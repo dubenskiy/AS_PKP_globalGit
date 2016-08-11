@@ -227,12 +227,12 @@
                 <omgdi:waypoint x="820.0" y="70.0"></omgdi:waypoint>
                 <omgdi:waypoint x="820.0" y="146.0"></omgdi:waypoint>
             </bpmndi:BPMNEdge>
-            <bpmndi:BPMNEdge bpmnElement="flow51" id="BPMNEdge_flow51">
-                <omgdi:waypoint x="351.0" y="575.0"></omgdi:waypoint>
-                <omgdi:waypoint x="420.0" y="575.0"></omgdi:waypoint>
-                <omgdi:waypoint x="420.0" y="605.0"></omgdi:waypoint>
-                <omgdi:waypoint x="200.0" y="605.0"></omgdi:waypoint>
-            </bpmndi:BPMNEdge>
+            <!--<bpmndi:BPMNEdge bpmnElement="flow51" id="BPMNEdge_flow51">-->
+                <!--<omgdi:waypoint x="351.0" y="575.0"></omgdi:waypoint>-->
+                <!--<omgdi:waypoint x="420.0" y="575.0"></omgdi:waypoint>-->
+                <!--<omgdi:waypoint x="420.0" y="605.0"></omgdi:waypoint>-->
+                <!--<omgdi:waypoint x="200.0" y="605.0"></omgdi:waypoint>-->
+            <!--</bpmndi:BPMNEdge>-->
         </bpmndi:BPMNPlane>
     </bpmndi:BPMNDiagram>
 </definitions>

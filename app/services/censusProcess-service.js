@@ -70,7 +70,7 @@ angular.module('asPkpApp.censusProcess.service', [])
              * getXML
              */
             getXML: function () {
-                return $http.get("../xml/test5.xml",
+                return $http.get("../xml/test.xml",
                     {
                         transformResponse: function (dataXML) {
                             var x2js = new X2JS();

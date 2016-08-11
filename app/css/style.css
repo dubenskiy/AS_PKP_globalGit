@@ -178,18 +178,26 @@ option {
 }
 
 .process-shape-user-task {
-     position: absolute;
-     top: 0;
-     left: 0;
-     filter: alpha(opacity=50);
-     -moz-opacity: 0.5;
-     opacity: 0.5;
+    position: absolute;
+    top: 0;
+    left: 0;
+    filter: alpha(opacity=50);
+    -moz-opacity: 0.5;
+    opacity: 0.5;
     cursor: pointer;
-     background-color: #2fe139;
+    background-color: #2fe139;
     -moz-border-radius: 12px;
     -webkit-border-radius: 12px;
     border-radius: 12px;
- }
+}
+
+/*.test{*/
+    /*border: 5px solid ;*/
+/*}*/
+
+.test:hover   {
+    border: 5px solid green;
+}
 
 .process-shape-step {
     position: absolute;
@@ -291,11 +299,11 @@ option {
     background-color: black;
 }
 
-.corner-div{
+.corner-div {
     position: absolute;
     top: 0;
     left: 0;
-
+    /*z-index: 100;*/
     background-color: red;
 }
 
@@ -305,22 +313,22 @@ option {
 /*top: 136px;*/
 
 /*.diamond {*/
-    /*position: absolute;*/
-    /*top: 0;*/
-    /*left: 0;*/
-    /*border: 50px solid transparent;*/
-    /*border-bottom-color: red;*/
+/*position: absolute;*/
+/*top: 0;*/
+/*left: 0;*/
+/*border: 50px solid transparent;*/
+/*border-bottom-color: red;*/
 
 /*}*/
 /*.diamond:after {*/
-    /*content: '';*/
-    /*position: absolute;*/
-    /*left: -50px;*/
-    /*top: 50px;*/
-    /*width: 0;*/
-    /*height: 0;*/
-    /*border: 50px solid transparent;*/
-    /*border-top-color: red;*/
+/*content: '';*/
+/*position: absolute;*/
+/*left: -50px;*/
+/*top: 50px;*/
+/*width: 0;*/
+/*height: 0;*/
+/*border: 50px solid transparent;*/
+/*border-top-color: red;*/
 /*}*/
 
 /*@media (max-width: 170px)*/

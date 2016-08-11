@@ -23,7 +23,10 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                         "ng-click='testAlert(\"" + val.class + "\")'>" +
                         "</div>";
 
+
                     var cornerTpl = "<div class='corner-div' style='width: " + val.sizeConst + "px; height: " + val.sizeConst + "px; left: " + val.cornerLeft + "px; top: " + val.cornerTop + "px; border-radius: " + val.cornerBorderRadius + "'></div>";
+
+                    // if (val.cornerTop==248) $log.warn(cornerTpl);
 
                     return type == 'cornerDiv' ? cornerTpl : mainTpl
                 };
@@ -47,17 +50,17 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                     // $log.info(val);
 
                     if (x1 == x2 && x1 < x3 && y1 < y3) {
-                        direction = 'forward';
+                        direction = 'backward';
                     } else if (y1 == y2 && y1 < y3 && x1 < x3) {
                         direction = 'backward';
                     } else if (y1 == y2 && y1 > y3 && x1 < x3) {
-                        direction = 'forward';
+                        direction = 'backward';
                     } else if (y1 == y2 && y1 > y3 && x1 > x3) {
                         direction = 'forward';
                     } else if (y1 == y2 && y1 < y3 && x1 > x3) {
                         direction = 'forward';
                     } else if (x1 == x2 && x1 > x3 && y1 < y3) {
-                        direction = 'forward';
+                        direction = 'backward';
                     } else if (x1 == x2 && x1 > x3 && y1 > y3) {
                         direction = 'forward';
                     } else if (x1 == x2 && x1 < x3 && y1 > y3) {
@@ -122,11 +125,13 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                                 edge.cornerLeft = edge.left + edge.width - sizeConst;
                                 edge.cornerTop = edge.top - sizeConst;
                             } else if (x1 == x2 && x1 < x3 && y1 > y3) {
+                                // $log.info(x1 + ' ' + x2 + ' ' + x3);
                                 edge.height -= sizeConst;
                                 edge.top += sizeConst;
                                 edge.cornerBorderRadius = sizeConst + 'px 0 0 0';
                                 edge.cornerLeft = edge.left + edge.width - sizeConst;
                                 edge.cornerTop = edge.top - sizeConst;
+                                // if (x1==132){$log.info(edge)}
                             }
 
                         } else if (direction === 'backward') {
@@ -159,7 +164,9 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                                 edge.height -= sizeConst;
                                 edge.top += sizeConst;
                             } else if (x0 == x1 && x0 > x2 && y0 < y2) {
-
+                                edge.cornerBorderRadius = '0 0 ' + sizeConst + 'px 0';
+                                edge.cornerLeft = edge.left + edge.width;
+                                edge.cornerTop = edge.top + edge.height - sizeConst;
                             } else if (x0 == x1 && x0 > x2 && y0 > y2) {
                                 // edge.width -= sizeConst;
                             } else if (x0 == x1 && x0 < x2 && y0 > y2) {
@@ -197,20 +204,20 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                     var shape = {};
                     var coordsData = angular.fromJson($attr.data);
                     // Блоки
-                    // angular.forEach(coordsData.BPMNShape, function (val, index) {
-                    //     shape = {
-                    //         width: +val.Bounds._width,
-                    //         height: +val.Bounds._height,
-                    //         left: +val.Bounds._x + 15,
-                    //         top: +val.Bounds._y + 83,
-                    //         bpmnElement: val._bpmnElement,
-                    //         // class:  val._id + " process-shape"
-                    //         class: (~(val._id).indexOf("gateway")) ? val._id + " process-shape-diamond" :
-                    //             (~(val._id).indexOf("event")) ? ' process-shape-circle' :
-                    //                 (~(val._id).indexOf("step")) ? ' process-shape-step' : val._id + " process-shape-user-task"
-                    //     };
-                    //     angular.element(document.getElementById('main-div-process')).append($compile(templateFunc(shape))($scope));
-                    // });
+                    angular.forEach(coordsData.BPMNShape, function (val, index) {
+                        shape = {
+                            width: +val.Bounds._width,
+                            height: +val.Bounds._height,
+                            left: +val.Bounds._x + 15,
+                            top: +val.Bounds._y + 83,
+                            bpmnElement: val._bpmnElement,
+                            // class:  val._id + " process-shape"
+                            class: (~(val._id).indexOf("gateway")) ? val._id + " process-shape-diamond" :
+                                (~(val._id).indexOf("event")) ? ' process-shape-circle' :
+                                    (~(val._id).indexOf("step")) ? ' process-shape-step' : val._id + " process-shape-user-task"
+                        };
+                        angular.element(document.getElementById('main-div-process')).append($compile(templateFunc(shape))($scope));
+                    });
                     // Линии
                     angular.forEach(coordsData.BPMNEdge, function (val, index) {
                         // $log.info(val);
@@ -222,13 +229,13 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                         }
                         else if (val.waypoint.length == 4) {
                             drawingEdge(+val.waypoint[0]._x, +val.waypoint[1]._x, +val.waypoint[0]._y, +val.waypoint[1]._y, val, 4, 'forward', 0, true);
-                            drawingEdge(+val.waypoint[1]._x, +val.waypoint[2]._x, +val.waypoint[1]._y, +val.waypoint[2]._y, val, 4, directionFunc(val, 1), 1, false);
+                            drawingEdge(+val.waypoint[1]._x, +val.waypoint[2]._x, +val.waypoint[1]._y, +val.waypoint[2]._y, val, 4, directionFunc(val, 1), 1, true);
                             drawingEdge(+val.waypoint[2]._x, +val.waypoint[3]._x, +val.waypoint[2]._y, +val.waypoint[3]._y, val, 4, 'backward', 2, true);
                         } else if (val.waypoint.length == 5) {
-                            drawingEdge(+val.waypoint[0]._x, +val.waypoint[1]._x, +val.waypoint[0]._y, +val.waypoint[1]._y, val, 4, 'forward', 0);
-                            drawingEdge(+val.waypoint[1]._x, +val.waypoint[2]._x, +val.waypoint[1]._y, +val.waypoint[2]._y, val, 4, +val.waypoint[1]._y == +val.waypoint[2]._y && +val.waypoint[2]._y < +val.waypoint[3]._y ? 'forward' : 'backward', 1);
-                            drawingEdge(+val.waypoint[2]._x, +val.waypoint[3]._x, +val.waypoint[2]._y, +val.waypoint[3]._y, val, 4, +val.waypoint[2]._y == +val.waypoint[3]._y && +val.waypoint[3]._y < +val.waypoint[4]._y ? 'forward' : 'backward', 2);
-                            drawingEdge(+val.waypoint[3]._x, +val.waypoint[4]._x, +val.waypoint[3]._y, +val.waypoint[4]._y, val, 4, 'backward', 3);
+                            drawingEdge(+val.waypoint[0]._x, +val.waypoint[1]._x, +val.waypoint[0]._y, +val.waypoint[1]._y, val, 4, 'forward', 0, true);
+                            drawingEdge(+val.waypoint[1]._x, +val.waypoint[2]._x, +val.waypoint[1]._y, +val.waypoint[2]._y, val, 4, directionFunc(val, 1), 1, true);
+                            drawingEdge(+val.waypoint[2]._x, +val.waypoint[3]._x, +val.waypoint[2]._y, +val.waypoint[3]._y, val, 4, directionFunc(val, 2), 2, true);
+                            drawingEdge(+val.waypoint[3]._x, +val.waypoint[4]._x, +val.waypoint[3]._y, +val.waypoint[4]._y, val, 4, 'backward', 3, true);
                         }
                     })
                 }, 0);

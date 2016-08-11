@@ -54,10 +54,11 @@
                 <omgdi:waypoint x="350.0" y="317.0"></omgdi:waypoint>
             </bpmndi:BPMNEdge>
             <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
-                <omgdi:waypoint x="305.0" y="150.0"></omgdi:waypoint>
+                <!--<omgdi:waypoint x="305.0" y="150.0"></omgdi:waypoint>-->
                 <omgdi:waypoint x="305.0" y="207.0"></omgdi:waypoint>
                 <omgdi:waypoint x="512.0" y="207.0"></omgdi:waypoint>
                 <omgdi:waypoint x="512.0" y="234.0"></omgdi:waypoint>
+                <omgdi:waypoint x="600.0" y="234.0"></omgdi:waypoint>
             </bpmndi:BPMNEdge>
             <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
                 <omgdi:waypoint x="565.0" y="261.0"></omgdi:waypoint>
@@ -65,10 +66,10 @@
                 <omgdi:waypoint x="662.0" y="235.0"></omgdi:waypoint>
             </bpmndi:BPMNEdge>
             <bpmndi:BPMNEdge bpmnElement="flow4" id="BPMNEdge_flow4">
-                <omgdi:waypoint x="200.0" y="250.0"></omgdi:waypoint>
                 <omgdi:waypoint x="200.0" y="207.0"></omgdi:waypoint>
                 <omgdi:waypoint x="132.0" y="207.0"></omgdi:waypoint>
                 <omgdi:waypoint x="132.0" y="165.0"></omgdi:waypoint>
+                <omgdi:waypoint x="100.0" y="165.0"></omgdi:waypoint>
             </bpmndi:BPMNEdge>
             <bpmndi:BPMNEdge bpmnElement="flow5" id="BPMNEdge_flow5">
                 <omgdi:waypoint x="80.0" y="138.0"></omgdi:waypoint>
@@ -89,6 +90,7 @@
                 <omgdi:waypoint x="252.0" y="180.0"></omgdi:waypoint>
                 <omgdi:waypoint x="252.0" y="137.0"></omgdi:waypoint>
                 <omgdi:waypoint x="306.0" y="137.0"></omgdi:waypoint>
+                <omgdi:waypoint x="306.0" y="120.0"></omgdi:waypoint>
             </bpmndi:BPMNEdge>
         </bpmndi:BPMNPlane>
     </bpmndi:BPMNDiagram>
