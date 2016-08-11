@@ -12,6 +12,7 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                 /**
                  * Формирую шаблон
                  * @param val
+                 * @param type
                  * @returns {string}
                  */
                 var templateFunc = function (val, type) {
@@ -27,15 +28,56 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                     return type == 'cornerDiv' ? cornerTpl : mainTpl
                 };
 
+                var directionFunc = function (val, index) {
+                    var direction,
+                        x1 = +val.waypoint[index]._x,
+                        x2 = +val.waypoint[index + 1]._x,
+                        x3 = +val.waypoint[index + 2]._x,
+                        y1 = +val.waypoint[index]._y,
+                        y2 = +val.waypoint[index + 1]._y,
+                        y3 = +val.waypoint[index + 2]._y;
+
+                    // if (+val.waypoint[index]._y == +val.waypoint[index + 1]._y && (+val.waypoint[index + 1]._y < +val.waypoint[index + 2]._y || +val.waypoint[index + 1]._y > +val.waypoint[index + 2]._y)) {
+                    //     direction = 'forward';
+                    // } else {
+                    //     direction = 'backward';
+                    // }
+
+                    // $log.info(x1 + ' ' + x2 + ' ' + x3);
+                    // $log.info(val);
+
+                    if (x1 == x2 && x1 < x3 && y1 < y3) {
+                        direction = 'forward';
+                    } else if (y1 == y2 && y1 < y3 && x1 < x3) {
+                        direction = 'backward';
+                    } else if (y1 == y2 && y1 > y3 && x1 < x3) {
+                        direction = 'forward';
+                    } else if (y1 == y2 && y1 > y3 && x1 > x3) {
+                        direction = 'forward';
+                    } else if (y1 == y2 && y1 < y3 && x1 > x3) {
+                        direction = 'forward';
+                    } else if (x1 == x2 && x1 > x3 && y1 < y3) {
+                        direction = 'forward';
+                    } else if (x1 == x2 && x1 > x3 && y1 > y3) {
+                        direction = 'forward';
+                    } else if (x1 == x2 && x1 < x3 && y1 > y3) {
+                        direction = 'forward';
+                    }
+
+                    return direction
+                };
+
                 /**
                  * Отрисовка элемента
-                 * Если х == х, вертикальная прямая (|)
-                 * Если y == y, горизонтальная прямая (-)
                  * @param x1
                  * @param x2
                  * @param y1
                  * @param y2
                  * @param otherInfo
+                 * @param sizeConst
+                 * @param direction
+                 * @param x1Index
+                 * @param isCornerDiv
                  */
                 var drawingEdge = function (x1, x2, y1, y2, otherInfo, sizeConst, direction, x1Index, isCornerDiv) {
 
@@ -101,6 +143,9 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                             } else if (y0 == y1 && y0 < y2 && x0 < x2) {
                                 edge.height -= sizeConst;
                                 edge.top += sizeConst;
+                                edge.cornerBorderRadius = '0 ' + sizeConst + 'px 0 0';
+                                edge.cornerLeft = edge.left;
+                                edge.cornerTop = edge.top - sizeConst;
                             } else if (y0 == y1 && y0 > y2 && x0 < x2) {
                                 edge.cornerBorderRadius = '0 0 ' + sizeConst + 'px 0';
                                 edge.cornerLeft = edge.left;
@@ -108,8 +153,8 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                             } else if (y0 == y1 && y0 > y2 && x0 > x2) {
                                 // не факт что верно! нужно проверить!
                                 edge.cornerBorderRadius = '0 0 0 ' + sizeConst + 'px';
-                                edge.cornerLeft = edge.left - sizeConst;
-                                edge.cornerTop = edge.top;
+                                edge.cornerLeft = edge.left;
+                                edge.cornerTop = edge.top + edge.height;
                             } else if (y0 == y1 && y0 < y2 && x0 > x2) {
                                 edge.height -= sizeConst;
                                 edge.top += sizeConst;
@@ -152,20 +197,20 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                     var shape = {};
                     var coordsData = angular.fromJson($attr.data);
                     // Блоки
-                    angular.forEach(coordsData.BPMNShape, function (val, index) {
-                        shape = {
-                            width: +val.Bounds._width,
-                            height: +val.Bounds._height,
-                            left: +val.Bounds._x + 15,
-                            top: +val.Bounds._y + 83,
-                            bpmnElement: val._bpmnElement,
-                            // class:  val._id + " process-shape"
-                            class: (~(val._id).indexOf("gateway")) ? val._id + " process-shape-diamond" :
-                                (~(val._id).indexOf("event")) ? ' process-shape-circle' :
-                                    (~(val._id).indexOf("step")) ? ' process-shape-step' : val._id + " process-shape-user-task"
-                        };
-                        angular.element(document.getElementById('main-div-process')).append($compile(templateFunc(shape))($scope));
-                    });
+                    // angular.forEach(coordsData.BPMNShape, function (val, index) {
+                    //     shape = {
+                    //         width: +val.Bounds._width,
+                    //         height: +val.Bounds._height,
+                    //         left: +val.Bounds._x + 15,
+                    //         top: +val.Bounds._y + 83,
+                    //         bpmnElement: val._bpmnElement,
+                    //         // class:  val._id + " process-shape"
+                    //         class: (~(val._id).indexOf("gateway")) ? val._id + " process-shape-diamond" :
+                    //             (~(val._id).indexOf("event")) ? ' process-shape-circle' :
+                    //                 (~(val._id).indexOf("step")) ? ' process-shape-step' : val._id + " process-shape-user-task"
+                    //     };
+                    //     angular.element(document.getElementById('main-div-process')).append($compile(templateFunc(shape))($scope));
+                    // });
                     // Линии
                     angular.forEach(coordsData.BPMNEdge, function (val, index) {
                         // $log.info(val);
@@ -177,7 +222,7 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                         }
                         else if (val.waypoint.length == 4) {
                             drawingEdge(+val.waypoint[0]._x, +val.waypoint[1]._x, +val.waypoint[0]._y, +val.waypoint[1]._y, val, 4, 'forward', 0, true);
-                            drawingEdge(+val.waypoint[1]._x, +val.waypoint[2]._x, +val.waypoint[1]._y, +val.waypoint[2]._y, val, 4, +val.waypoint[1]._y == +val.waypoint[2]._y && +val.waypoint[2]._y < +val.waypoint[3]._y ? 'forward' : 'backward', 1, false);
+                            drawingEdge(+val.waypoint[1]._x, +val.waypoint[2]._x, +val.waypoint[1]._y, +val.waypoint[2]._y, val, 4, directionFunc(val, 1), 1, false);
                             drawingEdge(+val.waypoint[2]._x, +val.waypoint[3]._x, +val.waypoint[2]._y, +val.waypoint[3]._y, val, 4, 'backward', 2, true);
                         } else if (val.waypoint.length == 5) {
                             drawingEdge(+val.waypoint[0]._x, +val.waypoint[1]._x, +val.waypoint[0]._y, +val.waypoint[1]._y, val, 4, 'forward', 0);
