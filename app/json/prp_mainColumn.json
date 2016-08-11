@@ -1,0 +1,136 @@
+[
+  {
+    "field": "nCont",
+    "displayName": "Номер контейнера",
+    "width": "25",
+    "show": true
+  },
+  {
+    "field": "AbdPkPriz",
+    "displayName": "Признак АБД ПК",
+    "width": "35",
+    "show": true
+  },
+  {
+    "field": "codeAdmSob",
+    "displayName": "Код администрации-собственницы",
+    "width": "50",
+    "show": true
+  },
+  {
+    "field": "codeStation",
+    "displayName": "Код станции совершения операции",
+    "width": "45",
+    "show": true
+  },
+  {
+    "field": "date",
+    "displayName": "Дата, время",
+    "cellFilter": "dateTime:'dd-MM-yyyy HH:mm:ss'",
+    "width": "105",
+    "align": "left",
+    "show": true
+  },
+  {
+    "field": "trainIndex",
+    "displayName": "Индекс поезда",
+    "width": "105",
+    "show": true
+  },
+  {
+    "field": "ninv",
+    "displayName": "Номер вагона",
+    "width": "105",
+    "show": true
+  },
+  {
+    "field": "messageCode",
+    "displayName": "Код сообщения ",
+    "width": "105",
+    "show": true
+  },
+  {
+    "field": "operCode",
+    "displayName": "Код операции",
+    "width": "105",
+    "show": true
+  },
+  {
+    "field": "receptionPriz",
+    "displayName": "Признак приема/неприема",
+    "width": "105",
+    "show": true
+  },
+  {
+    "field": "deliveryRoadCode",
+    "displayName": "Код дороги сдачи",
+    "width": "105",
+    "show": true
+  },
+  {
+    "field": "receptionRoadCode",
+    "displayName": "Код дороги приема",
+    "width": "40",
+    "show": true
+  },
+  {
+    "field": "censusPlaceCode",
+    "displayName": "Код места переписи",
+    "width": "55",
+    "show": true
+  },
+  {
+    "field": "censusTypeCode",
+    "displayName": "Код вида переписи",
+    "width": "55",
+    "show": true
+  },
+  {
+    "field": "parkNumber",
+    "displayName": "№ парка",
+    "width": "105",
+    "show": true
+  },
+  {
+    "field": "pathNumber",
+    "displayName": "№ пути",
+    "width": "40",
+    "show": true
+  },
+  {
+    "field": "typeSize",
+    "displayName": "Типоразмер",
+    "width": "105",
+    "show": true
+  },
+  {
+    "field": "contType",
+    "displayName": "Вид контейнера",
+    "width": "40",
+    "show": true
+  },
+  {
+    "field": "grossWeight",
+    "displayName": "Масса брутто",
+    "width": "50",
+    "show": true
+  },
+  {
+    "field": "technicalCode",
+    "displayName": "Код технического состояния",
+    "width": "50",
+    "show": true
+  },
+  {
+    "field": "transmissionDate",
+    "displayName": "Дата передачи",
+    "width": "105",
+    "show": true
+  },
+  {
+    "field": "censusCurDate",
+    "displayName": "Текущий год переписи",
+    "width": "40",
+    "show": true
+  }
+]

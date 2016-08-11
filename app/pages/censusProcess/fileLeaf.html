@@ -1,0 +1,48 @@
+<div class="panel">
+    <div class="panel-body">
+        <uib-tabset active="0" justified="false" type="tabs">
+            <uib-tab index="0" heading="Файлы расхождений" ng-click="selectedLeafObj.setClickedRow(null)">
+                <div class="row">
+                    <div class="col-lg-offset-1 col-lg-10">
+                        <div class="panel-body" ng-include src="'pages/template/generateFiles.tpl.html'">
+                        </div>
+                    </div>
+                </div>
+            </uib-tab>
+            <uib-tab index="1" heading="Список рассылки" ng-click="selectedLeafObj.setClickedRow(null)">
+                <div class="row">
+                    <div class="col-lg-offset-1 col-lg-10">
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover noselect" style="cursor: default !important;">
+                                    <thead>
+                                    <tr>
+                                        <th class="text-center">#</th>
+                                        <th class="text-center">Кому</th>
+                                        <th class="text-center">От кого</th>
+                                        <th class="text-center">Когда</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="row in selectedLeafObj.listDistributionProcess track by $index"
+                                        ng-click="tasksDetailObj.setClickedRow($index,row)"
+                                        ng-class="{'selected': $index == tasksDetailObj.selectedIndex}"
+                                        class="text-center">
+                                        <td ng-bind="$index+1"></td>
+                                        <td ng-bind="row.whom"></td>
+                                        <td ng-bind="row.fromWhom"></td>
+                                        <td ng-bind="row.dateCreate"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </uib-tab>
+        </uib-tabset>
+        <!--<div class="text-right">-->
+        <!--<button class="btn btn-primary">Send message</button>-->
+        <!--</div>-->
+    </div>
+</div>

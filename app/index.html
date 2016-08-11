@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ru" ng-app="asPkpApp" class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>АС ПКП</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700" rel="stylesheet" type="text/css">
+
+    <link type="text/css" rel="stylesheet" href="dist/css/normalize.css?rev=1e9c0f3b13da66012ea079bc1509fef2">
+    <link type="text/css" rel="stylesheet" href="dist/css/main.css?rev=bb05e5163c8705764265f3fd1a8c1f4d">
+    <link type="text/css" rel="stylesheet" href="dist/css/bootstrap.min.css?rev=ec3bb52a00e176a7181d454dffaea219">
+    <link type="text/css" rel="stylesheet" href="dist/font-awesome/css/font-awesome.min.css?rev=7c5c70efc6386e1f69e66154da8c5c8d">
+    <link type="text/css" rel="stylesheet" href="dist/css/bundle.min.css?rev=2f973b0549868989fb2a57915e824f41">
+
+    <!--<link type="text/css" rel="stylesheet" href="dist/css/boot-reset.css">-->
+    <link type="text/css" rel="stylesheet" href="dist/css/nifty.min.css?rev=dd1b0eda0a28deabf244d9422a85325f">
+    <link type="text/css" rel="stylesheet" href="dist/css/theme-ocean.min.css?rev=cd2f579698074c429eb72c1472a044fd">
+    <link type="text/css" rel="stylesheet" href="dist/css/nifty-icons.min.css?rev=0d1c533f4a666dc79fe5bb9260381c8f">
+
+    <link type="text/css" rel="stylesheet" href="dist/css/fileInput.css?rev=091a8c4cbed97901c99fb5f7dc69a7db">
+    <link type="text/css" rel="stylesheet" href="dist/css/angular-ui-notification.css?rev=ce168394490994e8d692f9ee5ac215cb">
+
+    <link type="text/css" rel="stylesheet" href="dist/css/resizer.css?rev=5779ba67c6d0480fc17405c8a9ee8aae">
+    <link type="text/css" rel="stylesheet" href="dist/css/tree.css?rev=4c8597470a76ae707b724b48bd1e7c3d">
+
+
+    <!--<link type="text/css" rel="stylesheet" href="dist/css/ng-tags-input.bootstrap.min.css">-->
+
+    <!--<link type="text/css" rel="stylesheet" href="dist/fre/css/font-awesome.css">-->
+
+    <style>
+        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak, .ng-hide:not(.ng-hide-animate) {
+            display: none !important;
+        }
+    </style>
+
+    <!--Если браузер IE версией младше или равной 8-ой-->
+    <!--[if lte IE 8]>
+    <style>
+        #onlyIE8 {
+            display: block;
+        }
+
+        #mainContent {
+            display: none;
+        }
+    </style>
+    <![endif]-->
+
+</head>
+
+<body class=" pace-done">
+<div id="container" class="aside-float aside-bright effect mainnav-lg">
+
+    <!--NAVBAR-->
+    <!--===================================================-->
+    <header id="navbar">
+        <div id="navbar-container" class="boxed">
+
+            <!--Brand logo & name-->
+            <!--================================-->
+            <div class="navbar-header">
+                <a href="index.html" class="navbar-brand">
+                    <div class="brand-title">
+                        <span class="brand-text">АС ПКП</span>
+                    </div>
+                </a>
+            </div>
+            <!--================================-->
+            <!--End brand logo & name-->
+
+
+            <!--Navbar Dropdown-->
+            <!--================================-->
+            <div class="navbar-content clearfix textSizeInput">
+                <!--buttons -->
+
+                <ul class="nav navbar-top-links pull-left">
+                    <li>
+                        <a ng-class="{activeNavbar: $state.includes('tasks')}" ui-sref="tasks">Задачи</a>
+                    </li>
+                    <li ui-sref-active="activeNavbar">
+                        <a ng-class="{activeNavbar: $state.includes('censusProcess')}" ui-sref="censusProcess">Процесс переписи</a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-top-links pull-right">
+                    <!--User dropdown-->
+                    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+                    <li id="dropdown-user" class="dropdown" uib-dropdown>
+                        <a href="#" data-toggle="dropdown" class="dropdown-toggle text-right" uib-dropdown-toggle>
+                            <div class="username hidden-xs"><span>Анонним</span></div>
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-md dropdown-menu-right with-arrow panel-default" uib-dropdown-menu>
+                            <!-- User dropdown menu -->
+                            <ul class="head-list">
+                                <li>
+                                    <a href="" ng-click="openInfo()">
+                                        <i class="fa fa-user fa-fw fa-lg"></i> Инфо
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="" ng-click="openReferenceModal()">
+                                        <i class="fa fa-question-circle fa-fw fa-lg"></i> Справка
+                                    </a>
+                                </li>
+                            </ul>
+
+                            <!-- Dropdown footer -->
+                            <div class="pad-all text-right">
+                                <a href="logout.html" class="btn btn-primary">
+                                    <i class="fa fa-sign-out fa-fw"></i> Выход
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+                    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+                    <!--End user dropdown-->
+                </ul>
+            </div>
+            <!--================================-->
+            <!--End Navbar Dropdown-->
+
+        </div>
+    </header>
+    <!--===================================================-->
+    <!--END NAVBAR-->
+
+    <div class="boxed">
+
+        <!--CONTENT CONTAINER-->
+        <!--===================================================-->
+        <div id="content-container">
+
+            <!--<div id="page-title">-->
+                <!--<h1 class="page-header text-overflow">Static Tables</h1>-->
+            <!--</div>-->
+
+            <!--breadcrumb-->
+            <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+            <!--<ol class="breadcrumb">-->
+                <!--<li><a href="#">Home</a></li>-->
+                <!--<li><a href="#">Tables</a></li>-->
+                <!--<li class="active">Static Tables</li>-->
+            <!--</ol>-->
+            <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+            <!--end breadcrumb-->
+
+            <!--Page content-->
+            <!--===================================================-->
+            <div id="page-content">
+                 <span >
+                    <ui-breadcrumbs displayname-property="data.displayName" template-url="dist\tpl\uiBreadcrumbs.tpl.html"></ui-breadcrumbs>
+                </span>
+                <div ui-view></div>
+            </div>
+            <!--===================================================-->
+            <!--End page content-->
+
+        </div>
+        <!--===================================================-->
+        <!--END CONTENT CONTAINER-->
+
+    </div>
+
+
+    <!-- FOOTER -->
+    <!--===================================================-->
+    <footer id="footer">
+
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        <!-- Remove the class "show-fixed" and "hide-fixed" to make the content always appears. -->
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+        <p class="hide-fixed pull-right pad-rgt">© 2016 ОАО «РЖД» </p>
+
+
+    </footer>
+    <!--===================================================-->
+    <!-- END FOOTER -->
+
+
+    <!-- SCROLL PAGE BUTTON -->
+    <!--===================================================-->
+    <!--<button class="scroll-top btn" style="animation: jellyIn 0.8s;">-->
+        <!--<i class="pci-chevron chevron-up"></i>-->
+    <!--</button>-->
+    <!--===================================================-->
+
+</div>
+<!--===================================================-->
+<!-- END OF CONTAINER -->
+
+<!--<pre>-->
+<!--$state = {{$state.current.name}}-->
+<!--$stateParams = {{$stateParams}}-->
+<!--$state full url = {{ $state.$current.url.source }}-->
+<!--</pre>-->
+
+
+<!--JAVASCRIPT-->
+<!--=================================================-->
+<script type="text/javascript" src="dist/lib/jquery.min.js?rev=64ec1b9cff683a0a739eeea84c9e628c"></script>
+<script type="text/javascript" src="dist/lib/angular.min.js?rev=6902fa79ea81480624e1328b01f9aaa0"></script>
+<script type="text/javascript" src="dist/lib/angular-animate.min.js?rev=a9a3cbc28719729316635728a0a3dde5"></script>
+<script type="text/javascript" src="dist/lib/angular-cookies.min.js?rev=4de6752e36054571e6d484b54f04f221"></script>
+<script type="text/javascript" src="dist/lib/angular-sanitize.min.js?rev=ee5049f5a046060fe1c2680ff53605c8"></script>
+<script type="text/javascript" src="dist/lib/angular-locale_ru-ru.js?rev=9aad04321e01ee3a423168c2f334213f"></script>
+<script type="text/javascript" src="dist/lib/angular-ui-router.min.js?rev=bc4ebd8ff767bc0f0454dab5d092df45"></script>
+<script type="text/javascript" src="dist/lib/ui-bootstrap-tpls-2.0.1.min.js?rev=45fb87221dbaa2768b2b799e7798eca6"></script>
+<script type="text/javascript" src="dist/lib/dirPagination.js?rev=d2236cfc3f0934cd2dadae03098f3a3a"></script>
+<script type="text/javascript" src="dist/lib/uiBreadcrumbs.js?rev=413100886755dd249d3ac18cfa4c01a9"></script>
+<script type="text/javascript" src="dist/lib/tree-directive.js?rev=ba3acccaa79ccb2bcd0d7fbd4d6ba3da"></script>
+<script type="text/javascript" src="dist/lib/fileInput.js?rev=05a06db965f02405cd4a6ca441b44757"></script>
+<script type="text/javascript" src="dist/lib/time2.js?rev=25fce96436ee4eb80589f8266b989e1b"></script>
+<script type="text/javascript" src="dist/lib/jquery.form.js?rev=6ff2b31a30c385d84606f867affa503a"></script>
+<script type="text/javascript" src="dist/lib/angular-ui-notification.js?rev=f3057800a968231072fd946c2a5fa8b4"></script>
+
+<script type="text/javascript" src="dist/lib/xml2json.min.js?rev=cdfcd39bf10750b6f60e0c5db009805a"></script>
+
+<!--<script type="text/javascript" src="dist/lib/ng-tags-input.min.js"></script>-->
+
+<script type="text/javascript" src="js/app.js?rev=3fcc92b8aa988f8d7b49175053614637"></script>
+<script type="text/javascript" src="js/tasks/tasksCtrl.js?rev=1bebc40457d57f6c9c7555c195d9fea8"></script>
+<script type="text/javascript" src="js/tasks/tasksDetailCtrl.js?rev=c94c9c5ded2dae87f9b66a0979da6df7"></script>
+<script type="text/javascript" src="js/censusProcess/censusProcessCtrl.js?rev=05ff796b245e23131afda5dfd153d2b9"></script>
+<script type="text/javascript" src="js/censusProcess/selectedLeafCtrl.js?rev=c8704273d9cf86b70b272d9971267e25"></script>
+<!--<script type="text/javascript" src="js/censusProcess/tableSelectedLeafCtrl.js?rev=086be61921024d18ff06ba5f38653404"></script>-->
+<script type="text/javascript" src="js/detailInfoFromRowModalCtrl.js"></script>
+
+<script type="text/javascript" src="js/datePickerCtrl.js?rev=1e88f509238335361234c8d26c535a8a"></script>
+
+<script type="text/javascript" src="services/tasks-service.js?rev=adf5ff4f668540e2c9010265f3776db1"></script>
+<script type="text/javascript" src="services/censusProcess-service.js?rev=8c5e27c8f566fab63a78a1eac981ac1b"></script>
+
+<!--<script type="text/javascript" src="filters/startsWith-filter.js?rev=ed55b83441e9d065dd44f9755a0ece0a"></script>-->
+
+<script type="text/javascript" src="directives/myResizer.directive.js?rev=a4b4258ac943202c9a46b60a7a0ff6e3"></script>
+<script type="text/javascript" src="directives/drawingProcess.directive.js?rev=42c2aab48c7645ca0a7897d0c148b1b4"></script>
+<script type="text/javascript" src="directives/fileNameInput.directive.js?rev=d1efd24ee42e37e3145947510e835bd8"></script>
+
+</body>
+</html>

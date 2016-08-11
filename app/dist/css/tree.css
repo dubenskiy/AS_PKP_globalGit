@@ -1,0 +1,75 @@
+ul.abn-tree li.abn-tree-row {
+    padding: 0;
+    margin: 0;
+}
+
+ul.abn-tree li.abn-tree-row a {
+    padding: 3px 10px;
+}
+
+ul.abn-tree i.indented {
+    padding: 2px;
+}
+
+.abn-tree {
+    cursor: pointer;
+}
+
+ul.nav.abn-tree .level-1 .indented {
+    /*position: relative;*/
+    padding-left: 0;
+}
+
+ul.nav.abn-tree .level-2 .indented {
+    /*position: relative;*/
+    padding-left: 20px;
+}
+
+ul.nav.abn-tree .level-3 .indented {
+    /*position: relative;*/
+    padding-left: 40px;
+}
+
+ul.nav.abn-tree .level-4 .indented {
+    /*position: relative;*/
+    padding-left: 60px;
+    /*width: 404px !important;*/
+}
+
+/*ul.nav.abn-tree .level-4 .href-class {*/
+/*padding-left: 60px;*/
+/*}*/
+
+/*#page-content > div > div > div > div.col-lg-5.eq-box-lg.ng-isolate-scope.resizable > div.panel > div > ul > li:nth-child(7) > a{*/
+/*padding-left: 60px;*/
+/*}*/
+
+ul.nav.abn-tree .level-5 .indented {
+    /*position: relative;*/
+    padding-left: 80px;
+}
+
+ul.nav.abn-tree .level-6 .indented {
+    /*position: relative;*/
+    padding-left: 100px;
+}
+
+ul.nav.nav-list.abn-tree .level-7 .indented {
+    /*position: relative;*/
+    padding-left: 120px;
+}
+
+ul.nav.nav-list.abn-tree .level-8 .indented {
+    /*position: relative;*/
+    padding-left: 140px;
+}
+
+ul.nav.nav-list.abn-tree .level-9 .indented {
+    /*position: relative;*/
+    padding-left: 160px;
+}
+
+.activeNodeTree {
+    background-color: #e5e7eb !important;
+    color: #5f5f5f !important
+}

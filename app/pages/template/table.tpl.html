@@ -1,0 +1,90 @@
+<div class="fixed-table-container">
+    <div class="fixed-table-body">
+        <table class="table table-hover noselect" id="tableT1">
+            <thead>
+            <tr>
+                <th style="text-align: center">
+                    <div class="th-inner ">Тип детали</div>
+                    <div class="fht-cell"></div>
+                </th>
+                <th style="text-align: center">
+                    <div class="th-inner ">Номер</div>
+                    <div class="fht-cell"></div>
+                </th>
+                <th style="text-align: center">
+                    <div class="th-inner ">Код завода-изготовителя</div>
+                    <div class="fht-cell"></div>
+                </th>
+                <th style="text-align: center">
+                    <div class="th-inner ">Наименования завода-изготовителя</div>
+                    <div class="fht-cell"></div>
+                </th>
+                <th style="text-align: center">
+                    <div class="th-inner ">Год выпуска детали</div>
+                    <div class="fht-cell"></div>
+                </th>
+                <th style="text-align: center">
+                    <div class="th-inner ">Основание</div>
+                    <div class="fht-cell"></div>
+                </th>
+                <th style="text-align: center">
+                    <div class="th-inner ">Дата ввода</div>
+                    <div class="fht-cell"></div>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr dir-paginate="row in listData | itemsPerPage: countRowInPage"
+                total-items="totalItems"
+                current-page="pageNumber"
+                class="alignCenter"
+                ng-class="{'selected': isSelected(row)}"
+                ng-dblclick="showDetailInfoFromRow($index, row)"
+                pagination-id="mainTable"
+                style="cursor: default !important;">
+                <td>
+                    <span ng-if="row.typeDetail==5">Колесная пара</span>
+                    <span ng-if="row.typeDetail==6">Надрессорная балка</span>
+                    <span ng-if="row.typeDetail==7">Боковая рама</span>
+                    <span ng-if="row.typeDetail==8">Соединительная балкаа</span>
+                </td>
+                <td ng-bind="row.numbers"></td>
+                <td ng-bind="row.vagUkp.kod"></td>
+                <td ng-bind="row.vagUkp.name"></td>
+                <td ng-bind="row.yearCreateDetail"></td>
+                <td>
+                    <span ng-if="row.document.typeDoc == 1">Распоряжение</span>
+                    <span ng-if="row.document.typeDoc == 2">Письмо</span>
+                    <span ng-if="row.document.typeDoc == 3">Телеграмма</span>
+                    № {{row.document.numberDoc}} <br>
+                    от {{row.document.dateDoc}}
+                </td>
+                <td ng-bind="row.dateWrite"></td>
+            </tr>
+            <tr ng-if="listData.length==0">
+                <td colspan="7" style="text-align: center"><code>нет данных</code></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="fixed-table-pagination" style="display: block;">
+
+        <div class="pull-left pagination-detail">
+            <span class="pagination-info">Показано</span>
+            <span class="page-list">
+                                                    <select style="width:70px;display: inline;" class="form-control" ng-model="countRowInPage"
+                                                            ng-change="countRowInPageChanged(countRowInPage, filter, numberDetails)">
+                                                        <option value="5">5</option>
+                                                        <option value="10">10</option>
+                                                        <option value="15">15</option>
+                                                    </select>
+                                                    из {{totalItems}}.
+                                                </span>
+        </div>
+        <div class="pull-right pagination" style="margin-top: -20px">
+            <dir-pagination-controls on-page-change="pageChanged(newPageNumber, countRowInPage, filter, numberDetails)" boundary-links="true"
+                                     pagination-id="mainTable"></dir-pagination-controls>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,34 @@
+<div class="panel">
+    <div class="panel-heading">
+        <h3 class="panel-title text-center">Форма получения предварительных результатов переписи в виде файлов PART.DBF для передачи в ИВЦ ЖА</h3>
+    </div>
+    <div class="panel-body">
+        <form class="form-horizontal" autocomplete="off" name="formUploadFile" id="formUploadFile" style="border: none !important;" novalidate>
+
+            <div class="row">
+                <div class="col-lg-offset-1 col-lg-2">
+                    <div class="form-group">
+                        <label class="control-label">Дорога</label>
+                        <span class="text-danger" style="font-size: 11px;" ng-if="formUploadFile.road.$error.required"> обязательный</span>
+                        <span class="text-danger" style="font-size: 11px;" ng-if="noResults&&tasksDetailObj.formUploadFile.road"> cовпадения не найдены</span>
+                        <input name="road"
+                               placeholder="Дорога"
+                               ng-model="tasksDetailObj.formUploadFile.road"
+                               uib-typeahead="c as c.name for c in tasksDetailObj.getRoad($viewValue) | limitTo:8"
+                               typeahead-loading="loadingLocations"
+                               typeahead-no-results="noResults"
+                               typeahead-select-on-blur="true"
+                               typeahead-show-hint="true"
+                               required
+                               class="form-control textSizeInput noselect">
+                        <i ng-if="!formUploadFile.road.$error.required && noResults && tasksDetailObj.formUploadFile.road.kod"
+                           class="form-control-feedback fa fa-check-circle fa-lg text-success"
+                           style="display: block; margin-right: 12px; margin-top: 30px"></i>
+                    </div>
+                </div>
+                <div class="col-lg-offset-1 col-lg-7" ng-include src="'pages/template/fileInput.tpl.html'">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

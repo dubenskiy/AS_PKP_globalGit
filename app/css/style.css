@@ -1,0 +1,508 @@
+#onlyIE8 {
+    display: none;
+}
+
+.ng-pageslide {
+    background: #3B4146
+}
+
+body.ng-pageslide-body-closed::before, body.ng-pageslide-body-open::before {
+    content: '.';
+    display: block;
+    position: absolute;
+    top: 0;
+    background-color: #000;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1
+}
+
+body.ng-pageslide-body-open::before {
+    opacity: .5;
+    -webkit-transition: opacity 1s;
+    transition: opacity 1s
+}
+
+body.ng-pageslide-body-closed::before {
+    -webkit-transition: opacity 1s;
+    transition: opacity 1s;
+    opacity: 0;
+    pointer-events: none
+}
+
+#color6 {
+    background-color: green;
+    float: right
+}
+
+#navbar {
+    z-index: 1010 !important
+}
+
+.activeNavbar {
+    background-color: #E5E7EB !important;
+    color: #5f5f5f !important
+}
+
+#mainnav-menu-style a {
+    color: #bbc0c5;
+    font-size: 9pt
+}
+
+#mainnav-menu-style > a:active, #mainnav-menu-style > a:hover {
+    font-size: 9pt;
+    color: #fff
+}
+
+tr.selected td {
+    background-color: #e5e7eb !important
+}
+
+tr.historySelected td {
+    background-color: #FAF2CC !important
+}
+
+.alignCenter {
+    text-align: center
+}
+
+.verticalAlign {
+    vertical-align: middle !important;
+    padding: 4px !important;
+}
+
+.activeMode {
+    background-color: #EEE
+}
+
+.fontSizeButton {
+    font-size: 1.25em
+}
+
+.fontSizeButtonNav {
+    font-size: 1.4em;
+    margin-top: 5px
+}
+
+.noselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none
+}
+
+.textSize {
+    font-size: 14px
+}
+
+.textSizeInput {
+    font-size: 13px
+}
+
+.heightFormElem {
+    height: 33px
+}
+
+.disabledTree {
+    cursor: not-allowed
+}
+
+.animate-if.ng-enter {
+    -webkit-transition: max-height 150ms ease-in;
+    transition: max-height 150ms ease-in
+}
+
+.animate-if.ng-leave {
+    -webkit-transition: max-height 150ms ease-out;
+    transition: max-height 150ms ease-out
+}
+
+select:required:invalid {
+    color: #999
+}
+
+option[value=””][disabled] {
+    display: none
+}
+
+option {
+    color: #000
+}
+
+.reeeeeeeeeeeeed {
+    background-color: #3366CC;
+}
+
+.highlightme {
+    background-color: #FFFF00;
+}
+
+.my-slider-left {
+    /*position: relative;*/
+    /*z-index: 1;*/
+    /*display: table-cell;*/
+    /*float: left ;*/
+    width: 30%;
+    max-width: 80% !important;
+    min-width: 240px !important;
+}
+
+.my-slider-right {
+    /*width: 100%;*/
+    display: inline;
+    /*float: right ;*/
+    /*width: 70%;*/
+    max-width: 700px !important;
+    min-width: 240px !important;
+    /*flex: 1;*/
+    /*display: flex;*/
+    /*flex-flow: column nowrap;*/
+    /*justify-content: space-around;*/
+    /*align-content: space-around;*/
+}
+
+.my-row {
+    display: table-row;
+    background: #f2dede;
+    border-color: #b94a48;
+}
+
+.my-table {
+    display: table;
+    table-layout: fixed;
+    /*height: 100%;*/
+    /*margin-bottom: 0;*/
+    width: 100%
+}
+
+.process-shape-user-task {
+     position: absolute;
+     top: 0;
+     left: 0;
+     filter: alpha(opacity=50);
+     -moz-opacity: 0.5;
+     opacity: 0.5;
+    cursor: pointer;
+     background-color: #2fe139;
+    -moz-border-radius: 12px;
+    -webkit-border-radius: 12px;
+    border-radius: 12px;
+ }
+
+.process-shape-step {
+    position: absolute;
+    top: 0;
+    left: 0;
+    filter: alpha(opacity=50);
+    -moz-opacity: 0.5;
+    opacity: 0.5;
+    cursor: pointer;
+    background-color: #2fe139;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.process-shape-diamond {
+    position: absolute;
+    top: 0;
+    left: 0;
+    filter: alpha(opacity=50);
+    -moz-opacity: 0.5;
+    opacity: 0.5;
+    cursor: pointer;
+    background-color: #e19250;
+    /* Rotate */
+    /*-webkit-transform: rotate(-45deg);*/
+    /*-moz-transform: rotate(-45deg);*/
+    /*-ms-transform: rotate(-45deg);*/
+    /*-o-transform: rotate(-45deg);*/
+    /*transform: rotate(-45deg);*/
+    /* Rotate Origin */
+    /*-webkit-transform-origin: 0 100%;*/
+    /*-moz-transform-origin: 0 100%;*/
+    /*-ms-transform-origin: 0 100%;*/
+    /*-o-transform-origin: 0 100%;*/
+    /*transform-origin: 0 100%;*/
+    /*margin: 60px 0 10px 310px;*/
+}
+
+.process-shape-circle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    filter: alpha(opacity=50);
+    -moz-opacity: 0.5;
+    opacity: 0.5;
+    cursor: pointer;
+    background-color: #7ce1e0;
+    -moz-border-radius: 60px;
+    -webkit-border-radius: 60px;
+    border-radius: 60px;
+}
+
+.process-edge-red {
+    position: absolute;
+    top: 0;
+    left: 0;
+    /*height: 3px;*/
+    filter: alpha(opacity=50);
+    -moz-opacity: 0.5;
+    opacity: 0.5;
+    cursor: pointer;
+    background-color: #f52530;
+}
+
+.process-edge-green {
+    position: absolute;
+    top: 0;
+    left: 0;
+    /*height: 3px;*/
+    filter: alpha(opacity=50);
+    -moz-opacity: 0.5;
+    opacity: 0.5;
+    cursor: pointer;
+    background-color: green;
+}
+
+.process-edge-yellow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    /*height: 3px;*/
+    filter: alpha(opacity=50);
+    -moz-opacity: 0.5;
+    opacity: 0.5;
+    cursor: pointer;
+    background-color: yellow;
+}
+
+.process-edge-black {
+    position: absolute;
+    top: 0;
+    left: 0;
+    /*height: 3px;*/
+    filter: alpha(opacity=50);
+    -moz-opacity: 0.5;
+    opacity: 0.5;
+    cursor: pointer;
+    background-color: black;
+}
+
+.corner-div{
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    background-color: red;
+}
+
+/*width: 28px;*/
+/*height: 28px;*/
+/*left: 811px;*/
+/*top: 136px;*/
+
+/*.diamond {*/
+    /*position: absolute;*/
+    /*top: 0;*/
+    /*left: 0;*/
+    /*border: 50px solid transparent;*/
+    /*border-bottom-color: red;*/
+
+/*}*/
+/*.diamond:after {*/
+    /*content: '';*/
+    /*position: absolute;*/
+    /*left: -50px;*/
+    /*top: 50px;*/
+    /*width: 0;*/
+    /*height: 0;*/
+    /*border: 50px solid transparent;*/
+    /*border-top-color: red;*/
+/*}*/
+
+/*@media (max-width: 170px)*/
+/*{*/
+/*#mySlider*/
+/*{*/
+/*!*display: none;*!*/
+/*border-color: red;*/
+/*}*/
+/*}*/
+
+/*--------------------------------------------------------------------------------------------------------*/
+/*стили для шестеренок и анимация*/
+.semilayer {
+    position: absolute;
+    width: 100% !important;
+    height: 100% !important;
+    z-index: 90000;
+    /*background-color: red;*/
+    background-color: rgba(255, 255, 255, 0.5);
+
+}
+
+.pace {
+    -webkit-pointer-events: none;
+    pointer-events: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    z-index: 200000;
+    position: fixed;
+    height: 150px;
+    width: 100px;
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.animate-if.ng-enter, .animate-if.ng-leave {
+    -webkit-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+    transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+}
+
+.animate-if.ng-enter,
+.animate-if.ng-leave.ng-leave-active {
+    opacity: 0;
+}
+
+.animate-if.ng-leave,
+.animate-if.ng-enter.ng-enter-active {
+    opacity: 1;
+}
+
+/*--------------------------------------------------------------------------------------------------------*/
+
+div.some-class {
+    position: absolute;
+    top: 0;
+
+    height: 100%;
+    width: 100%;
+    z-index: 3;
+    /*margin-left: -8px;*/
+    background-color: rgba(192, 192, 192, 0.25);
+}
+
+div.someclassDocument {
+    position: absolute;
+    top: 0;
+    height: 32px;
+    width: 501px;
+    z-index: 3;
+    /*margin-left: -8px;*/
+    background-color: rgba(192, 192, 192, 0.25);
+}
+
+/*************************************************/
+
+.ng-cloak {
+    opacity: 0;
+}
+
+.css-form input.ng-invalid.ng-touched {
+    border: 1px solid #eb2521 !important;
+}
+
+.bold {
+    font-weight: bold
+}
+
+.withMinMax {
+    max-width: 781px;
+    min-width: 300px;
+}
+
+/* ------------------------------------------
+Дерево css
+*/
+
+.abn-tree-animate-enter,
+li.abn-tree-row.ng-enter {
+    transition: 200ms linear all;
+    position: relative;
+    display: block;
+    opacity: 0;
+    max-height: 0px;
+}
+
+.abn-tree-animate-enter.abn-tree-animate-enter-active,
+li.abn-tree-row.ng-enter-active {
+    opacity: 1;
+    max-height: 30px;
+}
+
+.abn-tree-animate-leave,
+li.abn-tree-row.ng-leave {
+    transition: 200ms linear all;
+    position: relative;
+    display: block;
+    height: 30px;
+    max-height: 30px;
+    opacity: 1;
+}
+
+.abn-tree-animate-leave.abn-tree-animate-leave-active,
+li.abn-tree-row.ng-leave-active {
+    height: 0px;
+    max-height: 0px;
+    opacity: 0;
+}
+
+/*
+------------------------------------------
+Angular 1.2.0 Animation
+*/
+
+.abn-tree-animate.ng-enter {
+
+}
+
+.abn-tree-animate.ng-enter {
+
+}
+
+.my-image {
+    background: url('../../res/2.png') no-repeat center center;
+    width: 135px;
+    height: 135px;
+}
+
+img {
+    max-width: 100%;
+    /*max-height: 100%;*/
+    /*display: block;*/
+}
+
+/*.zoomin img {*/
+/*max-width: 100%;*/
+/*display: block;*/
+/*-webkit-transition: all 2s ease;*/
+/*-moz-transition: all 2s ease;*/
+/*-ms-transition: all 2s ease;*/
+/*transition: all 2s ease;*/
+/*}*/
+
+/*.zoomin img:hover {*/
+/*width: 2000px;*/
+/*height: 400px;*/
+/*}*/
+
+/*
+   end animation stuff
+-----------------------------------------
+   begin normal css stuff
+*/
+
+/*.red {*/
+/*background-color: red;*/
+/*}*/
+
+.my-class {
+    width: 273px !important;
+}

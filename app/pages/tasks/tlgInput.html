@@ -1,0 +1,57 @@
+<div class="panel">
+    <div class="panel-heading">
+        <h3 class="panel-title text-center">Форма загрузки Телеграммы ОАО «РЖД» о проведении переписи контейнерного парка с указанием даты переписи </h3>
+    </div>
+    <div class="panel-body">
+        <form class="form-horizontal css-form" autocomplete="off" name="formUploadFile" id="formUploadFile" style="border: none !important;" novalidate>
+
+            <div class="row">
+                <div class="col-lg-offset-1 col-lg-2">
+                    <div class="form-group">
+                        <label class="control-label">Дата переписи</label>
+                        <span class="text-danger" style="font-size: 11px;" ng-if="formUploadFile.dateCensus.$error.required"> обязательный</span>
+                        <p class="input-group" data-ng-controller="DatePickerCtrl" style="margin-bottom: -1px;">
+                            <input type="text"
+                                   name="dateCensus"
+                                   style="z-index: 4;"
+                                   id="dateCensus"
+                                   class="form-control textSizeInput"
+                                   uib-datepicker-popup="dd.MM.yyyy"
+                                   popup-placement="bottom-right"
+                                   ng-model="tasksDetailObj.formUploadFile.dateCensus"
+                                   is-open="opened"
+                                   min-date="'1090-06-22'"
+                                   max-date="'2090-06-22'"
+                                   placeholder="Дата переписи"
+                                   ng-required="true"
+                                   close-text="Закрыть"
+                                   current-text="Сегодня"
+                                   clear-text="Очистить"/>
+                            <span class="input-group-btn">
+                    <button type="button" style="z-index: 3; height: 32px" class="btn btn-default" ng-click="open($event)"><i class="fa fa-calendar fa-lg"></i></button>
+                 </span>
+                        </p>
+                        <span style="font-size: 11px; margin-left: 25px; color: gray">Пример даты: 18.09.1989</span>
+                    </div>
+                </div>
+                <div class="col-lg-offset-1 col-lg-7" ng-include src="'pages/template/fileInput.tpl.html'">
+                </div>
+
+                <!--<pre>{{fileTypeIcon}}</pre>-->
+                <!--<div class="col-lg-offset-10 col-lg-2">-->
+                    <!--<div class="form-group">-->
+                        <!--<div class="col-lg-10 col-lg-offset-2">-->
+                            <!--<button type="reset" class="btn btn-default">Cancel</button>-->
+                            <!--<button type="submit" class="btn btn-primary">Submit</button>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            </div>
+
+
+        </form>
+
+        <!--<button class="btn btn-primary" ng-click="pushMe()">push me</button>-->
+
+    </div>
+</div>

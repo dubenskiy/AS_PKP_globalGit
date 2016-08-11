@@ -1,0 +1,12 @@
+Bounds
+:
+Object
+__prefix: "omgdc"
+_height: "35.0"
+_width: "35.0"
+_x: "31.0"
+_y: "149.0"
+__proto__: Object
+__prefix: "bpmndi"
+_bpmnElement: "startevent1"
+_id: "BPMNShape_startevent1"

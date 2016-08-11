@@ -1,0 +1,51 @@
+<div class="panel" style="overflow: auto">
+    <div class="panel-body" style="margin-right: 20px;">
+
+        <table class="table table-bordered noselect" style="font-size: 10px; ">
+            <thead>
+            <tr>
+                <th ng-repeat="head in selectedLeafObj.gridTable.columns track by $index"
+                    ng-style="{width:head.width}"
+                    class="text-center verticalAlign"
+                    ng-if="head.show==true">
+                    {{head.displayName}}
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr dir-paginate="row in selectedLeafObj.gridTable.data | itemsPerPage: selectedLeafObj.countRowInPage"
+                total-items="selectedLeafObj.totalItems"
+                current-page="selectedLeafObj.pageNumber"
+                pagination-id="mainTable"
+                class="alignCenter"
+                style="cursor: default !important;">
+                <td ng-repeat="head in selectedLeafObj.gridTable.columns track by $index" ng-if="head.show==true" ng-bind="row[head.field]"></td>
+            </tr>
+            <!--<tr ng-if="listData.length==0">-->
+            <!--<td colspan="7" style="text-align: center"><code>нет данных</code></td>-->
+            <!--</tr>-->
+            </tbody>
+        </table>
+
+        <div class="fixed-table-pagination" style="display: block;">
+
+            <div class="pull-left pagination-detail">
+                <span class="pagination-info">Показано</span>
+                <span class="page-list">
+                    <select style="width:70px;display: inline;" class="form-control" ng-model="selectedLeafObj.countRowInPage"
+                            ng-change="selectedLeafObj.countRowInPageChanged(selectedLeafObj.countRowInPage)">
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                    </select>
+                    из <span ng-bind="selectedLeafObj.gridTable.totalItems"></span>.
+                </span>
+            </div>
+            <!--<div class="pull-right pagination" style="margin-top: -20px">-->
+            <!--<dir-pagination-controls on-page-change="selectedLeafObj.pageChanged(newPageNumber, selectedLeafObj.countRowInPage)" boundary-links="true"-->
+            <!--pagination-id="mainTable"></dir-pagination-controls>-->
+            <!--</div>-->
+
+        </div>
+    </div>
+</div>

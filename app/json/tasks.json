@@ -1,0 +1,83 @@
+[
+  {
+    "type": "TlgInput",
+    "name": "Экранная форма загрузки Телеграммы ОАО «РЖД» о проведении переписи контейнерного парка с указанием даты переписи «TlgInput»",
+    "appointmentDate": "2016-11-15",
+    "executor": "Иванов П.С.",
+    "group": "СБД",
+    "executionPeriod": "2016-08-22",
+    "status": "1"
+  },
+  {
+    "type": "ScheduleDelivery",
+    "name": "Экранная форма загрузки графика сдачи предварительных и окончательных результатов переписи из ИВЦ ЖА «ScheduleDelivery»",
+    "appointmentDate": "2016-02-16",
+    "executor": "Иванов П.С.",
+    "group": "СБД",
+    "executionPeriod": "2016-08-22",
+    "status": "2"
+  },
+  {
+    "type": "SendDifferencesFiles",
+    "name": "Экранная форма рассылки файлов расхождений «SendDifferencesFiles»",
+    "appointmentDate": "2016-02-17",
+    "executor": "Иванов П.С.",
+    "group": "СБД",
+    "executionPeriod": "2016-08-22",
+    "status": "3"
+  },
+  {
+    "type": "ReceivePartDbf",
+    "name": "Экранная форма получения предварительных результатов переписи в виде файлов PART.DBF  для передачи в ИВЦ ЖА «ReceivePartDbf»",
+    "appointmentDate": "2016-02-18",
+    "executor": "Иванов П.С.",
+    "group": "СБД",
+    "executionPeriod": "2016-08-22",
+    "status": "4"
+  },
+  {
+    "type": "AktForm",
+    "name": "Экранная форма для передачи",
+    "appointmentDate": "2014-02-15",
+    "executor": "Иванов П.С.",
+    "group": "СБД",
+    "executionPeriod": "2016-08-22",
+    "status": "5"
+  },
+  {
+    "type": "SendPartDbf",
+    "name": "Экранная форма по передаче файлов PART.DBF «SendPartDbf»",
+    "appointmentDate": "2022-02-15",
+    "executor": "Иванов П.С.",
+    "group": "СБД",
+    "executionPeriod": "2016-08-22",
+    "status": "6"
+  },
+  {
+    "type": "ControlUpload3345",
+    "name": "Экранная форма контроля загрузки сообщений 3345 «ControlUpload3345»",
+    "appointmentDate": "2016-02-30",
+    "executor": "Иванов П.С.",
+    "group": "СБД",
+    "executionPeriod": "2016-08-22",
+    "status": "7"
+  },
+  {
+    "type": "CommunicationPktbCki",
+    "name": "Экранная форма взаимодействия с ПКТБ ЦКИ и ИВЦ дорог РФ по результатам сверки «CommunicationPktbCki»",
+    "appointmentDate": "2016-02-28",
+    "executor": "Иванов П.С.",
+    "group": "СБД",
+    "executionPeriod": "2016-08-22",
+    "status": "8"
+  },
+  {
+    "type": "SendContainerLis",
+    "name": "Экранная форма отправки списка контейнеров «SendContainerLis»",
+    "appointmentDate": "2016-02-26",
+    "executor": "Иванов П.С.",
+    "group": "СБД",
+    "executionPeriod": "2016-08-22",
+    "status": "9"
+  }
+]

@@ -1,0 +1,73 @@
+<div class="panel">
+    <div class="panel-heading">
+        <h3 class="panel-title">Очередь моих задач</h3>
+    </div>
+
+    <!--Bordered Table-->
+    <!--===================================================-->
+    <div class="panel-body">
+        <div class="pad-btm form-inline" style="padding-bottom: 0;">
+            <div class="row">
+                <div class="col-sm-12 table-toolbar-right">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                            <input style=" height: 34px;" class="form-control" placeholder="Поиск" ng-model="searchTasks">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control " ng-model="year" ng-change="changeYear()" ng-options="f as f for f in years">
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover noselect" style="cursor: default !important;">
+                <thead>
+                <tr>
+                    <th class="text-center">#</th>
+                    <th class="text-center">Наименование задачи</th>
+                    <th class="text-center">Дата назначения
+                        <a href="" ng-click="sortType = 'appointmentDate'; sortReverse = !sortReverse">
+                            <span ng-if="sortType == 'status'"><i class="fa fa-sort"></i></span>
+                            <span ng-show="sortType == 'appointmentDate'&&!sortReverse"><i class="fa fa-sort-asc"></i></span>
+                            <span ng-show="sortType == 'appointmentDate'&&sortReverse"><i class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
+                    <th class="text-center">Исполнитель</th>
+                    <th class="text-center">Группа</th>
+                    <th class="text-center">Срок исполнения</th>
+                    <th class="text-center">Статус
+                        <a href="" ng-click="sortType = 'status'; sortReverse = !sortReverse">
+                            <span ng-if="sortType == 'appointmentDate'"><i class="fa fa-sort"></i></span>
+                            <span ng-show="sortType == 'status'&&!sortReverse"><i class="fa fa-sort-asc"></i></span>
+                            <span ng-show="sortType == 'status'&&sortReverse"><i class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="row in tasksData | orderBy:sortType:sortReverse | filter:searchTasks track by $index"
+                    ng-click="selectRow($index,row)"
+                    ng-dblclick="selectedTaskDetailInfo(row.type)"
+                    ng-class="{'selected': isSelected(row)}"
+                    class="text-center">
+                    <td ng-bind="$index+1"></td>
+                    <td ng-bind="row.name"></td>
+                    <td ng-bind="row.appointmentDate"></td>
+                    <td ng-bind="row.executor"></td>
+                    <td ng-bind="row.group"></td>
+                    <td ng-bind="row.executionPeriod"></td>
+                    <td ng-bind="row.status"></td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+    <!--===================================================-->
+    <!--End Bordered Table-->
+
+</div>

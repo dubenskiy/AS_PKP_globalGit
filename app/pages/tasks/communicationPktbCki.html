@@ -1,0 +1,19 @@
+<div class="panel">
+    <div class="panel-heading">
+        <h3 class="panel-title text-center">Форма взаимодействия с ПКТБ ЦКИ и ИВЦ дорог РФ по результатам сверки</h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-lg-offset-2 col-lg-8">
+                <label class="control-label">Комментарий</label>
+                <span class="text-danger" style="font-size: 11px;" ng-if="!tasksDetailObj.comment"> обязательный</span>
+                <textarea placeholder="Комментарий" rows="13" ng-model="tasksDetailObj.comment" class="form-control"></textarea>
+            </div>
+        </div>
+        <br>
+        <div class="text-right">
+            <button class="btn btn-primary" ng-click="tasksDetailObj.differencesEliminated()">Расхождения устранены</button>
+            <button class="btn btn-default" ng-click="tasksDetailObj.comment = null">Отмена</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,40 @@
+[
+  {
+    "nCont": "NCONT",
+    "AbdPkPriz": "ABD_PK_PRIZ",
+    "codeAdmSob": "CODE_ADM_SOB",
+    "codeStation": "CODE_STATION",
+    "date": "DATE",
+    "trainIndex": "TRAIN_INDEX",
+    "ninv": "NINV",
+    "messageCode": "MESSAGE_CODE",
+    "operCode": "OPER_CODE",
+    "receptionPriz": "RECEPTION_PRIZ",
+    "deliveryRoadCode": "DELIVERY_ROAD_CODE",
+    "receptionRoadCode": "RECEPTION_ROAD_CODE",
+    "countryCodeDeparture": "CENSUS_PLACES_CODE",
+    "countryCodeDestination": "CENSUS_TYPE_CODE",
+    "stationCodeDeparture": "PARK_NUMBER",
+    "stationCodeDestination": "PATH_NUMBER",
+    "ppvNumber": "TYPE_SIZE"
+  },
+  {
+    "nCont": "NCONT",
+    "AbdPkPriz": "ABD_PK_PRIZ",
+    "codeAdmSob": "CODE_ADM_SOB",
+    "codeStation": "CODE_STATION",
+    "date": "DATE",
+    "trainIndex": "TRAIN_INDEX",
+    "ninv": "NINV",
+    "messageCode": "MESSAGE_CODE",
+    "operCode": "OPER_CODE",
+    "receptionPriz": "RECEPTION_PRIZ",
+    "deliveryRoadCode": "DELIVERY_ROAD_CODE",
+    "receptionRoadCode": "RECEPTION_ROAD_CODE",
+    "countryCodeDeparture": "CENSUS_PLACES_CODE",
+    "countryCodeDestination": "CENSUS_TYPE_CODE",
+    "stationCodeDeparture": "PARK_NUMBER",
+    "stationCodeDestination": "PATH_NUMBER",
+    "ppvNumber": "TYPE_SIZE"
+  }
+]

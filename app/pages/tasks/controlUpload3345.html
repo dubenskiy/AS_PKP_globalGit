@@ -1,0 +1,31 @@
+<div class="panel">
+    <div class="panel-heading">
+        <h3 class="panel-title text-center">Форма контроля загрузки сообщений 3345</h3>
+    </div>
+    <div class="panel-body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover noselect" style="cursor: default !important;">
+                <thead>
+                <tr>
+                    <th class="text-center">#</th>
+                    <th class="text-center">Дорога</th>
+                    <th class="text-center">Выявлено расхождений</th>
+                    <th class="text-center">Загружено с. 3345</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="row in tasksDetailObj.listUpload3345 track by $index"
+                    class="text-center">
+                    <td ng-bind="$index+1"></td>
+                    <td ng-bind="row.road"></td>
+                    <td ng-bind="row.differences"></td>
+                    <td ng-bind="row.loaded3345"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="text-right">
+            <button class="btn btn-primary" ng-click="tasksDetailObj.differencesEliminated()">Расхождения устранены</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+<div class="form-group">
+    <label class="control-label">Файл</label>
+    <span class="text-danger" style="font-size: 11px;" ng-if="!fileTypeIcon"> обязательный</span>
+    <div style="position: relative;">
+        <div ng-if="formUploadFile.$invalid" class="some-class"></div>
+        <div id="fileInput" class="fileinput fileinput-new input-group" data-provides="fileinput">
+            <div class="form-control" data-trigger="fileinput">
+                <!--<i class="fileinput-exists {{fileTypeIcon}}" style="font-size: 1.6em;"></i>-->
+                <span class="fileinput-filename textSizeInput"></span>
+            </div>
+            <span class="input-group-addon btn btn-default btn-file">
+                                    <span class="fileinput-new">Выберите файл</span>
+                                    <span class="fileinput-exists">Изменить</span>
+                                    <input file-model="myFile" name="fileInput" type="file" ng-model="tasksDetailObj.fileInput" file-name-input
+                                           accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
+                                </span>
+            <a href="" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput" ng-click="fileTypeIcon=null">Удалить</a>
+            <a href="" class="input-group-addon btn btn-primary fileinput-exists " data-dismiss="fileinput" ng-click="uploadFile()">Загрузить</a>
+        </div>
+    </div>
+</div>

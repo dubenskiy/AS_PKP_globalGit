@@ -1,0 +1,106 @@
+[
+  {
+    "field": "nCont",
+    "displayName": "Номер контейнера",
+    "width": "25",
+    "show": true
+  },
+  {
+    "field": "AbdPkPriz",
+    "displayName": "Признак АБД ПК",
+    "width": "35",
+    "show": true
+  },
+  {
+    "field": "codeAdmSob",
+    "displayName": "Код администрации-собственницы",
+    "width": "50",
+    "show": true
+  },
+  {
+    "field": "codeStation",
+    "displayName": "Код станции совершения операции",
+    "width": "45",
+    "show": true
+  },
+  {
+    "field": "date",
+    "displayName": "Дата, время",
+    "cellFilter": "dateTime:'dd-MM-yyyy HH:mm:ss'",
+    "width": "105",
+    "align": "left",
+    "show": true
+  },
+  {
+    "field": "trainIndex",
+    "displayName": "Индекс поезда",
+    "width": "105",
+    "show": true
+  },
+  {
+    "field": "ninv",
+    "displayName": "Номер вагона",
+    "width": "105",
+    "show": true
+  },
+  {
+    "field": "messageCode",
+    "displayName": "Код сообщения ",
+    "width": "105",
+    "show": true
+  },
+  {
+    "field": "operCode",
+    "displayName": "Код операции",
+    "width": "105",
+    "show": true
+  },
+  {
+    "field": "receptionPriz",
+    "displayName": "Признак приема/неприема",
+    "width": "105",
+    "show": true
+  },
+  {
+    "field": "deliveryRoadCode",
+    "displayName": "Код дороги сдачи",
+    "width": "105",
+    "show": true
+  },
+  {
+    "field": "receptionRoadCode",
+    "displayName": "Код дороги приема",
+    "width": "40",
+    "show": true
+  },
+  {
+    "field": "countryCodeDeparture",
+    "displayName": "Код государства отправления",
+    "width": "55",
+    "show": true
+  },
+  {
+    "field": "countryCodeDestination",
+    "displayName": "Код государства назначения",
+    "width": "55",
+    "show": true
+  },
+  {
+    "field": "stationCodeDeparture",
+    "displayName": "Код станции отправления",
+    "width": "105",
+    "show": true
+  },
+  {
+    "field": "stationCodeDestination",
+    "displayName": "Код станции назначения",
+    "width": "40",
+    "show": true
+  },
+  {
+    "field": "ppvNumber",
+    "displayName": "Номер ППВ",
+    "width": "105",
+    "show": true
+  }
+]

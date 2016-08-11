@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
+    <process id="myProcess" name="My process" isExecutable="true">
+        <startEvent id="startevent1" name="Start"></startEvent>
+        <callActivity id="prepare_step_1" name="Сверка ноября" calledElement="sub_proc_1"></callActivity>
+        <callActivity id="prepare_step_2" name="Сверка март" calledElement="sub_proc_1"></callActivity>
+        <callActivity id="prepare_step_3" name="Сверка июля " calledElement="sub_proc_1"></callActivity>
+        <callActivity id="prepare_step_4" name="Сверка августа" calledElement="sub_proc_1"></callActivity>
+        <callActivity id="step_r2" name="Раздел 2   -   1-й  день переписи" calledElement="sub_proc_2"></callActivity>
+        <endEvent id="endevent1" name="End"></endEvent>
+        <userTask id="usertask1" name="8.Получение Телеграммы ОАО «РЖД» о проведении переписи контейнерного парка с указанием даты переписи">
+            <extensionElements>
+                <activiti:formProperty id="dateCensusBegin" name="dateCensusBegin" type="Date" datePattern="dd-MM-yyyy" required="true"></activiti:formProperty>
+            </extensionElements>
+        </userTask>
+        <sequenceFlow id="flow7" sourceRef="startevent1" targetRef="parallelgateway1"></sequenceFlow>
+        <parallelGateway id="parallelgateway1" name="Exclusive Gateway"></parallelGateway>
+        <userTask id="usertask2" name="9.Получение графика сдачи предварительных и окончательных результатов переписи из ИВЦ ЖА"></userTask>
+        <sequenceFlow id="flow10" sourceRef="parallelgateway1" targetRef="usertask2"></sequenceFlow>
+        <intermediateCatchEvent id="timerintermediatecatchevent2" name="Выполняется в последний вторник марта(запуск 00:00)">
+            <timerEventDefinition></timerEventDefinition>
+        </intermediateCatchEvent>
+        <sequenceFlow id="flow12" sourceRef="prepare_step_1" targetRef="timerintermediatecatchevent2"></sequenceFlow>
+        <sequenceFlow id="flow13" sourceRef="timerintermediatecatchevent2" targetRef="prepare_step_2"></sequenceFlow>
+        <intermediateCatchEvent id="timerintermediatecatchevent3" name="Выполняется в последний вторник июля(запуск 00:00)">
+            <timerEventDefinition></timerEventDefinition>
+        </intermediateCatchEvent>
+        <sequenceFlow id="flow14" sourceRef="prepare_step_2" targetRef="timerintermediatecatchevent3"></sequenceFlow>
+        <sequenceFlow id="flow15" sourceRef="timerintermediatecatchevent3" targetRef="prepare_step_3"></sequenceFlow>
+        <intermediateCatchEvent id="timerintermediatecatchevent4" name="Выполняется в последний вторник августа (запуск 00:00)">
+            <timerEventDefinition></timerEventDefinition>
+        </intermediateCatchEvent>
+        <sequenceFlow id="flow16" sourceRef="prepare_step_3" targetRef="timerintermediatecatchevent4"></sequenceFlow>
+        <sequenceFlow id="flow17" sourceRef="timerintermediatecatchevent4" targetRef="prepare_step_4"></sequenceFlow>
+        <startEvent id="timerstartevent2" name="За сутки до начала переписи">
+            <documentation>За сутки до начала переписи (Расчитывается по формуле =  dateCensusBegin -  день)</documentation>
+            <timerEventDefinition></timerEventDefinition>
+        </startEvent>
+        <inclusiveGateway id="inclusivegateway1" name="Exclusive Gateway"></inclusiveGateway>
+        <sequenceFlow id="flow19" sourceRef="usertask1" targetRef="inclusivegateway1"></sequenceFlow>
+        <sequenceFlow id="flow21" sourceRef="inclusivegateway1" targetRef="timerstartevent2"></sequenceFlow>
+        <intermediateCatchEvent id="timerintermediatecatchevent1" name="Выполняется в последний вторник ноября (запуск 00:00)">
+            <timerEventDefinition></timerEventDefinition>
+        </intermediateCatchEvent>
+        <sequenceFlow id="flow11" sourceRef="timerintermediatecatchevent1" targetRef="prepare_step_1"></sequenceFlow>
+        <sequenceFlow id="flow23" sourceRef="parallelgateway1" targetRef="timerintermediatecatchevent1"></sequenceFlow>
+        <sequenceFlow id="flow24" sourceRef="servicetask1" targetRef="step_r2"></sequenceFlow>
+        <callActivity id="step_r3" name="Раздел 3   -   2-й день переписи " calledElement="sub_proc_3"></callActivity>
+        <sequenceFlow id="flow26" sourceRef="step_r2" targetRef="step_r3"></sequenceFlow>
+        <callActivity id="step_r4" name="Раздел 4   -   3-й день переписи" calledElement="sub_proc_4"></callActivity>
+        <callActivity id="step_r5" name="Раздел 5  -  Подготовка предварительных материалов переписи  (в соответствии с графиком)" calledElement="sub_proc_5"></callActivity>
+        <callActivity id="step_r6" name="Раздел 6  -  Подготовка окончательных материалов переписи  (в соответствии с графиком)" calledElement="sub_proc_6"></callActivity>
+        <sequenceFlow id="flow27" sourceRef="step_r3" targetRef="step_r4"></sequenceFlow>
+        <sequenceFlow id="flow28" sourceRef="step_r4" targetRef="step_r5"></sequenceFlow>
+        <sequenceFlow id="flow29" sourceRef="step_r5" targetRef="step_r6"></sequenceFlow>
+        <sequenceFlow id="flow30" sourceRef="step_r6" targetRef="servicetask2"></sequenceFlow>
+        <sequenceFlow id="flow31" sourceRef="servicetask2" targetRef="endevent1"></sequenceFlow>
+        <serviceTask id="servicetask1" name="10.Запуск загрузки с.3345 для таблицы переписи LKMC.AKT_PRP на период до сдачи окончательных результатов переписи"></serviceTask>
+        <serviceTask id="servicetask2" name="10.Снятие загрузки с.3345 для таблицы переписи LKMC.AKT_PRP"></serviceTask>
+        <sequenceFlow id="flow32" sourceRef="parallelgateway1" targetRef="usertask1"></sequenceFlow>
+        <sequenceFlow id="flow33" sourceRef="usertask2" targetRef="inclusivegateway1"></sequenceFlow>
+        <sequenceFlow id="flow34" sourceRef="timerstartevent2" targetRef="servicetask1"></sequenceFlow>
+        <sequenceFlow id="flow35" sourceRef="prepare_step_4" targetRef="inclusivegateway1"></sequenceFlow>
+    </process>
+    <bpmndi:BPMNDiagram id="BPMNDiagram_myProcess">
+        <bpmndi:BPMNPlane bpmnElement="myProcess" id="BPMNPlane_myProcess">
+            <bpmndi:BPMNShape bpmnElement="startevent1" id="BPMNShape_startevent1">
+                <omgdc:Bounds height="35.0" width="35.0" x="31.0" y="149.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="prepare_step_1" id="BPMNShape_prepare_step_1">
+                <omgdc:Bounds height="81.0" width="105.0" x="170.0" y="30.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="prepare_step_2" id="BPMNShape_prepare_step_2">
+                <omgdc:Bounds height="81.0" width="105.0" x="340.0" y="30.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="prepare_step_3" id="BPMNShape_prepare_step_3">
+                <omgdc:Bounds height="81.0" width="105.0" x="510.0" y="30.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="prepare_step_4" id="BPMNShape_prepare_step_4">
+                <omgdc:Bounds height="81.0" width="105.0" x="678.0" y="30.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="step_r2" id="BPMNShape_step_r2">
+                <omgdc:Bounds height="159.0" width="111.0" x="174.0" y="330.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
+                <omgdc:Bounds height="35.0" width="35.0" x="940.0" y="392.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="usertask1" id="BPMNShape_usertask1">
+                <omgdc:Bounds height="71.0" width="615.0" x="170.0" y="131.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="parallelgateway1" id="BPMNShape_parallelgateway1">
+                <omgdc:Bounds height="40.0" width="40.0" x="111.0" y="146.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="usertask2" id="BPMNShape_usertask2">
+                <omgdc:Bounds height="71.0" width="617.0" x="170.0" y="215.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="timerintermediatecatchevent2" id="BPMNShape_timerintermediatecatchevent2">
+                <omgdc:Bounds height="35.0" width="35.0" x="290.0" y="53.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="timerintermediatecatchevent3" id="BPMNShape_timerintermediatecatchevent3">
+                <omgdc:Bounds height="35.0" width="35.0" x="460.0" y="53.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="timerintermediatecatchevent4" id="BPMNShape_timerintermediatecatchevent4">
+                <omgdc:Bounds height="35.0" width="35.0" x="628.0" y="53.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="timerstartevent2" id="BPMNShape_timerstartevent2">
+                <omgdc:Bounds height="35.0" width="35.0" x="851.0" y="149.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="inclusivegateway1" id="BPMNShape_inclusivegateway1">
+                <omgdc:Bounds height="40.0" width="40.0" x="800.0" y="146.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="timerintermediatecatchevent1" id="BPMNShape_timerintermediatecatchevent1">
+                <omgdc:Bounds height="35.0" width="35.0" x="113.0" y="53.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="step_r3" id="BPMNShape_step_r3">
+                <omgdc:Bounds height="159.0" width="105.0" x="304.0" y="330.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="step_r4" id="BPMNShape_step_r4">
+                <omgdc:Bounds height="159.0" width="105.0" x="428.0" y="330.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="step_r5" id="BPMNShape_step_r5">
+                <omgdc:Bounds height="159.0" width="105.0" x="550.0" y="330.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="step_r6" id="BPMNShape_step_r6">
+                <omgdc:Bounds height="159.0" width="105.0" x="670.0" y="330.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="servicetask1" id="BPMNShape_servicetask1">
+                <omgdc:Bounds height="159.0" width="107.0" x="42.0" y="330.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="servicetask2" id="BPMNShape_servicetask2">
+                <omgdc:Bounds height="159.0" width="105.0" x="800.0" y="330.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge bpmnElement="flow7" id="BPMNEdge_flow7">
+                <omgdi:waypoint x="66.0" y="166.0"></omgdi:waypoint>
+                <omgdi:waypoint x="111.0" y="166.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow10" id="BPMNEdge_flow10">
+                <omgdi:waypoint x="131.0" y="186.0"></omgdi:waypoint>
+                <omgdi:waypoint x="131.0" y="250.0"></omgdi:waypoint>
+                <omgdi:waypoint x="170.0" y="250.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow12" id="BPMNEdge_flow12">
+                <omgdi:waypoint x="275.0" y="70.0"></omgdi:waypoint>
+                <omgdi:waypoint x="290.0" y="70.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow13" id="BPMNEdge_flow13">
+                <omgdi:waypoint x="325.0" y="70.0"></omgdi:waypoint>
+                <omgdi:waypoint x="340.0" y="70.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow14" id="BPMNEdge_flow14">
+                <omgdi:waypoint x="445.0" y="70.0"></omgdi:waypoint>
+                <omgdi:waypoint x="460.0" y="70.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow15" id="BPMNEdge_flow15">
+                <omgdi:waypoint x="495.0" y="70.0"></omgdi:waypoint>
+                <omgdi:waypoint x="510.0" y="70.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow16" id="BPMNEdge_flow16">
+                <omgdi:waypoint x="615.0" y="70.0"></omgdi:waypoint>
+                <omgdi:waypoint x="628.0" y="70.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow17" id="BPMNEdge_flow17">
+                <omgdi:waypoint x="663.0" y="70.0"></omgdi:waypoint>
+                <omgdi:waypoint x="678.0" y="70.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow19" id="BPMNEdge_flow19">
+                <omgdi:waypoint x="785.0" y="166.0"></omgdi:waypoint>
+                <omgdi:waypoint x="800.0" y="166.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow21" id="BPMNEdge_flow21">
+                <omgdi:waypoint x="840.0" y="166.0"></omgdi:waypoint>
+                <omgdi:waypoint x="851.0" y="166.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow11" id="BPMNEdge_flow11">
+                <omgdi:waypoint x="148.0" y="70.0"></omgdi:waypoint>
+                <omgdi:waypoint x="170.0" y="70.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow23" id="BPMNEdge_flow23">
+                <omgdi:waypoint x="131.0" y="146.0"></omgdi:waypoint>
+                <omgdi:waypoint x="131.0" y="88.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow24" id="BPMNEdge_flow24">
+                <omgdi:waypoint x="149.0" y="409.0"></omgdi:waypoint>
+                <omgdi:waypoint x="174.0" y="409.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow26" id="BPMNEdge_flow26">
+                <omgdi:waypoint x="285.0" y="409.0"></omgdi:waypoint>
+                <omgdi:waypoint x="304.0" y="409.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow27" id="BPMNEdge_flow27">
+                <omgdi:waypoint x="409.0" y="409.0"></omgdi:waypoint>
+                <omgdi:waypoint x="428.0" y="409.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow28" id="BPMNEdge_flow28">
+                <omgdi:waypoint x="533.0" y="409.0"></omgdi:waypoint>
+                <omgdi:waypoint x="550.0" y="409.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow29" id="BPMNEdge_flow29">
+                <omgdi:waypoint x="655.0" y="409.0"></omgdi:waypoint>
+                <omgdi:waypoint x="670.0" y="409.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow30" id="BPMNEdge_flow30">
+                <omgdi:waypoint x="775.0" y="409.0"></omgdi:waypoint>
+                <omgdi:waypoint x="800.0" y="409.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow31" id="BPMNEdge_flow31">
+                <omgdi:waypoint x="905.0" y="409.0"></omgdi:waypoint>
+                <omgdi:waypoint x="940.0" y="409.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow32" id="BPMNEdge_flow32">
+                <omgdi:waypoint x="151.0" y="166.0"></omgdi:waypoint>
+                <omgdi:waypoint x="170.0" y="166.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow33" id="BPMNEdge_flow33">
+                <omgdi:waypoint x="787.0" y="250.0"></omgdi:waypoint>
+                <omgdi:waypoint x="820.0" y="250.0"></omgdi:waypoint>
+                <omgdi:waypoint x="820.0" y="186.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow34" id="BPMNEdge_flow34">
+                <omgdi:waypoint x="868.0" y="184.0"></omgdi:waypoint>
+                <omgdi:waypoint x="868.0" y="303.0"></omgdi:waypoint>
+                <omgdi:waypoint x="95.0" y="303.0"></omgdi:waypoint>
+                <omgdi:waypoint x="95.0" y="330.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow35" id="BPMNEdge_flow35">
+                <omgdi:waypoint x="783.0" y="70.0"></omgdi:waypoint>
+                <omgdi:waypoint x="820.0" y="70.0"></omgdi:waypoint>
+                <omgdi:waypoint x="820.0" y="146.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow51" id="BPMNEdge_flow51">
+                <omgdi:waypoint x="351.0" y="575.0"></omgdi:waypoint>
+                <omgdi:waypoint x="420.0" y="575.0"></omgdi:waypoint>
+                <omgdi:waypoint x="420.0" y="605.0"></omgdi:waypoint>
+                <omgdi:waypoint x="200.0" y="605.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+        </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</definitions>
+
+

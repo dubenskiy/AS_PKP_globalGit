@@ -1,0 +1,61 @@
+<div class="pad-btm form-inline" style="padding-bottom: 0;">
+    <div ng-hide="tasksDetailObj.isAddOrEditDestination" class="row">
+        <div class="col-lg-6 table-toolbar-left">
+            <div class="form-group">
+                <button class="btn btn-primary" ng-click="tasksDetailObj.distribution(tasksDetailObj.listDistribution)"><i class="fa fa-envelope-o fa-fw"></i>
+                    Выполнить рассылку
+                </button>
+            </div>
+        </div>
+        <div class="col-lg-6 table-toolbar-right">
+            <div class="form-group">
+                <button class="btn btn-default" type="button" name="refresh" title="Добавить"
+                        ng-click="tasksDetailObj.isAddOrEditDestination=!tasksDetailObj.isAddOrEditDestination; tasksDetailObj.setClickedRow(null)"><i
+                        class="fa fa-plus"></i></button>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-default" type="button" name="refresh" title="Изменить" ng-disabled="!tasksDetailObj.disabledToolbarButtons"
+                        ng-click="tasksDetailObj.isAddOrEditDestination=!tasksDetailObj.isAddOrEditDestination; tasksDetailObj.destination = tasksDetailObj.selectedRow">
+                    <i class="fa fa-pencil fa-fw"></i>
+                </button>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-default" type="button" name="refresh" title="Удалить" ng-disabled="!tasksDetailObj.disabledToolbarButtons"
+                        ng-click="tasksDetailObj.removeRow(tasksDetailObj.listDistribution)"><i class="fa fa-trash-o fa-fw"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div ng-show="tasksDetailObj.isAddOrEditDestination" class="row">
+        <div class="col-lg-offset-2 col-lg-10 table-toolbar-right">
+            <div class="form-group" style="width: 70%;">
+                <input type="text" class="form-control" ng-model="tasksDetailObj.destination" style="width: 100%" placeholder="Новое значение">
+            </div>
+            <button type="button" ng-if="!tasksDetailObj.disabledToolbarButtons" class="btn btn-primary editable-submit" ng-disabled="!tasksDetailObj.destination"
+                    ng-click="tasksDetailObj.saveNewDestination(tasksDetailObj.listDistribution)"><i class="fa fa-fw fa-check"></i></button>
+            <button type="button" ng-if="tasksDetailObj.disabledToolbarButtons" class="btn btn-primary editable-submit" ng-disabled="!tasksDetailObj.destination"
+                    ng-click="tasksDetailObj.saveEditDestination(tasksDetailObj.listDistribution)"><i class="fa fa-fw fa-check"></i></button>
+            <button type="button" class="btn btn-default editable-cancel" ng-click="tasksDetailObj.isAddOrEditDestination=!tasksDetailObj.isAddOrEditDestination"><i
+                    class="fa fa-fw fa-times"></i></button>
+        </div>
+    </div>
+</div>
+<div class="table-responsive">
+    <table class="table table-bordered table-hover noselect" style="cursor: default !important;">
+        <thead>
+        <tr>
+            <th class="text-center">#</th>
+            <th class="text-center">ФИО</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="row in tasksDetailObj.listDistribution track by $index"
+            ng-click="tasksDetailObj.setClickedRow($index,row)"
+            ng-class="{'selected': $index == tasksDetailObj.selectedIndex}"
+            class="text-center">
+            <td ng-bind="$index+1"></td>
+            <td ng-bind="row"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
