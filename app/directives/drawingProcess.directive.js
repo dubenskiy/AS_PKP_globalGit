@@ -17,15 +17,24 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                  */
                 var templateFunc = function (val, type) {
                     // $log.info(val);
-                    var mainTpl = "<div id='" + val.id + "' " +
+                    var mainTpl = "<div " +
                         "class=\"" + val.class + "\" " +
                         "style='width: " + val.width + "px; height: " + val.height + "px; left: " + val.left + "px; top: " + val.top + "px;' " +
-                        "ng-click='testAlert(\"" + val.class + "\")'>" +
+                        "ng-click='testAlert(\"" + val.id + "\")'>" +
                         "</div>";
 
-
-                    var cornerTpl = "<div class='corner-div' style='width: " + val.cornerWidth + "px; height: " + val.cornerHeight + "px; left: " + val.cornerLeft + "px; top: " + val.cornerTop + "px; border-radius: " + val.cornerBorderRadius + "; " +
-                        "border-left: " + val.cornerBorderLeft + "; border-right: " + val.cornerBorderRight + "; border-top: " + val.cornerBorderTop + "; border-bottom: " + val.cornerBorderBottom + ";'></div>";
+                    var cornerTpl = "<div class=\"" + val.cornerClass + "\" style='" +
+                        "width: " + val.cornerWidth + "px; " +
+                        "height: " + val.cornerHeight + "px; " +
+                        "left: " + val.cornerLeft + "px; " +
+                        "top: " + val.cornerTop + "px; " +
+                        "border-radius: " + val.cornerBorderRadius + "; " +
+                        // "border-left: " + val.cornerBorderLeft + "; " +
+                        // "border-right: " + val.cornerBorderRight + "; " +
+                        // "border-top: " + val.cornerBorderTop + "; " +
+                        // "border-bottom: " + val.cornerBorderBottom + ";" +
+                        "' ng-click='testAlert(\"" + val.id + ", " + val.cornerBorderLeft + ", " + val.cornerBorderRight + ", " + val.cornerBorderTop + ", " + val.cornerBorderBottom + "\")'" +
+                        "></div>";
 
                     return type == 'cornerDiv' ? cornerTpl : mainTpl
                 };
@@ -45,7 +54,6 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                  */
                 var drawingEdge = function (x1, x2, y1, y2, otherInfo, lineThickness, direction, x1Index, isCornerDiv, cornerSize) {
 
-
                     function indentFunc() {
                         if (direction === 'forward') {
                             // вперед
@@ -61,15 +69,15 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                                 edge.cornerBorderRadius = '0 0 0 ' + cornerSize + 'px';
                                 edge.cornerLeft = edge.left;
                                 edge.cornerTop = edge.top + edge.height;
-                                edge.cornerBorderLeft = lineThickness + 'px solid #77797B';
-                                edge.cornerBorderBottom = lineThickness + 'px solid #77797B';
+                                edge.cornerBorderLeft = lineThickness + 'px solid black';
+                                edge.cornerBorderBottom = lineThickness + 'px solid black';
                             } else if (y1 == y2 && y1 < y3 && x1 < x3) {
                                 edge.width -= (cornerSize - lineThickness);
                                 edge.cornerBorderRadius = '0 ' + cornerSize + 'px 0 0';
                                 edge.cornerLeft = edge.left + edge.width;
                                 edge.cornerTop = edge.top;
-                                edge.cornerBorderRight = lineThickness + 'px solid #77797B';
-                                edge.cornerBorderTop = lineThickness + 'px solid #77797B';
+                                edge.cornerBorderRight = lineThickness + 'px solid black';
+                                edge.cornerBorderTop = lineThickness + 'px solid black';
                             } else if (y1 == y2 && y1 > y3 && x1 < x3) {
                                 edge.width -= (cornerSize - lineThickness);
                                 if (otherInfo.waypoint[x1Index - 1]) {
@@ -79,16 +87,16 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                                 edge.cornerBorderRadius = '0 0 ' + cornerSize + 'px 0';
                                 edge.cornerLeft = edge.left + edge.width;
                                 edge.cornerTop = edge.top - cornerSize + lineThickness;
-                                edge.cornerBorderRight = lineThickness + 'px solid #77797B';
-                                edge.cornerBorderBottom = lineThickness + 'px solid #77797B';
+                                edge.cornerBorderRight = lineThickness + 'px solid black';
+                                edge.cornerBorderBottom = lineThickness + 'px solid black';
                             } else if (y1 == y2 && y1 > y3 && x1 > x3) {
                                 edge.width -= cornerSize;
                                 edge.left += cornerSize;
                                 edge.cornerBorderRadius = '0 0 0 ' + cornerSize + 'px';
                                 edge.cornerLeft = edge.left - cornerSize;
                                 edge.cornerTop = edge.top - cornerSize + lineThickness;
-                                edge.cornerBorderLeft = lineThickness + 'px solid #77797B';
-                                edge.cornerBorderBottom = lineThickness + 'px solid #77797B';
+                                edge.cornerBorderLeft = lineThickness + 'px solid black';
+                                edge.cornerBorderBottom = lineThickness + 'px solid black';
                             } else if (y1 == y2 && y1 < y3 && x1 > x3) {
                                 edge.width -= cornerSize;
                                 edge.left += cornerSize;
@@ -98,31 +106,31 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                                 edge.cornerBorderRadius = cornerSize + 'px 0 0 0';
                                 edge.cornerLeft = edge.left - cornerSize;
                                 edge.cornerTop = edge.top;
-                                edge.cornerBorderLeft = lineThickness + 'px solid #77797B';
-                                edge.cornerBorderTop = lineThickness + 'px solid #77797B';
+                                edge.cornerBorderLeft = lineThickness + 'px solid black';
+                                edge.cornerBorderTop = lineThickness + 'px solid black';
                             } else if (x1 == x2 && x1 > x3 && y1 < y3) {
                                 edge.height -= (cornerSize - lineThickness);
                                 edge.cornerBorderRadius = '0 0 ' + cornerSize + 'px 0';
                                 edge.cornerLeft = edge.left - cornerSize + lineThickness;
                                 edge.cornerTop = edge.top + edge.height;
-                                edge.cornerBorderRight = lineThickness + 'px solid #77797B';
-                                edge.cornerBorderBottom = lineThickness + 'px solid #77797B';
+                                edge.cornerBorderRight = lineThickness + 'px solid black';
+                                edge.cornerBorderBottom = lineThickness + 'px solid black';
                             } else if (x1 == x2 && x1 > x3 && y1 > y3) {
                                 edge.height -= cornerSize;
                                 edge.top += cornerSize;
                                 edge.cornerBorderRadius = '0 ' + cornerSize + 'px 0 0';
                                 edge.cornerLeft = edge.left - cornerSize + lineThickness;
                                 edge.cornerTop = edge.top - cornerSize;
-                                edge.cornerBorderRight = lineThickness + 'px solid #77797B';
-                                edge.cornerBorderTop = lineThickness + 'px solid #77797B';
+                                edge.cornerBorderRight = lineThickness + 'px solid black';
+                                edge.cornerBorderTop = lineThickness + 'px solid black';
                             } else if (x1 == x2 && x1 < x3 && y1 > y3) {
                                 edge.height -= cornerSize;
                                 edge.top += cornerSize;
                                 edge.cornerBorderRadius = cornerSize + 'px 0 0 0';
                                 edge.cornerLeft = edge.left;
                                 edge.cornerTop = edge.top - cornerSize;
-                                edge.cornerBorderLeft = lineThickness + 'px solid #77797B';
-                                edge.cornerBorderTop = lineThickness + 'px solid #77797B';
+                                edge.cornerBorderLeft = lineThickness + 'px solid black';
+                                edge.cornerBorderTop = lineThickness + 'px solid black';
                             }
 
                         } else if (direction === 'backward') {
@@ -146,8 +154,8 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                         return edge
                     }
 
-
                     var edge = {
+                        id: otherInfo._id,
                         left: Math.min(x1, x2) + 15,
                         top: Math.min(y1, y2) + 83,
                         height: y1 == y2 ? lineThickness : Math.max(y1, y2) - Math.min(y1, y2),
@@ -156,7 +164,8 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                         class: otherInfo._id + " process-edge-black",
                         lineThickness: lineThickness,
                         cornerWidth: cornerSize,
-                        cornerHeight: cornerSize
+                        cornerHeight: cornerSize,
+                        cornerClass: otherInfo._id + " corner"
                     };
 
                     if (direction) indentFunc();
@@ -177,6 +186,7 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                     // Блоки
                     angular.forEach(coordsData.BPMNShape, function (val, index) {
                         shape = {
+                            id: val._id,
                             width: +val.Bounds._width,
                             height: +val.Bounds._height,
                             left: +val.Bounds._x + 15,
@@ -220,9 +230,32 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                 },
                 controller: function ($scope) {
 
-                    $scope.testAlert = function (val) {
-                        alert(val);
-                        console.log(val);
+                    $scope.testAlert = function (value) {
+
+                        // angular.element(document.hasClass(val));
+
+                        var arr = value.split(', ');
+
+                        $log.warn(arr);
+
+                        // $log.info(angular.element(document.querySelectorAll('.' + arr[0])));
+
+                        angular.forEach(angular.element(document.querySelectorAll('.' + arr[0])), function (val, index) {
+                            $log.warn(val);
+                            if (~val.className.indexOf("corner")) {
+                                // совпадение есть!
+                                $log.info(val.className);
+                                // val.style.backgroundColor = 'red';
+                                val.style.borderLeft = arr[1];
+                                val.style.borderRight = arr[2];
+                                val.style.borderTop = arr[3];
+                                val.style.borderBottom = arr[4];
+                                // angular.element(document.querySelector(val.className).css("background-color", "red"));
+                            } else if(~val.className.indexOf("process-edge-black")) {
+                                val.style.backgroundColor = 'black';
+                            }
+                        })
+
                     };
 
                 },
@@ -232,3 +265,7 @@ angular.module('asPkpApp.drawingProcess.directive', [])
     );
 
 
+// "border-left: " + val.cornerBorderLeft + "; " +
+// // "border-right: " + val.cornerBorderRight + "; " +
+// // "border-top: " + val.cornerBorderTop + "; " +
+// // "border-bottom: " + val.cornerBorderBottom + ";" +

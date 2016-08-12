@@ -185,14 +185,14 @@ option {
     -moz-opacity: 0.5;
     opacity: 0.5;
     cursor: pointer;
-    background-color: #2fe139;
+    /*background-color: #2fe139;*/
     -moz-border-radius: 12px;
     -webkit-border-radius: 12px;
     border-radius: 12px;
 }
 
 .process-shape-user-task:hover{
-    border: 5px solid green;
+    border: 3px solid #bbbb00;
 }
 
 .test{
@@ -210,15 +210,15 @@ option {
     border: 5px solid green;
 }
 
-.corner{
-    border-right: 4px solid #808080;
-    width: 15px;
-    border-bottom: 4px solid #808080;
-    height: 15px;
-    left: 872px;
-    top: 375px;
-    border-radius: 0 0 15px 0;
-}
+/*.corner{*/
+    /*border-right: 4px solid #808080;*/
+    /*width: 15px;*/
+    /*border-bottom: 4px solid #808080;*/
+    /*height: 15px;*/
+    /*left: 872px;*/
+    /*top: 375px;*/
+    /*border-radius: 0 0 15px 0;*/
+/*}*/
 
 .process-shape-step {
     position: absolute;
@@ -317,13 +317,18 @@ option {
     -moz-opacity: 0.5;
     opacity: 0.5;
     cursor: pointer;
-    background-color: black;
+    /*background-color: black;*/
 }
 
-.corner-div {
+/*.process-edge-black:hover{*/
+    /*background-color: black;*/
+/*}*/
+
+.corner {
     position: absolute;
     top: 0;
     left: 0;
+    cursor: pointer;
     /*z-index: 100;*/
     /*background-color: red;*/
     filter: alpha(opacity=50);
