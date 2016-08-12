@@ -24,7 +24,8 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                         "</div>";
 
 
-                    var cornerTpl = "<div class='corner-div' style='width: " + val.sizeConst + "px; height: " + val.sizeConst + "px; left: " + val.cornerLeft + "px; top: " + val.cornerTop + "px; border-radius: " + val.cornerBorderRadius + "'></div>";
+                    var cornerTpl = "<div class='corner-div' style='width: " + val.cornerWidth + "px; height: " + val.cornerHeight + "px; left: " + val.cornerLeft + "px; top: " + val.cornerTop + "px; border-radius: " + val.cornerBorderRadius + "; " +
+                        "border-left: " + val.cornerBorderLeft + "; border-right: " + val.cornerBorderRight + "; border-top: " + val.cornerBorderTop + "; border-bottom: " + val.cornerBorderBottom + ";'></div>";
 
                     // if (val.cornerTop==248) $log.warn(cornerTpl);
 
@@ -50,17 +51,17 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                     // $log.info(val);
 
                     if (x1 == x2 && x1 < x3 && y1 < y3) {
-                        direction = 'backward';
+                        direction = 'forward';
                     } else if (y1 == y2 && y1 < y3 && x1 < x3) {
-                        direction = 'backward';
+                        direction = 'forward';
                     } else if (y1 == y2 && y1 > y3 && x1 < x3) {
-                        direction = 'backward';
+                        direction = 'forward';
                     } else if (y1 == y2 && y1 > y3 && x1 > x3) {
                         direction = 'forward';
                     } else if (y1 == y2 && y1 < y3 && x1 > x3) {
-                        direction = 'forward';
+                        direction = 'forward';                   //********
                     } else if (x1 == x2 && x1 > x3 && y1 < y3) {
-                        direction = 'backward';
+                        direction = 'forward';
                     } else if (x1 == x2 && x1 > x3 && y1 > y3) {
                         direction = 'forward';
                     } else if (x1 == x2 && x1 < x3 && y1 > y3) {
@@ -77,12 +78,14 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                  * @param y1
                  * @param y2
                  * @param otherInfo
-                 * @param sizeConst
+                 * @param lineThickness
                  * @param direction
                  * @param x1Index
                  * @param isCornerDiv
+                 * @param cornerSize
                  */
-                var drawingEdge = function (x1, x2, y1, y2, otherInfo, sizeConst, direction, x1Index, isCornerDiv) {
+                var drawingEdge = function (x1, x2, y1, y2, otherInfo, lineThickness, direction, x1Index, isCornerDiv, cornerSize) {
+
 
                     function indentFunc() {
                         if (direction === 'forward') {
@@ -91,47 +94,76 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                                 y3 = otherInfo.waypoint[x1Index + 2]._y;
 
                             if (x1 == x2 && x1 < x3 && y1 < y3) {
-                                edge.cornerBorderRadius = '0 0 0 ' + sizeConst + 'px';
-                                edge.cornerLeft = edge.left + edge.width - sizeConst;
+                                edge.height -= (cornerSize - lineThickness);
+                                if (otherInfo.waypoint[x1Index - 1]) {
+                                    edge.top += cornerSize;
+                                    edge.height -= (cornerSize );
+                                }
+                                edge.cornerBorderRadius = '0 0 0 ' + cornerSize + 'px';
+                                edge.cornerLeft = edge.left;
                                 edge.cornerTop = edge.top + edge.height;
+                                edge.cornerBorderLeft = lineThickness + 'px solid #77797B';
+                                edge.cornerBorderBottom = lineThickness + 'px solid #77797B';
                             } else if (y1 == y2 && y1 < y3 && x1 < x3) {
-                                edge.cornerBorderRadius = '0 ' + sizeConst + 'px 0 0';
+                                edge.width -= (cornerSize - lineThickness);
+                                edge.cornerBorderRadius = '0 ' + cornerSize + 'px 0 0';
                                 edge.cornerLeft = edge.left + edge.width;
-                                edge.cornerTop = edge.top + edge.height - sizeConst;
+                                edge.cornerTop = edge.top;
+                                edge.cornerBorderRight = lineThickness + 'px solid #77797B';
+                                edge.cornerBorderTop = lineThickness + 'px solid #77797B';
                             } else if (y1 == y2 && y1 > y3 && x1 < x3) {
-                                edge.cornerBorderRadius = '0 0 ' + sizeConst + 'px 0';
+                                edge.width -= (cornerSize - lineThickness);
+                                if (otherInfo.waypoint[x1Index - 1]) {
+                                    edge.left += cornerSize;
+                                    edge.width -= (cornerSize );
+                                }
+                                edge.cornerBorderRadius = '0 0 ' + cornerSize + 'px 0';
                                 edge.cornerLeft = edge.left + edge.width;
-                                edge.cornerTop = edge.top + edge.height - sizeConst;
+                                edge.cornerTop = edge.top - cornerSize + lineThickness;
+                                edge.cornerBorderRight = lineThickness + 'px solid #77797B';
+                                edge.cornerBorderBottom = lineThickness + 'px solid #77797B';
                             } else if (y1 == y2 && y1 > y3 && x1 > x3) {
-                                edge.width -= sizeConst;
-                                edge.left += sizeConst;
-                                edge.cornerBorderRadius = '0 0 0 ' + sizeConst + 'px';
-                                edge.cornerLeft = edge.left - sizeConst;
-                                edge.cornerTop = edge.top;
+                                edge.width -= cornerSize;
+                                edge.left += cornerSize;
+                                edge.cornerBorderRadius = '0 0 0 ' + cornerSize + 'px';
+                                edge.cornerLeft = edge.left - cornerSize;
+                                edge.cornerTop = edge.top - cornerSize + lineThickness;
+                                edge.cornerBorderLeft = lineThickness + 'px solid #77797B';
+                                edge.cornerBorderBottom = lineThickness + 'px solid #77797B';
                             } else if (y1 == y2 && y1 < y3 && x1 > x3) {
-                                edge.width -= sizeConst;
-                                edge.left += sizeConst;
-                                edge.cornerBorderRadius = sizeConst + 'px 0 0 0';
-                                edge.cornerLeft = edge.left - sizeConst;
+                                edge.width -= cornerSize;
+                                edge.left += cornerSize;
+                                if (otherInfo.waypoint[x1Index - 1]) {
+                                    edge.width -= (cornerSize - lineThickness);
+                                }
+                                edge.cornerBorderRadius = cornerSize + 'px 0 0 0';
+                                edge.cornerLeft = edge.left - cornerSize;
                                 edge.cornerTop = edge.top;
+                                edge.cornerBorderLeft = lineThickness + 'px solid #77797B';
+                                edge.cornerBorderTop = lineThickness + 'px solid #77797B';
                             } else if (x1 == x2 && x1 > x3 && y1 < y3) {
-                                edge.cornerBorderRadius = '0 0 ' + sizeConst + 'px 0';
-                                edge.cornerLeft = edge.left + edge.width - sizeConst;
+                                edge.height -= (cornerSize - lineThickness);
+                                edge.cornerBorderRadius = '0 0 ' + cornerSize + 'px 0';
+                                edge.cornerLeft = edge.left - cornerSize + lineThickness;
                                 edge.cornerTop = edge.top + edge.height;
+                                edge.cornerBorderRight = lineThickness + 'px solid #77797B';
+                                edge.cornerBorderBottom = lineThickness + 'px solid #77797B';
                             } else if (x1 == x2 && x1 > x3 && y1 > y3) {
-                                edge.height -= sizeConst;
-                                edge.top += sizeConst;
-                                edge.cornerBorderRadius = '0 ' + sizeConst + 'px 0 0';
-                                edge.cornerLeft = edge.left + edge.width - sizeConst;
-                                edge.cornerTop = edge.top - sizeConst;
+                                edge.height -= cornerSize;
+                                edge.top += cornerSize;
+                                edge.cornerBorderRadius = '0 ' + cornerSize + 'px 0 0';
+                                edge.cornerLeft = edge.left - cornerSize + lineThickness;
+                                edge.cornerTop = edge.top - cornerSize;
+                                edge.cornerBorderRight = lineThickness + 'px solid #77797B';
+                                edge.cornerBorderTop = lineThickness + 'px solid #77797B';
                             } else if (x1 == x2 && x1 < x3 && y1 > y3) {
-                                // $log.info(x1 + ' ' + x2 + ' ' + x3);
-                                edge.height -= sizeConst;
-                                edge.top += sizeConst;
-                                edge.cornerBorderRadius = sizeConst + 'px 0 0 0';
-                                edge.cornerLeft = edge.left + edge.width - sizeConst;
-                                edge.cornerTop = edge.top - sizeConst;
-                                // if (x1==132){$log.info(edge)}
+                                edge.height -= cornerSize;
+                                edge.top += cornerSize;
+                                edge.cornerBorderRadius = cornerSize + 'px 0 0 0';
+                                edge.cornerLeft = edge.left;
+                                edge.cornerTop = edge.top - cornerSize;
+                                edge.cornerBorderLeft = lineThickness + 'px solid #77797B';
+                                edge.cornerBorderTop = lineThickness + 'px solid #77797B';
                             }
 
                         } else if (direction === 'backward') {
@@ -139,39 +171,23 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                             var x0 = otherInfo.waypoint[x1Index - 1]._x,
                                 y0 = otherInfo.waypoint[x1Index - 1]._y;
 
-                            if (x0 == x1 && x0 < x2 && y0 < y2) {
-                                edge.width -= sizeConst;
-                                edge.left += sizeConst;
-                                edge.cornerBorderRadius = '0 0 0 ' + sizeConst + 'px';
-                                edge.cornerLeft = edge.left - sizeConst;
-                                edge.cornerTop = edge.top;
+                            if ((x0 == x1 && x0 < x2 && y0 < y2) || (x0 == x1 && x0 < x2 && y0 > y2)) {
+                                edge.width -= cornerSize;
+                                edge.left += cornerSize;
                             } else if (y0 == y1 && y0 < y2 && x0 < x2) {
-                                edge.height -= sizeConst;
-                                edge.top += sizeConst;
-                                edge.cornerBorderRadius = '0 ' + sizeConst + 'px 0 0';
-                                edge.cornerLeft = edge.left;
-                                edge.cornerTop = edge.top - sizeConst;
+                                edge.height -= cornerSize;
+                                edge.top += cornerSize;
                             } else if (y0 == y1 && y0 > y2 && x0 < x2) {
-                                edge.cornerBorderRadius = '0 0 ' + sizeConst + 'px 0';
-                                edge.cornerLeft = edge.left;
-                                edge.cornerTop = edge.top + edge.height;
+                                edge.height -= (cornerSize - lineThickness);
                             } else if (y0 == y1 && y0 > y2 && x0 > x2) {
-                                // не факт что верно! нужно проверить!
-                                edge.cornerBorderRadius = '0 0 0 ' + sizeConst + 'px';
-                                edge.cornerLeft = edge.left;
-                                edge.cornerTop = edge.top + edge.height;
+                                edge.height -= (cornerSize - lineThickness);
                             } else if (y0 == y1 && y0 < y2 && x0 > x2) {
-                                edge.height -= sizeConst;
-                                edge.top += sizeConst;
+                                edge.height -= cornerSize;
+                                edge.top += cornerSize;
                             } else if (x0 == x1 && x0 > x2 && y0 < y2) {
-                                edge.cornerBorderRadius = '0 0 ' + sizeConst + 'px 0';
-                                edge.cornerLeft = edge.left + edge.width;
-                                edge.cornerTop = edge.top + edge.height - sizeConst;
+                                edge.width -= (cornerSize - lineThickness);
                             } else if (x0 == x1 && x0 > x2 && y0 > y2) {
-                                // edge.width -= sizeConst;
-                            } else if (x0 == x1 && x0 < x2 && y0 > y2) {
-                                edge.width -= sizeConst;
-                                edge.left += sizeConst;
+                                edge.width -= (cornerSize - lineThickness);
                             }
                         }
 
@@ -182,11 +198,13 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                     var edge = {
                         left: Math.min(x1, x2) + 15,
                         top: Math.min(y1, y2) + 83,
-                        height: y1 == y2 ? sizeConst : Math.max(y1, y2) - Math.min(y1, y2),
-                        width: x1 == x2 ? sizeConst : Math.max(x1, x2) - Math.min(x1, x2),
+                        height: y1 == y2 ? lineThickness : Math.max(y1, y2) - Math.min(y1, y2),
+                        width: x1 == x2 ? lineThickness : Math.max(x1, x2) - Math.min(x1, x2),
                         bpmnElement: otherInfo._bpmnElement,
                         class: otherInfo._id + " process-edge-black",
-                        sizeConst: sizeConst
+                        lineThickness: lineThickness,
+                        cornerWidth: cornerSize,
+                        cornerHeight: cornerSize
                     };
 
                     if (direction) indentFunc();
@@ -224,18 +242,18 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                         if (val.waypoint.length == 2) {
                             drawingEdge(+val.waypoint[0]._x, +val.waypoint[1]._x, +val.waypoint[0]._y, +val.waypoint[1]._y, val, 4);
                         } else if (val.waypoint.length == 3) {
-                            drawingEdge(+val.waypoint[0]._x, +val.waypoint[1]._x, +val.waypoint[0]._y, +val.waypoint[1]._y, val, 4, 'forward', 0, true);
-                            drawingEdge(+val.waypoint[1]._x, +val.waypoint[2]._x, +val.waypoint[1]._y, +val.waypoint[2]._y, val, 4, 'backward', 1, false);
+                            drawingEdge(+val.waypoint[0]._x, +val.waypoint[1]._x, +val.waypoint[0]._y, +val.waypoint[1]._y, val, 4, 'forward', 0, true, 15);
+                            drawingEdge(+val.waypoint[1]._x, +val.waypoint[2]._x, +val.waypoint[1]._y, +val.waypoint[2]._y, val, 4, 'backward', 1, false, 15);
                         }
                         else if (val.waypoint.length == 4) {
-                            drawingEdge(+val.waypoint[0]._x, +val.waypoint[1]._x, +val.waypoint[0]._y, +val.waypoint[1]._y, val, 4, 'forward', 0, true);
-                            drawingEdge(+val.waypoint[1]._x, +val.waypoint[2]._x, +val.waypoint[1]._y, +val.waypoint[2]._y, val, 4, directionFunc(val, 1), 1, true);
-                            drawingEdge(+val.waypoint[2]._x, +val.waypoint[3]._x, +val.waypoint[2]._y, +val.waypoint[3]._y, val, 4, 'backward', 2, true);
+                            drawingEdge(+val.waypoint[0]._x, +val.waypoint[1]._x, +val.waypoint[0]._y, +val.waypoint[1]._y, val, 4, 'forward', 0, true, 15);
+                            drawingEdge(+val.waypoint[1]._x, +val.waypoint[2]._x, +val.waypoint[1]._y, +val.waypoint[2]._y, val, 4, 'forward', 1, true, 15);
+                            drawingEdge(+val.waypoint[2]._x, +val.waypoint[3]._x, +val.waypoint[2]._y, +val.waypoint[3]._y, val, 4, 'backward', 2, false, 15);
                         } else if (val.waypoint.length == 5) {
-                            drawingEdge(+val.waypoint[0]._x, +val.waypoint[1]._x, +val.waypoint[0]._y, +val.waypoint[1]._y, val, 4, 'forward', 0, true);
-                            drawingEdge(+val.waypoint[1]._x, +val.waypoint[2]._x, +val.waypoint[1]._y, +val.waypoint[2]._y, val, 4, directionFunc(val, 1), 1, true);
-                            drawingEdge(+val.waypoint[2]._x, +val.waypoint[3]._x, +val.waypoint[2]._y, +val.waypoint[3]._y, val, 4, directionFunc(val, 2), 2, true);
-                            drawingEdge(+val.waypoint[3]._x, +val.waypoint[4]._x, +val.waypoint[3]._y, +val.waypoint[4]._y, val, 4, 'backward', 3, true);
+                            drawingEdge(+val.waypoint[0]._x, +val.waypoint[1]._x, +val.waypoint[0]._y, +val.waypoint[1]._y, val, 4, 'forward', 0, true, 15);
+                            drawingEdge(+val.waypoint[1]._x, +val.waypoint[2]._x, +val.waypoint[1]._y, +val.waypoint[2]._y, val, 4, 'forward', 1, true, 15);
+                            drawingEdge(+val.waypoint[2]._x, +val.waypoint[3]._x, +val.waypoint[2]._y, +val.waypoint[3]._y, val, 4, 'forward', 2, true, 15);
+                            drawingEdge(+val.waypoint[3]._x, +val.waypoint[4]._x, +val.waypoint[3]._y, +val.waypoint[4]._y, val, 4, 'backward', 3, true, 15);
                         }
                     })
                 }, 0);

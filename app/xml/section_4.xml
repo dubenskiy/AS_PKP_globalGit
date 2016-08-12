@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://activiti.org/test">
+    <process id="sub_proc_4" name="Раздел 4   -   3-й день переписи" isExecutable="true">
+        <intermediateCatchEvent id="timerintermediatecatchevent2" name="TimerCatchEvent">
+            <timerEventDefinition></timerEventDefinition>
+        </intermediateCatchEvent>
+        <sequenceFlow id="flow16" sourceRef="timerintermediatecatchevent2" targetRef="servicetask5"></sequenceFlow>
+        <sequenceFlow id="flow2" sourceRef="servicetask5" targetRef="inclusivegateway1"></sequenceFlow>
+        <parallelGateway id="parallelgateway1" name="Exclusive Gateway"></parallelGateway>
+        <userTask id="usertask1" name="5.Рассылка их в адрес ИВЦ дорог РФ файлов расхождений"></userTask>
+        <sequenceFlow id="flow20" sourceRef="usertask1" targetRef="endevent1"></sequenceFlow>
+        <serviceTask id="servicetask3" name="4.Выполнение сверки КМС ЕМПП и КММП ИБМУ на 08:00 дня переписи  по контейнерам инвентарного парка "></serviceTask>
+        <sequenceFlow id="flow5" sourceRef="servicetask3" targetRef="servicetask4"></sequenceFlow>
+        <startEvent id="startevent1" name="Start"></startEvent>
+        <sequenceFlow id="flow7" sourceRef="startevent1" targetRef="parallelgateway1"></sequenceFlow>
+        <inclusiveGateway id="inclusivegateway1" name="Exclusive Gateway"></inclusiveGateway>
+        <serviceTask id="servicetask4" name="5.Формирование файлов расхождений"></serviceTask>
+        <sequenceFlow id="flow19" sourceRef="servicetask4" targetRef="usertask1"></sequenceFlow>
+        <endEvent id="endevent1" name="End"></endEvent>
+        <sequenceFlow id="flow21" sourceRef="parallelgateway1" targetRef="timerintermediatecatchevent2"></sequenceFlow>
+        <sequenceFlow id="flow22" sourceRef="parallelgateway1" targetRef="receivetask1"></sequenceFlow>
+        <receiveTask id="receivetask1" name="1. Получение из ИВЦ ЖА файла с данными о наличии контейнеров на РФ на 08:00 дня переписи: Файл D.CNT.O30020.NKP20 ">
+            <documentation>Будем получать по MQ</documentation>
+        </receiveTask>
+        <serviceTask id="servicetask5" name="3.Формирование на основе КМС ЕМПП основной таблицы по переписи на 08:00 дня переписи: таблица LKMC.PRP_MAIN"></serviceTask>
+        <sequenceFlow id="flow24" sourceRef="inclusivegateway1" targetRef="servicetask3"></sequenceFlow>
+        <serviceTask id="servicetask6" name="2.Загрузка данных о контейнерах инвентарного парка на основе файла D.CNT.O30020.NKP20 в таблицу LKMC.IBMU_PRP"></serviceTask>
+        <sequenceFlow id="flow25" sourceRef="receivetask1" targetRef="servicetask6"></sequenceFlow>
+        <sequenceFlow id="flow26" sourceRef="servicetask6" targetRef="inclusivegateway1"></sequenceFlow>
+    </process>
+    <bpmndi:BPMNDiagram id="BPMNDiagram_sub_proc_4">
+        <bpmndi:BPMNPlane bpmnElement="sub_proc_4" id="BPMNPlane_sub_proc_4">
+            <bpmndi:BPMNShape bpmnElement="timerintermediatecatchevent2" id="BPMNShape_timerintermediatecatchevent2">
+                <omgdc:Bounds height="35.0" width="35.0" x="120.0" y="184.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="parallelgateway1" id="BPMNShape_parallelgateway1">
+                <omgdc:Bounds height="40.0" width="40.0" x="80.0" y="127.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="usertask1" id="BPMNShape_usertask1">
+                <omgdc:Bounds height="87.0" width="131.0" x="810.0" y="242.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="servicetask3" id="BPMNShape_servicetask3">
+                <omgdc:Bounds height="85.0" width="211.0" x="600.0" y="95.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="startevent1" id="BPMNShape_startevent1">
+                <omgdc:Bounds height="35.0" width="35.0" x="30.0" y="130.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="inclusivegateway1" id="BPMNShape_inclusivegateway1">
+                <omgdc:Bounds height="40.0" width="40.0" x="540.0" y="117.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="servicetask4" id="BPMNShape_servicetask4">
+                <omgdc:Bounds height="89.0" width="141.0" x="635.0" y="241.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
+                <omgdc:Bounds height="35.0" width="35.0" x="970.0" y="268.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="receivetask1" id="BPMNShape_receivetask1">
+                <omgdc:Bounds height="92.0" width="181.0" x="140.0" y="46.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="servicetask5" id="BPMNShape_servicetask5">
+                <omgdc:Bounds height="81.0" width="331.0" x="170.0" y="161.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="servicetask6" id="BPMNShape_servicetask6">
+                <omgdc:Bounds height="92.0" width="181.0" x="340.0" y="46.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge bpmnElement="flow16" id="BPMNEdge_flow16">
+                <omgdi:waypoint x="155.0" y="201.0"></omgdi:waypoint>
+                <omgdi:waypoint x="170.0" y="201.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
+                <omgdi:waypoint x="501.0" y="201.0"></omgdi:waypoint>
+                <omgdi:waypoint x="560.0" y="201.0"></omgdi:waypoint>
+                <omgdi:waypoint x="560.0" y="157.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow20" id="BPMNEdge_flow20">
+                <omgdi:waypoint x="941.0" y="285.0"></omgdi:waypoint>
+                <omgdi:waypoint x="970.0" y="285.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow5" id="BPMNEdge_flow5">
+                <omgdi:waypoint x="705.0" y="180.0"></omgdi:waypoint>
+                <omgdi:waypoint x="705.0" y="241.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow7" id="BPMNEdge_flow7">
+                <omgdi:waypoint x="65.0" y="147.0"></omgdi:waypoint>
+                <omgdi:waypoint x="80.0" y="147.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow19" id="BPMNEdge_flow19">
+                <omgdi:waypoint x="776.0" y="285.0"></omgdi:waypoint>
+                <omgdi:waypoint x="810.0" y="285.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow21" id="BPMNEdge_flow21">
+                <omgdi:waypoint x="100.0" y="167.0"></omgdi:waypoint>
+                <omgdi:waypoint x="100.0" y="201.0"></omgdi:waypoint>
+                <omgdi:waypoint x="120.0" y="201.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow22" id="BPMNEdge_flow22">
+                <omgdi:waypoint x="100.0" y="127.0"></omgdi:waypoint>
+                <omgdi:waypoint x="100.0" y="92.0"></omgdi:waypoint>
+                <omgdi:waypoint x="140.0" y="92.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow24" id="BPMNEdge_flow24">
+                <omgdi:waypoint x="580.0" y="137.0"></omgdi:waypoint>
+                <omgdi:waypoint x="600.0" y="137.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow25" id="BPMNEdge_flow25">
+                <omgdi:waypoint x="321.0" y="92.0"></omgdi:waypoint>
+                <omgdi:waypoint x="340.0" y="92.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow26" id="BPMNEdge_flow26">
+                <omgdi:waypoint x="521.0" y="92.0"></omgdi:waypoint>
+                <omgdi:waypoint x="560.0" y="92.0"></omgdi:waypoint>
+                <omgdi:waypoint x="560.0" y="117.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+        </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</definitions>

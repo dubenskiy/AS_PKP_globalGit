@@ -58,7 +58,7 @@
                 <omgdi:waypoint x="305.0" y="207.0"></omgdi:waypoint>
                 <omgdi:waypoint x="512.0" y="207.0"></omgdi:waypoint>
                 <omgdi:waypoint x="512.0" y="234.0"></omgdi:waypoint>
-                <omgdi:waypoint x="600.0" y="234.0"></omgdi:waypoint>
+                <!--<omgdi:waypoint x="600.0" y="234.0"></omgdi:waypoint>-->
             </bpmndi:BPMNEdge>
             <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
                 <omgdi:waypoint x="565.0" y="261.0"></omgdi:waypoint>
@@ -69,7 +69,7 @@
                 <omgdi:waypoint x="200.0" y="207.0"></omgdi:waypoint>
                 <omgdi:waypoint x="132.0" y="207.0"></omgdi:waypoint>
                 <omgdi:waypoint x="132.0" y="165.0"></omgdi:waypoint>
-                <omgdi:waypoint x="100.0" y="165.0"></omgdi:waypoint>
+                <!--<omgdi:waypoint x="100.0" y="165.0"></omgdi:waypoint>-->
             </bpmndi:BPMNEdge>
             <bpmndi:BPMNEdge bpmnElement="flow5" id="BPMNEdge_flow5">
                 <omgdi:waypoint x="80.0" y="138.0"></omgdi:waypoint>

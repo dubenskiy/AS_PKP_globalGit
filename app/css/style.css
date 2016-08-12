@@ -191,12 +191,33 @@ option {
     border-radius: 12px;
 }
 
-/*.test{*/
-    /*border: 5px solid ;*/
-/*}*/
+.process-shape-user-task:hover{
+    border: 5px solid green;
+}
+
+.test{
+    filter: alpha(opacity=50);
+    -moz-opacity: 0.5;
+    opacity: 0.5;
+    cursor: pointer;
+    /*background-color: #2fe139;*/
+    -moz-border-radius: 12px;
+    -webkit-border-radius: 12px;
+    border-radius: 50px;
+}
 
 .test:hover   {
     border: 5px solid green;
+}
+
+.corner{
+    border-right: 4px solid #808080;
+    width: 15px;
+    border-bottom: 4px solid #808080;
+    height: 15px;
+    left: 872px;
+    top: 375px;
+    border-radius: 0 0 15px 0;
 }
 
 .process-shape-step {
@@ -304,7 +325,10 @@ option {
     top: 0;
     left: 0;
     /*z-index: 100;*/
-    background-color: red;
+    /*background-color: red;*/
+    filter: alpha(opacity=50);
+    -moz-opacity: 0.5;
+    opacity: 0.5;
 }
 
 /*width: 28px;*/

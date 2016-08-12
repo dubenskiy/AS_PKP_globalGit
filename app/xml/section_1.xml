@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://activiti.org/test">
+    <process id="sub_proc_1" name="Раздел 1 - Подготовка к автоматизированной переписи" isExecutable="true">
+        <userTask id="usertask1" name="7.Рассылка на ИВЦ дорог РФ файлов расхождений"></userTask>
+        <sequenceFlow id="flow28" sourceRef="usertask1" targetRef="inclusivegateway2"></sequenceFlow>
+        <inclusiveGateway id="sid-3F16F711-F37F-4421-B618-90DB6B41E493"></inclusiveGateway>
+        <startEvent id="sid-D36A9431-DF2A-4538-AB8B-ECC59F13DF3C"></startEvent>
+        <sequenceFlow id="sid-3AEF6F01-9912-47DD-BCA9-4C0079D17AC2" sourceRef="sid-D36A9431-DF2A-4538-AB8B-ECC59F13DF3C" targetRef="sid-13E3EBA8-C815-4094-90BC-6E51798D087C"></sequenceFlow>
+        <sequenceFlow id="flow1" sourceRef="receivetask3" targetRef="sid-3F16F711-F37F-4421-B618-90DB6B41E493"></sequenceFlow>
+        <serviceTask id="servicetask2" name="5.Формирование файлов расхождений по результатам сверки КМС ЕМПП и АСОУП-2КС на 18:00"></serviceTask>
+        <sequenceFlow id="flow21" sourceRef="servicetask2" targetRef="sid-BA1FDA6D-BF58-4FE5-94FF-B39CB27B07F6"></sequenceFlow>
+        <serviceTask id="servicetask3" name="4.Выполнение сверки среза КМС ЕМПП и среза АСОУП-2КС на 18:00 московского времени с загрузкой в таблицу  сверки: таблица  LKMC.SVERKA1 "></serviceTask>
+        <sequenceFlow id="flow25" sourceRef="servicetask3" targetRef="servicetask2"></sequenceFlow>
+        <inclusiveGateway id="sid-6D4E4D73-3ABF-4BD5-8E38-4DAEE9185956"></inclusiveGateway>
+        <serviceTask id="servicetask4" name="6.Выполнение сверки среза КМС ЕМПП и среза КММП ИБМУ на 18:00 московского времени с загрузкой в таблицу  сверки: таблица  LKMC.SVERKA2"></serviceTask>
+        <sequenceFlow id="flow26" sourceRef="servicetask4" targetRef="servicetask5"></sequenceFlow>
+        <inclusiveGateway id="inclusivegateway2" name="Exclusive Gateway"></inclusiveGateway>
+        <sequenceFlow id="flow14" sourceRef="inclusivegateway2" targetRef="endevent1"></sequenceFlow>
+        <serviceTask id="servicetask5" name="7.Формирование файлов расхождений по результатам сверки КМС ЕМПП и КММП ИБМУ на 18:00 московского времени"></serviceTask>
+        <sequenceFlow id="flow27" sourceRef="servicetask5" targetRef="usertask1"></sequenceFlow>
+        <userTask id="sid-BA1FDA6D-BF58-4FE5-94FF-B39CB27B07F6" name="5.Рассылка на ИВЦ дорог РФ и в ПКТБ ЦКИ файлов расхождений">
+            <documentation>Нужно уточнять структкру файла, рассылается ОУП по систем СПФ (пользовательсякая задача). Перед рассыкой включается человек.</documentation>
+        </userTask>
+        <sequenceFlow id="flow16" sourceRef="sid-BA1FDA6D-BF58-4FE5-94FF-B39CB27B07F6" targetRef="inclusivegateway2"></sequenceFlow>
+        <receiveTask id="receivetask2" name="3.Формирование среза КММП ИБМУ по состоянию на 18:00 московского времени: таблица LKMC.IBMU_SUT"></receiveTask>
+        <sequenceFlow id="sid-F726151C-1E4D-47FB-816A-9E74349536C3" sourceRef="receivetask2" targetRef="sid-6D4E4D73-3ABF-4BD5-8E38-4DAEE9185956"></sequenceFlow>
+        <parallelGateway id="sid-13E3EBA8-C815-4094-90BC-6E51798D087C"></parallelGateway>
+        <sequenceFlow id="sid-27CEBDE6-2478-4F67-9736-265A627C6C7E" sourceRef="sid-13E3EBA8-C815-4094-90BC-6E51798D087C" targetRef="receivetask2"></sequenceFlow>
+        <parallelGateway id="sid-AE0CB6BF-7783-4539-AD61-BE1384AD9876"></parallelGateway>
+        <sequenceFlow id="sid-DA652672-B902-4D31-8C74-8B1E0EF924AC" sourceRef="sid-AE0CB6BF-7783-4539-AD61-BE1384AD9876" targetRef="sid-6D4E4D73-3ABF-4BD5-8E38-4DAEE9185956"></sequenceFlow>
+        <sequenceFlow id="sid-4580F5FE-A17A-4924-9154-CEAE090310C7" sourceRef="sid-AE0CB6BF-7783-4539-AD61-BE1384AD9876" targetRef="sid-3F16F711-F37F-4421-B618-90DB6B41E493"></sequenceFlow>
+        <endEvent id="endevent1" name="End"></endEvent>
+        <sequenceFlow id="flow29" sourceRef="sid-3F16F711-F37F-4421-B618-90DB6B41E493" targetRef="servicetask3"></sequenceFlow>
+        <sequenceFlow id="flow30" sourceRef="sid-6D4E4D73-3ABF-4BD5-8E38-4DAEE9185956" targetRef="servicetask4"></sequenceFlow>
+        <receiveTask id="receivetask3" name="2.Формирование среза АСОУП-2Кс по состоянию на 18:00 московского времени: таблица LKMC.ASOUP_SUT"></receiveTask>
+        <sequenceFlow id="flow32" sourceRef="sid-13E3EBA8-C815-4094-90BC-6E51798D087C" targetRef="receivetask3"></sequenceFlow>
+        <sequenceFlow id="flow33" sourceRef="receivetask4" targetRef="sid-AE0CB6BF-7783-4539-AD61-BE1384AD9876"></sequenceFlow>
+        <sequenceFlow id="flow34" sourceRef="sid-13E3EBA8-C815-4094-90BC-6E51798D087C" targetRef="receivetask4"></sequenceFlow>
+        <receiveTask id="receivetask4" name="Формирование среза КМС ЕМПП по состоянию на 18:00 московского времени: таблица LKMC.KMC_SUT"></receiveTask>
+    </process>
+    <bpmndi:BPMNDiagram id="BPMNDiagram_sub_proc_1">
+        <bpmndi:BPMNPlane bpmnElement="sub_proc_1" id="BPMNPlane_sub_proc_1">
+            <bpmndi:BPMNShape bpmnElement="usertask1" id="BPMNShape_usertask1">
+                <omgdc:Bounds height="113.0" width="105.0" x="914.0" y="248.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="sid-3F16F711-F37F-4421-B618-90DB6B41E493" id="BPMNShape_sid-3F16F711-F37F-4421-B618-90DB6B41E493">
+                <omgdc:Bounds height="40.0" width="40.0" x="477.0" y="100.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="sid-D36A9431-DF2A-4538-AB8B-ECC59F13DF3C" id="BPMNShape_sid-D36A9431-DF2A-4538-AB8B-ECC59F13DF3C">
+                <omgdc:Bounds height="35.0" width="35.0" x="20.0" y="173.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="servicetask2" id="BPMNShape_servicetask2">
+                <omgdc:Bounds height="126.0" width="120.0" x="769.0" y="16.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="servicetask3" id="BPMNShape_servicetask3">
+                <omgdc:Bounds height="118.0" width="181.0" x="560.0" y="20.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="sid-6D4E4D73-3ABF-4BD5-8E38-4DAEE9185956" id="BPMNShape_sid-6D4E4D73-3ABF-4BD5-8E38-4DAEE9185956">
+                <omgdc:Bounds height="40.0" width="40.0" x="477.0" y="239.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="servicetask4" id="BPMNShape_servicetask4">
+                <omgdc:Bounds height="112.0" width="178.0" x="562.0" y="249.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="inclusivegateway2" id="BPMNShape_inclusivegateway2">
+                <omgdc:Bounds height="40.0" width="40.0" x="1018.0" y="172.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="servicetask5" id="BPMNShape_servicetask5">
+                <omgdc:Bounds height="114.0" width="120.0" x="769.0" y="248.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="sid-BA1FDA6D-BF58-4FE5-94FF-B39CB27B07F6" id="BPMNShape_sid-BA1FDA6D-BF58-4FE5-94FF-B39CB27B07F6">
+                <omgdc:Bounds height="118.0" width="105.0" x="914.0" y="20.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="receivetask2" id="BPMNShape_receivetask2">
+                <omgdc:Bounds height="61.0" width="322.0" x="129.0" y="229.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="sid-13E3EBA8-C815-4094-90BC-6E51798D087C" id="BPMNShape_sid-13E3EBA8-C815-4094-90BC-6E51798D087C">
+                <omgdc:Bounds height="40.0" width="40.0" x="70.0" y="170.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="sid-AE0CB6BF-7783-4539-AD61-BE1384AD9876" id="BPMNShape_sid-AE0CB6BF-7783-4539-AD61-BE1384AD9876">
+                <omgdc:Bounds height="40.0" width="40.0" x="477.0" y="170.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
+                <omgdc:Bounds height="35.0" width="35.0" x="1080.0" y="175.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="receivetask3" id="BPMNShape_receivetask3">
+                <omgdc:Bounds height="61.0" width="321.0" x="130.0" y="90.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="receivetask4" id="BPMNShape_receivetask4">
+                <omgdc:Bounds height="58.0" width="322.0" x="130.0" y="161.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge bpmnElement="flow28" id="BPMNEdge_flow28">
+                <omgdi:waypoint x="1019.0" y="304.0"></omgdi:waypoint>
+                <omgdi:waypoint x="1038.0" y="304.0"></omgdi:waypoint>
+                <omgdi:waypoint x="1038.0" y="212.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sid-3AEF6F01-9912-47DD-BCA9-4C0079D17AC2" id="BPMNEdge_sid-3AEF6F01-9912-47DD-BCA9-4C0079D17AC2">
+                <omgdi:waypoint x="55.0" y="190.0"></omgdi:waypoint>
+                <omgdi:waypoint x="70.0" y="190.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
+                <omgdi:waypoint x="451.0" y="120.0"></omgdi:waypoint>
+                <omgdi:waypoint x="477.0" y="120.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow21" id="BPMNEdge_flow21">
+                <omgdi:waypoint x="889.0" y="79.0"></omgdi:waypoint>
+                <omgdi:waypoint x="914.0" y="79.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow25" id="BPMNEdge_flow25">
+                <omgdi:waypoint x="741.0" y="79.0"></omgdi:waypoint>
+                <omgdi:waypoint x="769.0" y="79.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow26" id="BPMNEdge_flow26">
+                <omgdi:waypoint x="740.0" y="305.0"></omgdi:waypoint>
+                <omgdi:waypoint x="769.0" y="305.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow14" id="BPMNEdge_flow14">
+                <omgdi:waypoint x="1058.0" y="192.0"></omgdi:waypoint>
+                <omgdi:waypoint x="1080.0" y="192.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow27" id="BPMNEdge_flow27">
+                <omgdi:waypoint x="889.0" y="305.0"></omgdi:waypoint>
+                <omgdi:waypoint x="914.0" y="305.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow16" id="BPMNEdge_flow16">
+                <omgdi:waypoint x="1019.0" y="79.0"></omgdi:waypoint>
+                <omgdi:waypoint x="1038.0" y="79.0"></omgdi:waypoint>
+                <omgdi:waypoint x="1038.0" y="172.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sid-F726151C-1E4D-47FB-816A-9E74349536C3" id="BPMNEdge_sid-F726151C-1E4D-47FB-816A-9E74349536C3">
+                <omgdi:waypoint x="451.0" y="259.0"></omgdi:waypoint>
+                <omgdi:waypoint x="477.0" y="259.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sid-27CEBDE6-2478-4F67-9736-265A627C6C7E" id="BPMNEdge_sid-27CEBDE6-2478-4F67-9736-265A627C6C7E">
+                <omgdi:waypoint x="90.0" y="210.0"></omgdi:waypoint>
+                <omgdi:waypoint x="90.0" y="267.0"></omgdi:waypoint>
+                <omgdi:waypoint x="129.0" y="267.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sid-DA652672-B902-4D31-8C74-8B1E0EF924AC" id="BPMNEdge_sid-DA652672-B902-4D31-8C74-8B1E0EF924AC">
+                <omgdi:waypoint x="497.0" y="210.0"></omgdi:waypoint>
+                <omgdi:waypoint x="497.0" y="239.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="sid-4580F5FE-A17A-4924-9154-CEAE090310C7" id="BPMNEdge_sid-4580F5FE-A17A-4924-9154-CEAE090310C7">
+                <omgdi:waypoint x="497.0" y="170.0"></omgdi:waypoint>
+                <omgdi:waypoint x="497.0" y="140.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow29" id="BPMNEdge_flow29">
+                <omgdi:waypoint x="497.0" y="100.0"></omgdi:waypoint>
+                <omgdi:waypoint x="497.0" y="79.0"></omgdi:waypoint>
+                <omgdi:waypoint x="560.0" y="79.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow30" id="BPMNEdge_flow30">
+                <omgdi:waypoint x="497.0" y="279.0"></omgdi:waypoint>
+                <omgdi:waypoint x="497.0" y="305.0"></omgdi:waypoint>
+                <omgdi:waypoint x="562.0" y="305.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow32" id="BPMNEdge_flow32">
+                <omgdi:waypoint x="90.0" y="170.0"></omgdi:waypoint>
+                <omgdi:waypoint x="90.0" y="120.0"></omgdi:waypoint>
+                <omgdi:waypoint x="130.0" y="120.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow33" id="BPMNEdge_flow33">
+                <omgdi:waypoint x="452.0" y="190.0"></omgdi:waypoint>
+                <omgdi:waypoint x="477.0" y="190.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="flow34" id="BPMNEdge_flow34">
+                <omgdi:waypoint x="110.0" y="190.0"></omgdi:waypoint>
+                <omgdi:waypoint x="130.0" y="190.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+        </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</definitions>
