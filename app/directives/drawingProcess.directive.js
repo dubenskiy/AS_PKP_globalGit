@@ -20,7 +20,7 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                     var mainTpl = "<div " +
                         "class=\"" + val.class + "\" " +
                         "style='width: " + val.width + "px; height: " + val.height + "px; left: " + val.left + "px; top: " + val.top + "px;' " +
-                        "ng-click='testAlert(\"" + val.id + "\")'>" +
+                        "ng-click='elemSelected(\"" + val.id + "\")'>" +
                         "</div>";
 
                     var cornerTpl = "<div class=\"" + val.cornerClass + "\" style='" +
@@ -33,7 +33,7 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                         // "border-right: " + val.cornerBorderRight + "; " +
                         // "border-top: " + val.cornerBorderTop + "; " +
                         // "border-bottom: " + val.cornerBorderBottom + ";" +
-                        "' ng-click='testAlert(\"" + val.id + "\")' borderProperties='" + val.cornerBorderLeft + ", " + val.cornerBorderRight + ", " + val.cornerBorderTop + ", " + val.cornerBorderBottom + "'" +
+                        "' ng-click='elemSelected(\"" + val.id + "\")' borderProperties='" + val.cornerBorderLeft + ", " + val.cornerBorderRight + ", " + val.cornerBorderTop + ", " + val.cornerBorderBottom + "'" +
                         "></div>";
 
                     return type == 'cornerDiv' ? cornerTpl : mainTpl
@@ -236,7 +236,7 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                      * Выбран элемент
                      * @param className
                      */
-                    $scope.testAlert = function (className) {
+                    $scope.elemSelected = function (className) {
 
                         angular.forEach($scope.arrOldClass, function (val, index) {
                             styleSelectedElem(val, 'old');
