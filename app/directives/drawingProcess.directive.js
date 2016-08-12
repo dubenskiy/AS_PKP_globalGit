@@ -33,7 +33,7 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                         // "border-right: " + val.cornerBorderRight + "; " +
                         // "border-top: " + val.cornerBorderTop + "; " +
                         // "border-bottom: " + val.cornerBorderBottom + ";" +
-                        "' ng-click='testAlert(\"" + val.id + ", " + val.cornerBorderLeft + ", " + val.cornerBorderRight + ", " + val.cornerBorderTop + ", " + val.cornerBorderBottom + "\")'" +
+                        "' ng-click='testAlert(\"" + val.id + "\")' borderProperties='" + val.cornerBorderLeft + ", " + val.cornerBorderRight + ", " + val.cornerBorderTop + ", " + val.cornerBorderBottom + "'" +
                         "></div>";
 
                     return type == 'cornerDiv' ? cornerTpl : mainTpl
@@ -230,31 +230,44 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                 },
                 controller: function ($scope) {
 
-                    $scope.testAlert = function (value) {
+                    $scope.arrOldClass = [];
 
-                        // angular.element(document.hasClass(val));
+                    /**
+                     * Выбран элемент
+                     * @param className
+                     */
+                    $scope.testAlert = function (className) {
 
-                        var arr = value.split(', ');
+                        angular.forEach($scope.arrOldClass, function (val, index) {
+                            styleSelectedElem(val, 'old');
+                        });
 
-                        $log.warn(arr);
+                        styleSelectedElem(className, 'new');
 
-                        // $log.info(angular.element(document.querySelectorAll('.' + arr[0])));
+                        function styleSelectedElem(nameClass, type) {
+                            angular.forEach(angular.element(document.querySelectorAll('.' + nameClass)), function (val, index) {
+                                if (~val.className.indexOf("corner")) {
+                                    // совпадение есть!
+                                    var arrBorderProperties = val.getAttribute('borderproperties').split(', ');
+                                    // $log.info('--------------');
+                                    // $log.info(arrBorder);
+                                    // $log.info('--------------');
+                                    // val.style.backgroundColor = 'red';
+                                    val.style.borderLeft = type == 'new' ? '' + arrBorderProperties[0] : '';
+                                    val.style.borderRight = type == 'new' ? '' + arrBorderProperties[1] : '';
+                                    val.style.borderTop = type == 'new' ? '' + arrBorderProperties[2] : '';
+                                    val.style.borderBottom = type == 'new' ? '' + arrBorderProperties[3] : '';
+                                    // $log.info(val);
+                                    // angular.element(document.querySelector(val.className).css("background-color", "red"));
+                                } else if (~val.className.indexOf("process-edge-black")) {
+                                    val.style.backgroundColor = type == 'new' ? 'black' : '';
+                                    // $log.warn(val);
+                                }
+                            });
+                        }
 
-                        angular.forEach(angular.element(document.querySelectorAll('.' + arr[0])), function (val, index) {
-                            $log.warn(val);
-                            if (~val.className.indexOf("corner")) {
-                                // совпадение есть!
-                                $log.info(val.className);
-                                // val.style.backgroundColor = 'red';
-                                val.style.borderLeft = arr[1];
-                                val.style.borderRight = arr[2];
-                                val.style.borderTop = arr[3];
-                                val.style.borderBottom = arr[4];
-                                // angular.element(document.querySelector(val.className).css("background-color", "red"));
-                            } else if(~val.className.indexOf("process-edge-black")) {
-                                val.style.backgroundColor = 'black';
-                            }
-                        })
+                        $scope.arrOldClass.push(className);
+                        // $log.info($scope.arrOldClass);
 
                     };
 
