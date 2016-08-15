@@ -9,17 +9,17 @@ angular.module('asPkpApp.myResizer.directive', [])
     .directive("myResizer", function ($window, $document, $log) {
         function linker($scope, $element, $attr) {
 
-            var scrollDiv = document.getElementById('' + $attr.scrollDiv);
-            var elems = document.getElementById('' + $attr.rightContent).childNodes;
-            elems = Array.prototype.slice.call(elems); // теперь elems - массив
-            scrollDiv.style.height = elems[2].clientHeight + 'px';
+            // var scrollDiv = document.getElementById('' + $attr.scrollDiv);
+            // var elems = document.getElementById('' + $attr.rightContent).childNodes;
+            // elems = Array.prototype.slice.call(elems); // теперь elems - массив
+            // scrollDiv.style.height = elems[2].clientHeight + 'px';
 
 
             // elems.forEach(function(elem) {
             //     $log.warn( elem ); // HEAD, текст, BODY
             // });
 
-            $log.warn(elems[2].clientHeight);
+            // $log.warn(elems[2].clientHeight);
 
 
 
