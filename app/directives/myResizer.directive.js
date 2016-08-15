@@ -8,11 +8,27 @@ angular.module('asPkpApp.myResizer.directive', [])
 
     .directive("myResizer", function ($window, $document, $log) {
         function linker($scope, $element, $attr) {
+
+            var scrollDiv = document.getElementById('' + $attr.scrollDiv);
+            var elems = document.getElementById('' + $attr.rightContent).childNodes;
+            elems = Array.prototype.slice.call(elems); // теперь elems - массив
+            scrollDiv.style.height = elems[2].clientHeight + 'px';
+
+
+            // elems.forEach(function(elem) {
+            //     $log.warn( elem ); // HEAD, текст, BODY
+            // });
+
+            $log.warn(elems[2].clientHeight);
+
+
+
             // вверх-вниз
             if ($attr.orientation === 'horizontal') {
-                var sliderElem = document.getElementById('slider-y');
-                var topContent = document.getElementById('' + $attr.topContent + '');
-                var bottomContent = document.getElementById('' + $attr.bottomContent + '');
+                var sliderElem = document.getElementById('slider-y'),
+                    topContent = document.getElementById('' + $attr.topContent),
+                    bottomContent = document.getElementById('' + $attr.bottomContent);
+
 
                 // устанавливаю первоначальный отступ полосы прокрутки
                 var topContentCoords = getCoords(topContent);
@@ -50,6 +66,9 @@ angular.module('asPkpApp.myResizer.directive', [])
                 }
             } else if ($attr.orientation === 'vertical') {
                 $element.on('mousedown', function (event) {
+
+
+
                     event.preventDefault();
                     $document.on('mousemove', mouseMove);
                     $document.on('mouseup', mouseUp);
@@ -72,12 +91,10 @@ angular.module('asPkpApp.myResizer.directive', [])
                     left: x + 'px'
                 });
 
-                $($attr.leftContent).css({
-                    width: x + 'px'
-                });
-                $($attr.rightContent).css({
-                    left: (x + parseInt($attr.indent)) + 'px'
-                });
+                document.getElementById('' + $attr.leftContent).style.width = x + 'px';
+                document.getElementById('' + $attr.rightContent).style.left = (x + parseInt($attr.indent)) + 'px';
+
+                // scrollDiv.style.height = elems[2].clientHeight + 'px';
 
             }
 

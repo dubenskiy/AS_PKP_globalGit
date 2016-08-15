@@ -156,8 +156,8 @@ angular.module('asPkpApp.drawingProcess.directive', [])
 
                     var edge = {
                         id: otherInfo._id,
-                        left: Math.min(x1, x2) + 15,
-                        top: Math.min(y1, y2) + 83,
+                        left: Math.min(x1, x2) + 20,
+                        top: Math.min(y1, y2) + 65,
                         height: y1 == y2 ? lineThickness : Math.max(y1, y2) - Math.min(y1, y2),
                         width: x1 == x2 ? lineThickness : Math.max(x1, x2) - Math.min(x1, x2),
                         bpmnElement: otherInfo._bpmnElement,
@@ -189,8 +189,8 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                             id: val._id,
                             width: (~(val._id).indexOf("gateway")) ? (val.Bounds._width - 12) : +val.Bounds._width,
                             height: (~(val._id).indexOf("gateway")) ? (val.Bounds._height - 12) : +val.Bounds._height,
-                            left: (~(val._id).indexOf("gateway")) ? (+val.Bounds._x + 15 + 6) : +val.Bounds._x + 15,
-                            top: (~(val._id).indexOf("gateway")) ? (+val.Bounds._y + 83 + 6) : +val.Bounds._y + 83,
+                            left: (~(val._id).indexOf("gateway")) ? (+val.Bounds._x + 20 + 6) : +val.Bounds._x + 20,
+                            top: (~(val._id).indexOf("gateway")) ? (+val.Bounds._y + 65 + 6) : +val.Bounds._y + 65,
                             bpmnElement: val._bpmnElement,
                             // class:  val._id + " process-shape"
                             class: (~(val._id).indexOf("gateway")) ? val._id + " process-shape-diamond" :
@@ -238,7 +238,7 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                      */
                     $scope.elemSelected = function (className) {
 
-                        $log.info(className);
+                        // $log.info(className);
 
                         angular.forEach($scope.arrOldClass, function (val, index) {
                             styleSelectedElem(val, 'old');
@@ -247,7 +247,7 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                         styleSelectedElem(className, 'new');
 
                         function styleSelectedElem(nameClass, type) {
-                            $log.info(angular.element(document.querySelectorAll('.' + nameClass)));
+                            // $log.info(angular.element(document.querySelectorAll('.' + nameClass)));
                             angular.forEach(angular.element(document.querySelectorAll('.' + nameClass)), function (val, index) {
                                 if (~val.className.indexOf("corner")) {
                                     // совпадение есть!
@@ -266,7 +266,7 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                                     val.style.backgroundColor = type == 'new' ? 'black' : '';
                                     // $log.warn(val);
                                 } else {
-                                    $log.warn(val);
+                                    // $log.warn(val);
                                     val.style.border = type == 'new' ? '3px solid #0965AE' : '';
                                 }
                             });

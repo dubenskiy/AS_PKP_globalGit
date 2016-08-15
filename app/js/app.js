@@ -35,7 +35,7 @@ angular.module('asPkpApp', [
 
     // 'asPkpApp.detailInfoFromRowModalCtrl'
 
-    'asPkpApp.myResizer.directive' ,
+    'asPkpApp.myResizer.directive',
     'asPkpApp.drawingProcess.directive'
 ])
 
@@ -63,6 +63,30 @@ angular.module('asPkpApp', [
                 };
 
                 // alert(angular.version.full );
+
+                /**
+                 * счетчик вотчеров
+                 */
+                // (function () {
+                //     var root = $(document.getElementsByTagName('body'));
+                //     var watchers = [];
+                //
+                //     var f = function (element) {
+                //         if (element.data().hasOwnProperty('$scope')) {
+                //             angular.forEach(element.data().$scope.$$watchers, function (watcher) {
+                //                 watchers.push(watcher);
+                //             });
+                //         }
+                //
+                //         angular.forEach(element.children(), function (childElement) {
+                //             f($(childElement));
+                //         });
+                //     };
+                //
+                //     f(root);
+                //
+                //     console.log(watchers.length);
+                // })();
 
                 // 65767
             }

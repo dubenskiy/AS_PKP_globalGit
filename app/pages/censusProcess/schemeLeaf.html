@@ -5,7 +5,11 @@
     <div class="panel-body">
         <!--<div class="my-image"></div>-->
         <!--<div class="zoomin">-->
-        <img ng-click="isDetailsScheme=!isDetailsScheme" ng-src="../res/census.bmp" alt="Процесс">
+        <!--<img ng-click="isDetailsScheme=!isDetailsScheme" ng-src="../res/census.bmp" alt="Процесс">-->
+        <div id="main-div-process">
+            <!--<img ng-click="isDetailsScheme=!isDetailsScheme" drawing-process data={{dataJSON}}  ng-src="../res/census.bmp" alt="Процесс">-->
+            <div drawing-process data={{dataJSON}} ng-click="isDetailsScheme=!isDetailsScheme" style='background-image: url("../res/census.bmp"); width: 991px; height: 533px'></div>
+        </div>
         <!--</div>-->
     </div>
 </div>
@@ -14,11 +18,12 @@
      id="slider-y"
      my-resizer
      orientation="horizontal"
-     min="150"
-     max="500"
+     min="300"
+     max="650"
      indent="84"
      top-content="top-content"
-     bottom-content="bottom-content">
+     bottom-content="bottom-content"
+     scroll-div="scroll-div">
     <i class="fa fa-arrows-v text-y"></i>
 </div>
 
