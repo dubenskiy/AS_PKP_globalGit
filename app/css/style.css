@@ -191,33 +191,8 @@ option {
     border-radius: 12px;
 }
 
-.process-shape-user-task:hover{
-    border: 3px solid #bbbb00;
-}
-
-.test{
-    filter: alpha(opacity=50);
-    -moz-opacity: 0.5;
-    opacity: 0.5;
-    cursor: pointer;
-    /*background-color: #2fe139;*/
-    -moz-border-radius: 12px;
-    -webkit-border-radius: 12px;
-    border-radius: 50px;
-}
-
-.test:hover   {
-    border: 5px solid green;
-}
-
-/*.corner{*/
-    /*border-right: 4px solid #808080;*/
-    /*width: 15px;*/
-    /*border-bottom: 4px solid #808080;*/
-    /*height: 15px;*/
-    /*left: 872px;*/
-    /*top: 375px;*/
-    /*border-radius: 0 0 15px 0;*/
+/*.process-shape-user-task:hover{*/
+    /*border: 3px solid #bbbb00;*/
 /*}*/
 
 .process-shape-step {
@@ -228,7 +203,7 @@ option {
     -moz-opacity: 0.5;
     opacity: 0.5;
     cursor: pointer;
-    background-color: #2fe139;
+    /*background-color: #2fe139;*/
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     border-radius: 3px;
@@ -242,14 +217,14 @@ option {
     -moz-opacity: 0.5;
     opacity: 0.5;
     cursor: pointer;
-    background-color: #e19250;
+    /*background-color: #e19250;*/
     /* Rotate */
-    /*-webkit-transform: rotate(-45deg);*/
-    /*-moz-transform: rotate(-45deg);*/
-    /*-ms-transform: rotate(-45deg);*/
-    /*-o-transform: rotate(-45deg);*/
-    /*transform: rotate(-45deg);*/
-    /* Rotate Origin */
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+     /*Rotate Origin */
     /*-webkit-transform-origin: 0 100%;*/
     /*-moz-transform-origin: 0 100%;*/
     /*-ms-transform-origin: 0 100%;*/
@@ -257,6 +232,10 @@ option {
     /*transform-origin: 0 100%;*/
     /*margin: 60px 0 10px 310px;*/
 }
+
+/*.process-shape-diamond:hover{*/
+    /*border: 3px solid #0965AE;*/
+/*}*/
 
 .process-shape-circle {
     position: absolute;
@@ -266,49 +245,13 @@ option {
     -moz-opacity: 0.5;
     opacity: 0.5;
     cursor: pointer;
-    background-color: #7ce1e0;
+    /*background-color: #7ce1e0;*/
     -moz-border-radius: 60px;
     -webkit-border-radius: 60px;
     border-radius: 60px;
 }
 
-.process-edge-red {
-    position: absolute;
-    top: 0;
-    left: 0;
-    /*height: 3px;*/
-    filter: alpha(opacity=50);
-    -moz-opacity: 0.5;
-    opacity: 0.5;
-    cursor: pointer;
-    background-color: #f52530;
-}
-
-.process-edge-green {
-    position: absolute;
-    top: 0;
-    left: 0;
-    /*height: 3px;*/
-    filter: alpha(opacity=50);
-    -moz-opacity: 0.5;
-    opacity: 0.5;
-    cursor: pointer;
-    background-color: green;
-}
-
-.process-edge-yellow {
-    position: absolute;
-    top: 0;
-    left: 0;
-    /*height: 3px;*/
-    filter: alpha(opacity=50);
-    -moz-opacity: 0.5;
-    opacity: 0.5;
-    cursor: pointer;
-    background-color: yellow;
-}
-
-.process-edge-black {
+.process-edge {
     position: absolute;
     top: 0;
     left: 0;

@@ -161,7 +161,7 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                         height: y1 == y2 ? lineThickness : Math.max(y1, y2) - Math.min(y1, y2),
                         width: x1 == x2 ? lineThickness : Math.max(x1, x2) - Math.min(x1, x2),
                         bpmnElement: otherInfo._bpmnElement,
-                        class: otherInfo._id + " process-edge-black",
+                        class: otherInfo._id + " process-edge",
                         lineThickness: lineThickness,
                         cornerWidth: cornerSize,
                         cornerHeight: cornerSize,
@@ -187,15 +187,15 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                     angular.forEach(coordsData.BPMNShape, function (val, index) {
                         shape = {
                             id: val._id,
-                            width: +val.Bounds._width,
-                            height: +val.Bounds._height,
-                            left: +val.Bounds._x + 15,
-                            top: +val.Bounds._y + 83,
+                            width: (~(val._id).indexOf("gateway")) ? (val.Bounds._width - 12) : +val.Bounds._width,
+                            height: (~(val._id).indexOf("gateway")) ? (val.Bounds._height - 12) : +val.Bounds._height,
+                            left: (~(val._id).indexOf("gateway")) ? (+val.Bounds._x + 15 + 6) : +val.Bounds._x + 15,
+                            top: (~(val._id).indexOf("gateway")) ? (+val.Bounds._y + 83 + 6) : +val.Bounds._y + 83,
                             bpmnElement: val._bpmnElement,
                             // class:  val._id + " process-shape"
                             class: (~(val._id).indexOf("gateway")) ? val._id + " process-shape-diamond" :
-                                (~(val._id).indexOf("event")) ? ' process-shape-circle' :
-                                    (~(val._id).indexOf("step")) ? ' process-shape-step' : val._id + " process-shape-user-task"
+                                (~(val._id).indexOf("event")) ? val._id + " process-shape-circle" :
+                                    (~(val._id).indexOf("step")) ? val._id + " process-shape-step" : val._id + " process-shape-user-task"
                         };
                         angular.element(document.getElementById('main-div-process')).append($compile(templateFunc(shape))($scope));
                     });
@@ -238,6 +238,8 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                      */
                     $scope.elemSelected = function (className) {
 
+                        $log.info(className);
+
                         angular.forEach($scope.arrOldClass, function (val, index) {
                             styleSelectedElem(val, 'old');
                         });
@@ -245,6 +247,7 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                         styleSelectedElem(className, 'new');
 
                         function styleSelectedElem(nameClass, type) {
+                            $log.info(angular.element(document.querySelectorAll('.' + nameClass)));
                             angular.forEach(angular.element(document.querySelectorAll('.' + nameClass)), function (val, index) {
                                 if (~val.className.indexOf("corner")) {
                                     // совпадение есть!
@@ -259,9 +262,12 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                                     val.style.borderBottom = type == 'new' ? '' + arrBorderProperties[3] : '';
                                     // $log.info(val);
                                     // angular.element(document.querySelector(val.className).css("background-color", "red"));
-                                } else if (~val.className.indexOf("process-edge-black")) {
+                                } else if (~val.className.indexOf("process-edge")) {
                                     val.style.backgroundColor = type == 'new' ? 'black' : '';
                                     // $log.warn(val);
+                                } else {
+                                    $log.warn(val);
+                                    val.style.border = type == 'new' ? '3px solid #0965AE' : '';
                                 }
                             });
                         }
@@ -277,8 +283,4 @@ angular.module('asPkpApp.drawingProcess.directive', [])
         }
     );
 
-
-// "border-left: " + val.cornerBorderLeft + "; " +
-// // "border-right: " + val.cornerBorderRight + "; " +
-// // "border-top: " + val.cornerBorderTop + "; " +
-// // "border-bottom: " + val.cornerBorderBottom + ";" +
+// border: 3px solid #0965AE;
