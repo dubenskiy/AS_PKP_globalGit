@@ -23,7 +23,7 @@ angular.module('asPkpApp.myResizer.directive', [])
 
 
                 // вверх-вниз
-                if ($attr.orientation === 'horizontal') {
+                if ($attr.orientation === 'vertical') {
                     var sliderElemY = document.getElementById('slider-y'),
                         topContent = document.getElementById('' + $attr.topContent),
                         bottomContent = document.getElementById('' + $attr.bottomContent);
@@ -63,28 +63,39 @@ angular.module('asPkpApp.myResizer.directive', [])
 
                         return false; // disable selection start (cursor change)
                     }
-                } else if ($attr.orientation === 'vertical') {
+                } else if ($attr.orientation === 'horizontal') {
 
                     var sliderElemX = document.getElementById('slider-x'),
                         leftContent = document.getElementById('' + $attr.leftContent),
-                        rightContent = document.getElementById('' + $attr.rightContent);
+                        rightContent = document.getElementById('' + $attr.rightContent),
+                        parentDiv = document.getElementById('parentDiv');
 
-                    sliderElemX.style.left = +$attr.indent + +leftContent.clientWidth + 'px';
-                    rightContent.style.left = +$attr.indent + +leftContent.clientWidth + 'px';
+                    // $attr.indent
+
+                    sliderElemX.style.left = parseInt((leftContent.clientWidth * 100) / parentDiv.clientWidth) + '%';
+                    // $log.info('sliderElemX.style.left ' + sliderElemX.style.left);
+                    rightContent.style.width = 98 - parseInt(sliderElemX.style.left) + '%';
+                    // $log.info('rightContent.style.width ' + rightContent.style.width);
+                    // var allWidth = parseInt(leftContent.clientWidth);
+                    // rightContent.style.left = leftContent.clientWidth + 'px';
 
                     sliderElemX.onmousedown = function (event) {
+
+                        // $log.warn('% ' + parseInt((leftContent.clientWidth * 100) / parentDiv.clientWidth));
+                        // $log.info('leftContent.clientWidth ' + leftContent.clientWidth);
+                        // $log.info('parentDiv ' + parentDiv.clientWidth);
 
                         // получаю координаты
                         var sliderElemCoords = getCoords(sliderElemX);
                         // https://learn.javascript.ru/article/drag-and-drop/ball_shift.png
                         // 10 это отступ слайдера
-                        var sliderShiftX = +$attr.indent + +event.pageX - sliderElemCoords.left;
+                        var sliderShiftX = event.pageX - sliderElemCoords.left;
 
                         document.onmousemove = function (event) {
                             // $attr.indent - отступ от края экрана до родительского блока
                             var newSliderElemLeft = event.pageX - sliderShiftX;
 
-                            $log.warn(newSliderElemLeft);
+                            // $log.warn(parseInt(newSliderElemLeft));
 
                             // ограничители
                             if (newSliderElemLeft > +$attr.max) {
@@ -94,9 +105,12 @@ angular.module('asPkpApp.myResizer.directive', [])
                                 newSliderElemLeft = $attr.min;
                             }
 
-                            sliderElemX.style.left = +$attr.indent + +newSliderElemLeft + 'px';
-                            leftContent.style.width = +newSliderElemLeft + 'px';
-                            rightContent.style.left = +$attr.indent + +newSliderElemLeft + 'px';
+                            $log.info('rightContent '+ parseInt(rightContent.style.width));
+                            $log.info('newSliderElemLeft '+ parseInt((newSliderElemLeft * 100) / parentDiv.clientWidth));
+
+                            sliderElemX.style.left = newSliderElemLeft + 'px';
+                            leftContent.style.width = newSliderElemLeft + 'px';
+                            rightContent.style.width = 98 - parseInt((newSliderElemLeft * 100) / parentDiv.clientWidth) + '%';
                         };
 
                         document.onmouseup = function () {

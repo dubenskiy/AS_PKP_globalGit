@@ -1,5 +1,6 @@
 #left-content {
-    width: 400px;
+    width: 35%;
+    float: left;
     /*margin-top: -280px;*/
     /*position: relative;*/
     /*top: -1000px;*/
@@ -8,11 +9,13 @@
 }
 
 #right-content {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0 /* 200 + 6*/;
-    right: 9px !important;
+    float: right;
+    /*width: 65%;*/
+    /*position: absolute;*/
+    /*top: 0;*/
+    /*bottom: 0;*/
+    /*left: 0 !* 200 + 6*!;*/
+    /*right: 9px !important;*/
     /*overflow: auto;*/
 }
 
