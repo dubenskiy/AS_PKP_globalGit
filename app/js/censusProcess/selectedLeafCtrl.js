@@ -15,11 +15,68 @@ angular.module('asPkpApp.selectedLeafCtrl', [])
             $scope.selectedLeafObj.countRowInPage = '5';
             $scope.model = $scope.selectedLeafObj;
 
+            // $scope.selectedLeafObj.activeTabIndex = 0;
+            // $scope.selectedLeafObj.tabs = [];
+
+            // ************************* test ******************
+            $scope.getXML = function (name) {
+                censusProcessService.getXML(name).then(function (response) {
+                    if (response) {
+                        // $log.info(response.definitions.BPMNDiagram.BPMNPlane);
+                        $scope.dataJSON = angular.fromJson(response.definitions.BPMNDiagram.BPMNPlane);
+                        // $log.warn(response.definitions.BPMNDiagram.BPMNPlane);
+                        // $log.info($scope.dataJSON);
+                    }
+                });
+            };
+
+            $scope.getXML('main');
 
 
-            // angular.element($window).bind('load', function() {
-            //     alert(3333343424);
-            // });
+            // ************************* test ******************
+
+            $scope.activeTabIndex = 0;
+            $scope.idParent = 0;
+            $scope.tabs = [];
+
+            $scope.selectedLeafObj.openNewProcess = function (className) {
+                if (~className.indexOf("_prepare_step_")) {
+
+                    // $log.warn($scope.tabs.length);
+
+                    if ($scope.tabs.length > 0) {
+                        angular.forEach($scope.tabs, function (val, index) {
+                            // $log.info(val.title);
+                            if (val.title != 'prepare_step') {
+                                var newTab = {title: 'prepare_step'};
+                                $scope.tabs.push(newTab);
+                                $timeout(function () {
+                                    $scope.activeTabIndex = ($scope.tabs.length );
+                                    $scope.getXML('section_r1');
+                                });
+                            } else {
+                                $timeout(function () {
+                                    $scope.activeTabIndex = ($scope.tabs.length );
+                                    // $scope.getXML('section_r1');
+                                });
+                            }
+                        });
+                    } else {
+                        var newTab = {title: 'prepare_step'};
+                        $scope.tabs.push(newTab);
+                        // $scope.idParent ++;
+                        $timeout(function () {
+                            $scope.activeTabIndex = ($scope.tabs.length );
+                            $scope.getXML('section_r1');
+                        });
+                    }
+
+
+                    // console.log($scope.activeTabIndex);
+
+                }
+            };
+
 
             /**
              * Загрузка данных
@@ -77,13 +134,12 @@ angular.module('asPkpApp.selectedLeafCtrl', [])
             };
 
 
-
             if ($stateParams.type === 'FileLeaf') {
                 $scope.selectedLeafObj.getListFile();
                 $scope.selectedLeafObj.getListDistributionProcess();
             } else if ($stateParams.type === 'TableLeaf' && $stateParams.typeDetail === 'prpMain') {
                 $scope.selectedLeafObj.getPrpMainColumns();
-            }  else if ($stateParams.type === 'TableLeaf' && $stateParams.typeDetail === 'prpIbmu') {
+            } else if ($stateParams.type === 'TableLeaf' && $stateParams.typeDetail === 'prpIbmu') {
                 $scope.selectedLeafObj.getPrpIbmuColumns();
             }
 

@@ -17,25 +17,7 @@ angular.module('asPkpApp.censusProcessCtrl', [])
             // } ;
 
 
-            // ************************* test ******************
-            $scope.getXML = function () {
-                censusProcessService.getXML().then(function (response) {
-                    if (response) {
-                        // $log.info(response.definitions.BPMNDiagram.BPMNPlane);
-                        $scope.dataJSON = angular.fromJson(response.definitions.BPMNDiagram.BPMNPlane);
-                        // $log.warn(response.definitions.BPMNDiagram.BPMNPlane);
-                        // $log.info($scope.dataJSON);
-                    }
-                });
-            };
 
-            $scope.getXML();
-
-            $scope.alertFunc = function () {
-                alert('dfssdfdsf');
-            };
-
-            // ************************* test ******************
 
 
             $scope.my_tree_handler = function (branch) {

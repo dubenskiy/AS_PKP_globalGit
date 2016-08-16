@@ -9,6 +9,10 @@ angular.module('asPkpApp.drawingProcess.directive', [])
     .directive("drawingProcess", function ($window, $document, $log, $timeout, $compile) {
             function linker($scope, $element, $attr) {
 
+
+                var timeoutId,
+                    arrOldClass = [];
+
                 /**
                  * Формирую шаблон
                  * @param val
@@ -20,7 +24,8 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                     var mainTpl = "<div " +
                         "class=\"" + val.class + "\" " +
                         "style='width: " + val.width + "px; height: " + val.height + "px; left: " + val.left + "px; top: " + val.top + "px;' " +
-                        "ng-click='elemSelected(\"" + val.id + "\")'>" +
+                        "ng-click='elemSelected(\"" + val.id + "\")'" +
+                        "ng-dblclick='selectedLeafObj.openNewProcess(\"" + val.id + "\")'>" +
                         "</div>";
 
                     var cornerTpl = "<div class=\"" + val.cornerClass + "\" style='" +
@@ -157,7 +162,7 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                     var edge = {
                         id: otherInfo._id,
                         left: Math.min(x1, x2) + 20,
-                        top: Math.min(y1, y2) + 65,
+                        top: Math.min(y1, y2) + 55,
                         height: y1 == y2 ? lineThickness : Math.max(y1, y2) - Math.min(y1, y2),
                         width: x1 == x2 ? lineThickness : Math.max(x1, x2) - Math.min(x1, x2),
                         bpmnElement: otherInfo._bpmnElement,
@@ -170,18 +175,22 @@ angular.module('asPkpApp.drawingProcess.directive', [])
 
                     if (direction) indentFunc();
 
-                    angular.element(document.getElementById('main-div-process')).append($compile(templateFunc(edge))($scope));
+                    angular.element(document.getElementById('' + $attr.idparent)).append($compile(templateFunc(edge))($scope));
 
-                    if (isCornerDiv) angular.element(document.getElementById('main-div-process')).append($compile(templateFunc(edge, 'cornerDiv'))($scope));
+                    // $element.append($compile(templateFunc(edge))($scope));
+
+                    if (isCornerDiv) angular.element(document.getElementById('' + $attr.idparent)).append($compile(templateFunc(edge, 'cornerDiv'))($scope));
 
                 };
 
                 /**
                  * Без таймаута не получаю данные
                  */
-                $timeout(function () {
-                    var shape = {};
-                    var coordsData = angular.fromJson($attr.data);
+                timeoutId = $timeout(function () {
+                    var shape = {},
+                        coordsData = angular.fromJson($attr.data);
+
+                    // $log.info($attr.idparent);
 
                     // Блоки
                     angular.forEach(coordsData.BPMNShape, function (val, index) {
@@ -190,14 +199,15 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                             width: (~(val._id).indexOf("gateway")) ? (val.Bounds._width - 12) : +val.Bounds._width,
                             height: (~(val._id).indexOf("gateway")) ? (val.Bounds._height - 12) : +val.Bounds._height,
                             left: (~(val._id).indexOf("gateway")) ? (+val.Bounds._x + 20 + 6) : +val.Bounds._x + 20,
-                            top: (~(val._id).indexOf("gateway")) ? (+val.Bounds._y + 65 + 6) : +val.Bounds._y + 65,
+                            top: (~(val._id).indexOf("gateway")) ? (+val.Bounds._y + 55 + 6) : +val.Bounds._y + 55,
                             bpmnElement: val._bpmnElement,
                             // class:  val._id + " process-shape"
                             class: (~(val._id).indexOf("gateway")) ? val._id + " process-shape-diamond" :
                                 (~(val._id).indexOf("event")) ? val._id + " process-shape-circle" :
                                     (~(val._id).indexOf("step")) ? val._id + " process-shape-step" : val._id + " process-shape-user-task"
                         };
-                        angular.element(document.getElementById('main-div-process')).append($compile(templateFunc(shape))($scope));
+                        // $log.warn(angular.element(document.getElementById('' + $attr.idparent)));
+                        angular.element(document.getElementById('' + $attr.idparent)).append($compile(templateFunc(shape))($scope));
                     });
 
                     // Линии
@@ -220,64 +230,66 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                             drawingEdge(+val.waypoint[3]._x, +val.waypoint[4]._x, +val.waypoint[3]._y, +val.waypoint[4]._y, val, 4, 'backward', 3, true, 15);
                         }
                     })
-                }, 0);
+                }, 1000);
+
+                $element.on('$destroy', function () {
+                    $timeout.cancel(timeoutId);
+                });
+
+
+                /**
+                 * Выбран элемент
+                 * @param className
+                 */
+                $scope.elemSelected = function (className) {
+
+                    // $log.info(className);
+
+                    angular.forEach(arrOldClass, function (val, index) {
+                        styleSelectedElem(val, 'old');
+                    });
+
+                    styleSelectedElem(className, 'new');
+
+                    function styleSelectedElem(nameClass, type) {
+                        // $log.info(angular.element(document.querySelectorAll('.' + nameClass)));
+                        angular.forEach(angular.element(document.querySelectorAll('.' + nameClass)), function (val, index) {
+                            if (~val.className.indexOf("corner")) {
+                                // совпадение есть!
+                                var arrBorderProperties = val.getAttribute('borderproperties').split(', ');
+                                val.style.borderLeft = type == 'new' ? '' + arrBorderProperties[0] : '';
+                                val.style.borderRight = type == 'new' ? '' + arrBorderProperties[1] : '';
+                                val.style.borderTop = type == 'new' ? '' + arrBorderProperties[2] : '';
+                                val.style.borderBottom = type == 'new' ? '' + arrBorderProperties[3] : '';
+                            } else if (~val.className.indexOf("process-edge")) {
+                                val.style.backgroundColor = type == 'new' ? 'black' : '';
+                            } else {
+                                val.style.border = type == 'new' ? '3px solid #0965AE' : '';
+                            }
+                        });
+                    }
+
+                    arrOldClass.push(className);
+
+                };
+
+                // $scope.openNewProcess = function (className) {
+                //       if (~className.indexOf("_prepare_step_")){
+                //           alert('hihi');
+                //       }
+                // };
+
             }
 
             return {
                 restrict: 'EA',
-                scope: {
-                    customerInfo: '=info'
-                },
-                controller: function ($scope) {
-
-                    $scope.arrOldClass = [];
-
-                    /**
-                     * Выбран элемент
-                     * @param className
-                     */
-                    $scope.elemSelected = function (className) {
-
-                        // $log.info(className);
-
-                        angular.forEach($scope.arrOldClass, function (val, index) {
-                            styleSelectedElem(val, 'old');
-                        });
-
-                        styleSelectedElem(className, 'new');
-
-                        function styleSelectedElem(nameClass, type) {
-                            // $log.info(angular.element(document.querySelectorAll('.' + nameClass)));
-                            angular.forEach(angular.element(document.querySelectorAll('.' + nameClass)), function (val, index) {
-                                if (~val.className.indexOf("corner")) {
-                                    // совпадение есть!
-                                    var arrBorderProperties = val.getAttribute('borderproperties').split(', ');
-                                    // $log.info('--------------');
-                                    // $log.info(arrBorder);
-                                    // $log.info('--------------');
-                                    // val.style.backgroundColor = 'red';
-                                    val.style.borderLeft = type == 'new' ? '' + arrBorderProperties[0] : '';
-                                    val.style.borderRight = type == 'new' ? '' + arrBorderProperties[1] : '';
-                                    val.style.borderTop = type == 'new' ? '' + arrBorderProperties[2] : '';
-                                    val.style.borderBottom = type == 'new' ? '' + arrBorderProperties[3] : '';
-                                    // $log.info(val);
-                                    // angular.element(document.querySelector(val.className).css("background-color", "red"));
-                                } else if (~val.className.indexOf("process-edge")) {
-                                    val.style.backgroundColor = type == 'new' ? 'black' : '';
-                                    // $log.warn(val);
-                                } else {
-                                    // $log.warn(val);
-                                    val.style.border = type == 'new' ? '3px solid #0965AE' : '';
-                                }
-                            });
-                        }
-
-                        $scope.arrOldClass.push(className);
-                        // $log.info($scope.arrOldClass);
-
-                    };
-
-                },
+                // scope: {
+                //     customerInfo: '=info'
+                // },
+                // controller: function ($scope) {
+                //
+                //
+                // },
                 link: linker
             };
         }

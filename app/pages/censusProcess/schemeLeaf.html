@@ -1,15 +1,27 @@
 <div class="panel" id="top-content">
-    <div class="panel-heading">
-        <h3 class="panel-title">Процесс</h3>
-    </div>
+    <!--<div class="panel-heading">-->
+    <!--<h3 class="panel-title">Процесс</h3>-->
+    <!--</div>-->
     <div class="panel-body">
         <!--<div class="my-image"></div>-->
         <!--<div class="zoomin">-->
         <!--<img ng-click="isDetailsScheme=!isDetailsScheme" ng-src="../res/census.bmp" alt="Процесс">-->
-        <div id="main-div-process">
-            <!--<img ng-click="isDetailsScheme=!isDetailsScheme" drawing-process data={{dataJSON}}  ng-src="../res/census.bmp" alt="Процесс">-->
-            <div drawing-process data={{dataJSON}} ng-click="isDetailsScheme=!isDetailsScheme" style='background-image: url("../res/census.bmp"); width: 991px; height: 533px'></div>
-        </div>
+        <!--<input type="button" value="Add Tab" ng-click="addTab()" />-->
+
+        <uib-tabset active="activeTabIndex" >
+            <uib-tab index="0" heading="Основная схема">
+                <div id="census_main-div">
+                    <div drawing-process data={{dataJSON}} idParent="census_main-div" style='background-image: url("../res/main.bmp"); width: 991px; height: 533px'></div>
+                    <!--<img drawing-process data={{dataJSON}} ng-src="../res/census.bmp" alt="Процесс" style=" width: 991px; height: 533px">-->
+                </div>
+            </uib-tab>
+            <uib-tab index="$index + 1" ng-repeat="tab in tabs" heading="{{tab.title}}" disable="tab.disabled">
+                <div id="census_r1-div">
+                    <div drawing-process data={{dataJSON}} idParent="census_r1-div" style='background-image: url("../res/census_r1.png"); width: 1169px; height: 718px'></div>
+                </div>
+            </uib-tab>
+        </uib-tabset>
+
         <!--</div>-->
     </div>
 </div>
@@ -62,3 +74,5 @@
         </table>
     </div>
 </div>
+
+

@@ -237,7 +237,7 @@ option {
     -moz-opacity: 0.5;
     opacity: 0.5;
     cursor: pointer;
-    /*background-color: #7ce1e0;*/
+    background-color: #7ce1e0;
     -moz-border-radius: 60px;
     -webkit-border-radius: 60px;
     border-radius: 60px;
@@ -269,6 +269,14 @@ option {
     filter: alpha(opacity=50);
     -moz-opacity: 0.5;
     opacity: 0.5;
+}
+
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
 }
 
 /*--------------------------------------------------------------------------------------------------------*/
