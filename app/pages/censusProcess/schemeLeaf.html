@@ -16,10 +16,10 @@
                 </div>
             </uib-tab>
             <uib-tab index="$index + 1" ng-repeat="tab in tabs" heading="{{tab.title}}" disable="tab.disabled">
-                <div ng-if="selectedLeafObj.showSheme == 'prepare_step'" id="census_r1-div">
+                <div ng-if="tab.showScheme == 'prepare_step'" id="census_r1-div">
                     <div drawing-process data={{dataJSON}} idParent="census_r1-div" style='background-image: url("../res/census_r1.png"); width: 1169px; height: 718px'></div>
                 </div>
-                <div ng-if="selectedLeafObj.showSheme == 'BPMNShape_step_r2'" id="census_r2-div">
+                <div ng-if="tab.showScheme == 'BPMNShape_step_r2'" id="census_r2-div">
                     <div drawing-process data={{dataJSON}} idParent="census_r2-div" style='background-image: url("../res/census_r2.png"); width: 1260px; height: 701px'></div>
                 </div>
             </uib-tab>
