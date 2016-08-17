@@ -19,18 +19,13 @@ angular.module('asPkpApp.selectedLeafCtrl', [])
             // $scope.selectedLeafObj.tabs = [];
 
             // ************************* test ******************
-            $scope.getXML = function (name) {
+            $scope.selectedLeafObj.getXML = function (name) {
                 censusProcessService.getXML(name).then(function (response) {
                     if (response) {
-                        // $log.info(response.definitions.BPMNDiagram.BPMNPlane);
-                        $scope.dataJSON = angular.fromJson(response.definitions.BPMNDiagram.BPMNPlane);
-                        // $log.warn(response.definitions.BPMNDiagram.BPMNPlane);
-                        // $log.info($scope.dataJSON);
+                        $scope.dataJSON = angular.fromJson(response.definitions);
                     }
                 });
             };
-
-            $scope.getXML('main');
 
 
             // ************************* test ******************
@@ -40,41 +35,50 @@ angular.module('asPkpApp.selectedLeafCtrl', [])
             $scope.tabs = [];
 
             $scope.selectedLeafObj.openNewProcess = function (className) {
+
+                $scope.selectedLeafObj.showSheme = null;
                 if (~className.indexOf("_prepare_step_")) {
+                    $log.debug('_prepare_step_');
+                    $scope.selectedLeafObj.showSheme = 'prepare_step';
+                    newTab('prepare_step', 'section_r1')
+                } else if (~className.indexOf("BPMNShape_step_r2")) {
+                    $log.debug('BPMNShape_step_r2');
+                    $scope.selectedLeafObj.showSheme = 'BPMNShape_step_r2';
+                    newTab('BPMNShape_step_r2', 'section_r2')
+                }
 
-                    // $log.warn($scope.tabs.length);
-
+                function newTab(tabName, xmlName) {
                     if ($scope.tabs.length > 0) {
                         angular.forEach($scope.tabs, function (val, index) {
-                            // $log.info(val.title);
-                            if (val.title != 'prepare_step') {
-                                var newTab = {title: 'prepare_step'};
+                            $log.info('tabName ' + tabName);
+                            if (tabName == val.title) {
+                                $timeout(function () {
+                                    $scope.activeTabIndex = ($scope.tabs.length );
+                                });
+                            } else {
+                                var newTab = {title: tabName};
                                 $scope.tabs.push(newTab);
                                 $timeout(function () {
                                     $scope.activeTabIndex = ($scope.tabs.length );
-                                    $scope.getXML('section_r1');
-                                });
-                            } else {
-                                $timeout(function () {
-                                    $scope.activeTabIndex = ($scope.tabs.length );
-                                    // $scope.getXML('section_r1');
+                                    $scope.selectedLeafObj.getXML(xmlName);
                                 });
                             }
                         });
                     } else {
-                        var newTab = {title: 'prepare_step'};
+                        var newTab = {title: tabName};
                         $scope.tabs.push(newTab);
                         // $scope.idParent ++;
                         $timeout(function () {
                             $scope.activeTabIndex = ($scope.tabs.length );
-                            $scope.getXML('section_r1');
+                            $scope.selectedLeafObj.getXML(xmlName);
                         });
                     }
 
-
-                    // console.log($scope.activeTabIndex);
-
+                    $timeout(function () {
+                        $log.debug($scope.tabs)
+                    });
                 }
+
             };
 
 
@@ -141,6 +145,8 @@ angular.module('asPkpApp.selectedLeafCtrl', [])
                 $scope.selectedLeafObj.getPrpMainColumns();
             } else if ($stateParams.type === 'TableLeaf' && $stateParams.typeDetail === 'prpIbmu') {
                 $scope.selectedLeafObj.getPrpIbmuColumns();
+            } else if ($stateParams.type === 'SchemeLeaf') {
+                $scope.selectedLeafObj.getXML('main');
             }
 
             /**

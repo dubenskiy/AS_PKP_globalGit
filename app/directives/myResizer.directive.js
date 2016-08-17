@@ -70,36 +70,18 @@ angular.module('asPkpApp.myResizer.directive', [])
                         rightContent = document.getElementById('' + $attr.rightContent),
                         parentDiv = document.getElementById('parentDiv');
 
-                    $window.onresize = function (event) {
-                        $log.info('resize');
-                    };
-
-                    // $attr.indent
-
                     sliderElemX.style.left = parseInt((leftContent.clientWidth * 100) / parentDiv.clientWidth) + '%';
-                    // $log.info('sliderElemX.style.left ' + sliderElemX.style.left);
-                    rightContent.style.width = 100 - parseInt(sliderElemX.style.left) + '%';
-                    // $log.info('rightContent.style.width ' + rightContent.style.width);
-                    // var allWidth = parseInt(leftContent.clientWidth);
-                    // rightContent.style.left = leftContent.clientWidth + 'px';
+                    rightContent.style.width = 99 - parseInt(sliderElemX.style.left) + '%';
 
                     sliderElemX.onmousedown = function (event) {
 
-                        // $log.warn('% ' + parseInt((leftContent.clientWidth * 100) / parentDiv.clientWidth));
-                        // $log.info('leftContent.clientWidth ' + leftContent.clientWidth);
-                        // $log.info('parentDiv ' + parentDiv.clientWidth);
-
                         // получаю координаты
                         var sliderElemCoords = getCoords(sliderElemX);
-                        // https://learn.javascript.ru/article/drag-and-drop/ball_shift.png
-                        // 10 это отступ слайдера
                         var sliderShiftX = event.pageX - sliderElemCoords.left;
 
                         document.onmousemove = function (event) {
                             // $attr.indent - отступ от края экрана до родительского блока
                             var newSliderElemLeft = event.pageX - sliderShiftX;
-
-                            // $log.warn(parseInt(newSliderElemLeft));
 
                             // ограничители
                             if (newSliderElemLeft > +$attr.max) {
@@ -109,12 +91,9 @@ angular.module('asPkpApp.myResizer.directive', [])
                                 newSliderElemLeft = $attr.min;
                             }
 
-                            $log.info('rightContent ' + parseInt(rightContent.style.width));
-                            $log.info('newSliderElemLeft ' + parseInt((newSliderElemLeft * 100) / parentDiv.clientWidth));
-
                             sliderElemX.style.left = parseInt((newSliderElemLeft * 100) / parentDiv.clientWidth) + '%';
                             leftContent.style.width = parseInt((newSliderElemLeft * 100) / parentDiv.clientWidth) + '%';
-                            rightContent.style.width = 100 - parseInt((newSliderElemLeft * 100) / parentDiv.clientWidth) + '%';
+                            rightContent.style.width = 99 - parseInt((newSliderElemLeft * 100) / parentDiv.clientWidth) + '%';
                         };
 
                         document.onmouseup = function () {

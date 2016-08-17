@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://activiti.org/test">
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath"
+             targetNamespace="http://activiti.org/test">
     <process id="sub_proc_1" name="Раздел 1 - Подготовка к автоматизированной переписи" isExecutable="true">
         <userTask id="usertask1" name="7.Рассылка на ИВЦ дорог РФ файлов расхождений"></userTask>
         <sequenceFlow id="flow28" sourceRef="usertask1" targetRef="inclusivegateway2"></sequenceFlow>
@@ -9,7 +12,8 @@
         <sequenceFlow id="flow1" sourceRef="receivetask3" targetRef="sid-3F16F711-F37F-4421-B618-90DB6B41E493"></sequenceFlow>
         <serviceTask id="servicetask2" name="5.Формирование файлов расхождений по результатам сверки КМС ЕМПП и АСОУП-2КС на 18:00"></serviceTask>
         <sequenceFlow id="flow21" sourceRef="servicetask2" targetRef="sid-BA1FDA6D-BF58-4FE5-94FF-B39CB27B07F6"></sequenceFlow>
-        <serviceTask id="servicetask3" name="4.Выполнение сверки среза КМС ЕМПП и среза АСОУП-2КС на 18:00 московского времени с загрузкой в таблицу  сверки: таблица  LKMC.SVERKA1 "></serviceTask>
+        <serviceTask id="servicetask3"
+                     name="4.Выполнение сверки среза КМС ЕМПП и среза АСОУП-2КС на 18:00 московского времени с загрузкой в таблицу  сверки: таблица  LKMC.SVERKA1 "></serviceTask>
         <sequenceFlow id="flow25" sourceRef="servicetask3" targetRef="servicetask2"></sequenceFlow>
         <inclusiveGateway id="sid-6D4E4D73-3ABF-4BD5-8E38-4DAEE9185956"></inclusiveGateway>
         <serviceTask id="servicetask4" name="6.Выполнение сверки среза КМС ЕМПП и среза КММП ИБМУ на 18:00 московского времени с загрузкой в таблицу  сверки: таблица  LKMC.SVERKA2"></serviceTask>
