@@ -55,6 +55,7 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                         obj.class = obj.id + " process-shape-step"
                     } else if (key == 'parallelGateway' || key == 'inclusiveGateway') {
                         obj.class = obj.id + " process-shape-diamond";
+                        // $log.debug(obj);
                         obj.width -= 12;
                         obj.height -= 12;
                         obj.left += 6;
@@ -230,38 +231,28 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                             //         (~(valBPMNDiagram._id).indexOf("step")) ? valBPMNDiagram._id + " process-shape-step" : valBPMNDiagram._id + " process-shape-user-task"
                         };
 
+                        // $log.log(shape);
+
                         delete mainData.process['_id'];
                         delete mainData.process['_isExecutable'];
                         delete mainData.process['_name'];
 
                         for (var key in mainData.process) {
-
                             if (mainData.process[key].length) {
                                 angular.forEach(mainData.process[key], function (val, index) {
                                     if (val._id == shape.bpmnElement) {
                                         getClassName(key, shape);
-                                        // $log.log(key + '****' + index);
                                     }
                                 })
                             } else {
                                 if (mainData.process[key]._id == shape.bpmnElement) {
                                     getClassName(key, shape);
-                                    // $log.debug('%%%%%%% ' + key)
                                 }
                             }
-
-                            // if (~shape.bpmnElement.toLowerCase().indexOf('' + key.toLowerCase())) {
-                            //     getClassName(key, shape);
-                            //     // $log.info("Ключ: " + key);
-                            //
-                            // }
-
-
                         }
 
                         // $log.warn(angular.element(document.getElementById('' + $attr.idparent)));
                         angular.element(document.getElementById('' + $attr.idparent)).append($compile(getTemplate(shape))($scope));
-
 
                     });
 

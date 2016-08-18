@@ -37,49 +37,65 @@ angular.module('asPkpApp.selectedLeafCtrl', [])
             $scope.selectedLeafObj.openNewProcess = function (className) {
 
                 $scope.selectedLeafObj.showSheme = null;
-                if (~className.indexOf("_prepare_step_")) {
-                    $log.debug('_prepare_step_');
-
+                if (~className.indexOf("prepare_step")) {
                     newTab('prepare_step', 'section_r1')
                 } else if (~className.indexOf("BPMNShape_step_r2")) {
-                    $log.debug('BPMNShape_step_r2');
-                    // $scope.selectedLeafObj.showSheme = 'BPMNShape_step_r2';
                     newTab('BPMNShape_step_r2', 'section_r2')
+                } else if (~className.indexOf("BPMNShape_step_r3")) {
+                    newTab('BPMNShape_step_r3', 'section_r3')
+                } else if (~className.indexOf("BPMNShape_step_r4")) {
+                    newTab('BPMNShape_step_r4', 'section_r4')
+                } else if (~className.indexOf("BPMNShape_step_r5")) {
+                    newTab('BPMNShape_step_r5', 'section_r5')
+                } else if (~className.indexOf("BPMNShape_step_r6")) {
+                    newTab('BPMNShape_step_r6', 'section_r6')
                 }
 
                 function newTab(tabName, xmlName) {
+                    var indexExistTab = -1,
+                        newTab;
+
                     if ($scope.tabs.length > 0) {
-                        $log.info(1);
+                        // $log.log('массив существует');
                         angular.forEach($scope.tabs, function (val, index) {
-                            $log.info('tabName ' + tabName);
-                            if (tabName == val.title) {
-                                $timeout(function () {
-                                    $scope.activeTabIndex = ($scope.tabs.length );
-                                });
-                            } else {
-                                var newTab = {title: tabName, showScheme: tabName};
-                                $scope.tabs.push(newTab);
-                                $timeout(function () {
-                                    $scope.activeTabIndex = ($scope.tabs.length );
-                                    $scope.selectedLeafObj.getXML(xmlName);
-                                });
+                            if (val.title == tabName) {
+                                indexExistTab = index;
                             }
                         });
+
+                        if (indexExistTab >= 0) {
+                            // $log.log('Открывается существующая вкладка');
+                            $timeout(function () {
+                                $scope.activeTabIndex = $scope.tabs[indexExistTab].activeTabIndex;
+                            });
+                        } else {
+                            // $log.log('Открывается новая вкладка');
+                            newTab = {
+                                title: tabName,
+                                showScheme: tabName,
+                                activeTabIndex: $scope.tabs.length + 1
+                            };
+                            $scope.tabs.push(newTab);
+                            $timeout(function () {
+                                $scope.activeTabIndex = $scope.tabs.length;
+                                $scope.selectedLeafObj.getXML(xmlName);
+                            });
+                        }
                     } else {
-                        var newTab = {title: tabName, showScheme: tabName};
+                        newTab = {
+                            title: tabName,
+                            showScheme: tabName,
+                            activeTabIndex: 1
+                        };
                         $scope.tabs.push(newTab);
-                        // $scope.idParent ++;
+                        // $log.log('массив не существует');
                         $timeout(function () {
-                            $scope.activeTabIndex = ($scope.tabs.length );
+                            $scope.activeTabIndex = $scope.tabs.length;
                             $scope.selectedLeafObj.getXML(xmlName);
+                            // return $scope.activeTabIndex;
                         });
                     }
-
-                    $timeout(function () {
-                        $log.debug($scope.tabs)
-                    });
                 }
-
             };
 
 
