@@ -76,7 +76,7 @@
 
 .text-y {
     font-size: 1.8em;
-    margin-left: 49%;
+    /*margin-left: 49%;*/
     margin-top: -2px;
     z-index: 10;
     position: absolute;

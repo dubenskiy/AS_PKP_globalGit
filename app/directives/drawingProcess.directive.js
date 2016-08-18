@@ -25,7 +25,7 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                         "class=\"" + val.class + "\" " +
                         "style='width: " + val.width + "px; height: " + val.height + "px; left: " + val.left + "px; top: " + val.top + "px;' " +
                         "ng-click='elemSelected(\"" + val.id + "\")'" +
-                        "ng-dblclick='selectedLeafObj.openNewProcess(\"" + val.id + "\")'>" +
+                        "ng-dblclick='openNewProcess({idElem: \"" + val.id + "\"})'>" +
                         "</div>";
 
                     var cornerTpl = "<div class=\"" + val.cornerClass + "\" style='" +
@@ -276,7 +276,7 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                             drawingEdge(+val.waypoint[3]._x, +val.waypoint[4]._x, +val.waypoint[3]._y, +val.waypoint[4]._y, val, 4, 'backward', 3, true, 15);
                         }
                     })
-                }, 1000);
+                }, 500);
 
                 $element.on('$destroy', function () {
                     $timeout.cancel(timeoutId);
@@ -287,55 +287,48 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                  * Выбран элемент
                  * @param className
                  */
-                $scope.elemSelected = function (className) {
+                $scope.elemSelected = function (idElem) {
 
-                    // $log.info(className);
+                    // $log.info(idElem);
 
                     angular.forEach(arrOldClass, function (val, index) {
                         styleSelectedElem(val, 'old');
                     });
 
-                    styleSelectedElem(className, 'new');
+                    styleSelectedElem(idElem, 'new');
 
-                    function styleSelectedElem(nameClass, type) {
-                        // $log.info(angular.element(document.querySelectorAll('.' + nameClass)));
-                        angular.forEach(angular.element(document.querySelectorAll('.' + nameClass)), function (val, index) {
-                            if (~val.className.indexOf("corner")) {
-                                // совпадение есть!
-                                var arrBorderProperties = val.getAttribute('borderproperties').split(', ');
-                                val.style.borderLeft = type == 'new' ? '' + arrBorderProperties[0] : '';
-                                val.style.borderRight = type == 'new' ? '' + arrBorderProperties[1] : '';
-                                val.style.borderTop = type == 'new' ? '' + arrBorderProperties[2] : '';
-                                val.style.borderBottom = type == 'new' ? '' + arrBorderProperties[3] : '';
-                            } else if (~val.className.indexOf("process-edge")) {
-                                val.style.backgroundColor = type == 'new' ? 'black' : '';
-                            } else {
-                                val.style.border = type == 'new' ? '3px solid #0965AE' : '';
-                            }
-                        });
-                    }
+                    $scope.taskDetailInfo({idElem: idElem});
 
-                    arrOldClass.push(className);
 
+                    arrOldClass.push(idElem);
                 };
 
-                // $scope.openNewProcess = function (className) {
-                //       if (~className.indexOf("_prepare_step_")){
-                //           alert('hihi');
-                //       }
-                // };
+                function styleSelectedElem(nameClass, type) {
+                    // $log.info(angular.element(document.querySelectorAll('.' + nameClass)));
+                    angular.forEach(angular.element(document.querySelectorAll('.' + nameClass)), function (val, index) {
+                        if (~val.className.indexOf("corner")) {
+                            // совпадение есть!
+                            var arrBorderProperties = val.getAttribute('borderproperties').split(', ');
+                            val.style.borderLeft = type == 'new' ? '' + arrBorderProperties[0] : '';
+                            val.style.borderRight = type == 'new' ? '' + arrBorderProperties[1] : '';
+                            val.style.borderTop = type == 'new' ? '' + arrBorderProperties[2] : '';
+                            val.style.borderBottom = type == 'new' ? '' + arrBorderProperties[3] : '';
+                        } else if (~val.className.indexOf("process-edge")) {
+                            val.style.backgroundColor = type == 'new' ? 'black' : '';
+                        } else {
+                            val.style.border = type == 'new' ? '3px solid #0965AE' : '';
+                        }
+                    });
+                }
 
             }
 
             return {
                 restrict: 'EA',
-                // scope: {
-                //     customerInfo: '=info'
-                // },
-                // controller: function ($scope) {
-                //
-                //
-                // },
+                scope: {
+                    'taskDetailInfo': '&onTaskDetailInfo',
+                    'openNewProcess': '&onOpenNewProcess'
+                },
                 link: linker
             };
         }

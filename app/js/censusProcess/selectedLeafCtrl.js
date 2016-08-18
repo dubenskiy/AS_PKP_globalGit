@@ -13,6 +13,7 @@ angular.module('asPkpApp.selectedLeafCtrl', [])
             $scope.selectedLeafObj.gridTable = {};
             $scope.selectedLeafObj.pageNumber = 1;
             $scope.selectedLeafObj.countRowInPage = '5';
+            $scope.selectedLeafObj.isDetailsScheme = false;
             $scope.model = $scope.selectedLeafObj;
 
             // $scope.selectedLeafObj.activeTabIndex = 0;
@@ -30,34 +31,43 @@ angular.module('asPkpApp.selectedLeafCtrl', [])
 
             // ************************* test ******************
 
-            $scope.activeTabIndex = 0;
-            $scope.idParent = 0;
-            $scope.tabs = [];
+            $scope.selectedLeafObj.activeTabIndex = 0;
+            // $scope.idParent = 0;
+            $scope.selectedLeafObj.tabs = [];
 
-            $scope.selectedLeafObj.openNewProcess = function (className) {
+            /**
+             * Открытие новой вкладки
+             * @param idElem
+             */
+            $scope.selectedLeafObj.openNewProcess = function (idElem) {
 
                 $scope.selectedLeafObj.showSheme = null;
-                if (~className.indexOf("prepare_step")) {
+                if (~idElem.indexOf("prepare_step")) {
                     newTab('prepare_step', 'section_r1')
-                } else if (~className.indexOf("BPMNShape_step_r2")) {
+                } else if (~idElem.indexOf("BPMNShape_step_r2")) {
                     newTab('BPMNShape_step_r2', 'section_r2')
-                } else if (~className.indexOf("BPMNShape_step_r3")) {
+                } else if (~idElem.indexOf("BPMNShape_step_r3")) {
                     newTab('BPMNShape_step_r3', 'section_r3')
-                } else if (~className.indexOf("BPMNShape_step_r4")) {
+                } else if (~idElem.indexOf("BPMNShape_step_r4")) {
                     newTab('BPMNShape_step_r4', 'section_r4')
-                } else if (~className.indexOf("BPMNShape_step_r5")) {
+                } else if (~idElem.indexOf("BPMNShape_step_r5")) {
                     newTab('BPMNShape_step_r5', 'section_r5')
-                } else if (~className.indexOf("BPMNShape_step_r6")) {
+                } else if (~idElem.indexOf("BPMNShape_step_r6")) {
                     newTab('BPMNShape_step_r6', 'section_r6')
                 }
 
+                /**
+                 * newTab
+                 * @param tabName
+                 * @param xmlName
+                 */
                 function newTab(tabName, xmlName) {
                     var indexExistTab = -1,
                         newTab;
 
-                    if ($scope.tabs.length > 0) {
+                    if ($scope.selectedLeafObj.tabs.length > 0) {
                         // $log.log('массив существует');
-                        angular.forEach($scope.tabs, function (val, index) {
+                        angular.forEach($scope.selectedLeafObj.tabs, function (val, index) {
                             if (val.title == tabName) {
                                 indexExistTab = index;
                             }
@@ -66,18 +76,18 @@ angular.module('asPkpApp.selectedLeafCtrl', [])
                         if (indexExistTab >= 0) {
                             // $log.log('Открывается существующая вкладка');
                             $timeout(function () {
-                                $scope.activeTabIndex = $scope.tabs[indexExistTab].activeTabIndex;
+                                $scope.selectedLeafObj.activeTabIndex = $scope.selectedLeafObj.tabs[indexExistTab].activeTabIndex;
                             });
                         } else {
                             // $log.log('Открывается новая вкладка');
                             newTab = {
                                 title: tabName,
                                 showScheme: tabName,
-                                activeTabIndex: $scope.tabs.length + 1
+                                activeTabIndex: $scope.selectedLeafObj.tabs.length + 1
                             };
-                            $scope.tabs.push(newTab);
+                            $scope.selectedLeafObj.tabs.push(newTab);
                             $timeout(function () {
-                                $scope.activeTabIndex = $scope.tabs.length;
+                                $scope.selectedLeafObj.activeTabIndex = $scope.selectedLeafObj.tabs.length;
                                 $scope.selectedLeafObj.getXML(xmlName);
                             });
                         }
@@ -87,14 +97,26 @@ angular.module('asPkpApp.selectedLeafCtrl', [])
                             showScheme: tabName,
                             activeTabIndex: 1
                         };
-                        $scope.tabs.push(newTab);
+                        $scope.selectedLeafObj.tabs.push(newTab);
                         // $log.log('массив не существует');
                         $timeout(function () {
-                            $scope.activeTabIndex = $scope.tabs.length;
+                            $scope.selectedLeafObj.activeTabIndex = $scope.selectedLeafObj.tabs.length;
                             $scope.selectedLeafObj.getXML(xmlName);
-                            // return $scope.activeTabIndex;
+                            // return $scope.selectedLeafObj.activeTabIndex;
                         });
                     }
+                }
+            };
+
+            /**
+             *  taskDetailInfo
+             * @param idElem
+             */
+            $scope.selectedLeafObj.taskDetailInfo = function (idElem) {
+                if (~idElem.indexOf("BPMNShape_usertask")) {
+                    // alert(idElem);
+                    $scope.selectedLeafObj.isDetailsScheme = true;
+                    // $log.debug($scope.selectedLeafObj.isDetailsScheme);
                 }
             };
 
@@ -102,6 +124,14 @@ angular.module('asPkpApp.selectedLeafCtrl', [])
             /**
              * Загрузка данных
              */
+            $scope.selectedLeafObj.getXML = function (name) {
+                censusProcessService.getXML(name).then(function (response) {
+                    if (response) {
+                        $scope.dataJSON = angular.fromJson(response.definitions);
+                    }
+                });
+            };
+
             $scope.selectedLeafObj.getListFile = function () {
                 censusProcessService.getListFile().then(function (response) {
                     if (response) {

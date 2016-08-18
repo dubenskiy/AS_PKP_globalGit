@@ -31,7 +31,8 @@ angular.module('asPkpApp.myResizer.directive', [])
 
                     // устанавливаю первоначальный отступ полосы прокрутки
                     var topContentCoords = getCoords(topContent);
-                    sliderElemY.style.top = topContentCoords.bottom - $attr.indent + 'px';
+                    sliderElemY.style.top = topContent.clientHeight  + +$attr.indent + 16 + 'px';
+                    sliderElemY.style.left = topContentCoords.left + (topContent.clientWidth / 2) + 'px';
 
                     sliderElemY.onmousedown = function (event) {
 
@@ -47,12 +48,14 @@ angular.module('asPkpApp.myResizer.directive', [])
                             // ограничители
                             if (newSliderElemTop > +$attr.max) {
                                 newSliderElemTop = $attr.max;
+                                // $log.warn('max');
                             }
                             if (newSliderElemTop < +$attr.min) {
                                 newSliderElemTop = $attr.min;
+                                // $log.warn('min');
                             }
 
-                            sliderElemY.style.top = +newSliderElemTop + 'px';
+                            sliderElemY.style.top = +newSliderElemTop + +$attr.indent + 'px';
                             topContent.style.height = +newSliderElemTop + 'px';
                             // bottomContent.style.top = +newBottomContentTop + 'px';
                         };
