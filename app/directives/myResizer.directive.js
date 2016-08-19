@@ -6,66 +6,62 @@
 
 angular.module('asPkpApp.myResizer.directive', [])
 
-    .directive("myResizer", function ($window, $document, $log) {
+    .directive("myResizer", function ($window, $document, $log, $timeout) {
             function linker($scope, $element, $attr) {
 
-                // var scrollDiv = document.getElementById('' + $attr.scrollDiv);
-                // var elems = document.getElementById('' + $attr.rightContent).childNodes;
-                // elems = Array.prototype.slice.call(elems); // теперь elems - массив
-                // scrollDiv.style.height = elems[2].clientHeight + 'px';
-
-
-                // elems.forEach(function(elem) {
-                //     $log.warn( elem ); // HEAD, текст, BODY
-                // });
-
-                // $log.warn(elems[2].clientHeight);
+                var timeoutId;
 
 
                 // вверх-вниз
                 if ($attr.orientation === 'vertical') {
-                    var sliderElemY = document.getElementById('slider-y'),
-                        topContent = document.getElementById('' + $attr.topContent),
-                        bottomContent = document.getElementById('' + $attr.bottomContent);
 
+                    timeoutId = $timeout(function () {
 
-                    // устанавливаю первоначальный отступ полосы прокрутки
-                    var topContentCoords = getCoords(topContent);
-                    sliderElemY.style.top = topContent.clientHeight  + +$attr.indent + 16 + 'px';
-                    sliderElemY.style.left = topContentCoords.left + (topContent.clientWidth / 2) + 'px';
+                        var sliderElemY = document.getElementById('slider-y'),
+                            topContent = document.getElementById('' + $attr.topContent),
+                            bottomContent = document.getElementById('' + $attr.bottomContent);
 
-                    sliderElemY.onmousedown = function (event) {
+                        // устанавливаю первоначальный отступ полосы прокрутки
+                        var topContentCoords = getCoords(topContent);
+                        sliderElemY.style.top = topContent.clientHeight + +$attr.indent + 16 + 'px';
+                        sliderElemY.style.left = topContentCoords.left + (topContent.clientWidth / 2) + 'px';
 
-                        // получаю координаты
-                        var sliderElemCoords = getCoords(sliderElemY);
-                        // https://learn.javascript.ru/article/drag-and-drop/ball_shift.png
-                        var sliderShiftY = event.pageY - sliderElemCoords.top;
+                        sliderElemY.onmousedown = function (event) {
 
-                        document.onmousemove = function (event) {
-                            // $attr.indent - отступ от края экрана до родительского блока
-                            var newSliderElemTop = event.pageY - sliderShiftY - $attr.indent;
+                            // получаю координаты
+                            var sliderElemCoords = getCoords(sliderElemY);
+                            // https://learn.javascript.ru/article/drag-and-drop/ball_shift.png
+                            var sliderShiftY = event.pageY - sliderElemCoords.top;
 
-                            // ограничители
-                            if (newSliderElemTop > +$attr.max) {
-                                newSliderElemTop = $attr.max;
-                                // $log.warn('max');
-                            }
-                            if (newSliderElemTop < +$attr.min) {
-                                newSliderElemTop = $attr.min;
-                                // $log.warn('min');
-                            }
+                            document.onmousemove = function (event) {
+                                // $attr.indent - отступ от края экрана до родительского блока
+                                var newSliderElemTop = event.pageY - sliderShiftY - $attr.indent;
 
-                            sliderElemY.style.top = +newSliderElemTop + +$attr.indent + 'px';
-                            topContent.style.height = +newSliderElemTop + 'px';
-                            // bottomContent.style.top = +newBottomContentTop + 'px';
-                        };
+                                // ограничители
+                                if (newSliderElemTop > +$attr.max) {
+                                    newSliderElemTop = $attr.max;
+                                    // $log.warn('max');
+                                }
+                                if (newSliderElemTop < +$attr.min) {
+                                    newSliderElemTop = $attr.min;
+                                    // $log.warn('min');
+                                }
 
-                        document.onmouseup = function () {
-                            document.onmousemove = document.onmouseup = null;
-                        };
+                                sliderElemY.style.top = +newSliderElemTop + +$attr.indent + 'px';
+                                topContent.style.height = +newSliderElemTop + 'px';
+                                // bottomContent.style.top = +newBottomContentTop + 'px';
+                            };
 
-                        return false; // disable selection start (cursor change)
-                    }
+                            document.onmouseup = function () {
+                                document.onmousemove = document.onmouseup = null;
+                                $element.on('$destroy', function () {
+                                    $timeout.cancel(timeoutId);
+                                });
+                            };
+
+                            return false; // disable selection start (cursor change)
+                        }
+                    }, 100);
                 } else if ($attr.orientation === 'horizontal') {
 
                     var sliderElemX = document.getElementById('slider-x'),

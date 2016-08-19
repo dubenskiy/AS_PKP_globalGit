@@ -9,7 +9,6 @@ angular.module('asPkpApp.drawingProcess.directive', [])
     .directive("drawingProcess", function ($window, $document, $log, $timeout, $compile) {
             function linker($scope, $element, $attr) {
 
-
                 var timeoutId,
                     arrOldClass = [];
 
@@ -34,10 +33,6 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                         "left: " + val.cornerLeft + "px; " +
                         "top: " + val.cornerTop + "px; " +
                         "border-radius: " + val.cornerBorderRadius + "; " +
-                        // "border-left: " + val.cornerBorderLeft + "; " +
-                        // "border-right: " + val.cornerBorderRight + "; " +
-                        // "border-top: " + val.cornerBorderTop + "; " +
-                        // "border-bottom: " + val.cornerBorderBottom + ";" +
                         "' ng-click='elemSelected(\"" + val.id + "\")' borderProperties='" + val.cornerBorderLeft + ", " + val.cornerBorderRight + ", " + val.cornerBorderTop + ", " + val.cornerBorderBottom + "'" +
                         "></div>";
 
@@ -55,7 +50,6 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                         obj.class = obj.id + " process-shape-step"
                     } else if (key == 'parallelGateway' || key == 'inclusiveGateway') {
                         obj.class = obj.id + " process-shape-diamond";
-                        // $log.debug(obj);
                         obj.width -= 12;
                         obj.height -= 12;
                         obj.left += 6;
@@ -69,7 +63,7 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                 }
 
                 /**
-                 * Отрисовка элемента
+                 * Отрисовка линий (стрелок)
                  * @param x1
                  * @param x2
                  * @param y1
@@ -83,6 +77,10 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                  */
                 function drawingEdge(x1, x2, y1, y2, otherInfo, lineThickness, direction, x1Index, isCornerDiv, cornerSize) {
 
+                    /**
+                     * Формирование координат и размеров для линий (стрелок)
+                     * @returns {{id: *, left: number, top: number, height: number, width: number, bpmnElement: *, class: string, lineThickness: *, cornerWidth: *, cornerHeight: *, cornerClass: string}}
+                     */
                     function indentFunc() {
                         if (direction === 'forward') {
                             // вперед
@@ -199,10 +197,14 @@ angular.module('asPkpApp.drawingProcess.directive', [])
 
                     if (direction) indentFunc();
 
+                    /**
+                     * вставка эллемента (стрелка или блок) в DOM
+                     */
                     angular.element(document.getElementById('' + $attr.idparent)).append($compile(getTemplate(edge))($scope));
 
-                    // $element.append($compile(getTemplate(edge))($scope));
-
+                    /**
+                     * вставка эллемента (угол стрелки) в DOM
+                     */
                     if (isCornerDiv) angular.element(document.getElementById('' + $attr.idparent)).append($compile(getTemplate(edge, 'cornerDiv'))($scope));
 
                 }
@@ -214,9 +216,7 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                     var shape = {},
                         mainData = angular.fromJson($attr.data);
 
-                    // $log.info($attr.idparent);
-
-                    // Блоки
+                    // *********************************** Блоки ****************************** //
                     angular.forEach(mainData.BPMNDiagram.BPMNPlane.BPMNShape, function (valBPMNDiagram, index) {
                         shape = {
                             id: valBPMNDiagram._id,
@@ -225,18 +225,14 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                             left: +valBPMNDiagram.Bounds._x + 20,
                             top: +valBPMNDiagram.Bounds._y + 55,
                             bpmnElement: valBPMNDiagram._bpmnElement
-                            // class:  valBPMNDiagram._id + " process-shape"
-                            // class: (~(valBPMNDiagram._id).indexOf("gateway")) ? valBPMNDiagram._id + " process-shape-diamond" :
-                            //     (~(valBPMNDiagram._id).indexOf("event") || ~(valBPMNDiagram._id).indexOf("sid")) ? valBPMNDiagram._id + " process-shape-circle" :
-                            //         (~(valBPMNDiagram._id).indexOf("step")) ? valBPMNDiagram._id + " process-shape-step" : valBPMNDiagram._id + " process-shape-user-task"
                         };
 
-                        // $log.log(shape);
-
+                        /**
+                         * Определяю тип эллемента и в зависимости от этого применяю класс
+                         */
                         delete mainData.process['_id'];
                         delete mainData.process['_isExecutable'];
                         delete mainData.process['_name'];
-
                         for (var key in mainData.process) {
                             if (mainData.process[key].length) {
                                 angular.forEach(mainData.process[key], function (val, index) {
@@ -251,12 +247,14 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                             }
                         }
 
-                        // $log.warn(angular.element(document.getElementById('' + $attr.idparent)));
+                        /**
+                         * вставка эллемента в DOM
+                         */
                         angular.element(document.getElementById('' + $attr.idparent)).append($compile(getTemplate(shape))($scope));
-
                     });
+                    // *********************************** Блоки ****************************** //
 
-                    // Линии
+                    // *********************************** Линии ****************************** //
                     angular.forEach(mainData.BPMNDiagram.BPMNPlane.BPMNEdge, function (val, index) {
                         // $log.info(val);
                         if (val.waypoint.length == 2) {
@@ -276,20 +274,20 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                             drawingEdge(+val.waypoint[3]._x, +val.waypoint[4]._x, +val.waypoint[3]._y, +val.waypoint[4]._y, val, 4, 'backward', 3, true, 15);
                         }
                     })
+                    // *********************************** Линии ****************************** //
                 }, 500);
 
                 $element.on('$destroy', function () {
                     $timeout.cancel(timeoutId);
                 });
 
+                // *********************************** Взаимодействие с отрисованными эллементами ****************************** //
 
                 /**
                  * Выбран элемент
                  * @param className
                  */
                 $scope.elemSelected = function (idElem) {
-
-                    // $log.info(idElem);
 
                     angular.forEach(arrOldClass, function (val, index) {
                         styleSelectedElem(val, 'old');
@@ -299,10 +297,14 @@ angular.module('asPkpApp.drawingProcess.directive', [])
 
                     $scope.taskDetailInfo({idElem: idElem});
 
-
                     arrOldClass.push(idElem);
                 };
 
+                /**
+                 * Добавление рамки выбранного эллемента
+                 * @param nameClass
+                 * @param type
+                 */
                 function styleSelectedElem(nameClass, type) {
                     // $log.info(angular.element(document.querySelectorAll('.' + nameClass)));
                     angular.forEach(angular.element(document.querySelectorAll('.' + nameClass)), function (val, index) {
@@ -321,6 +323,8 @@ angular.module('asPkpApp.drawingProcess.directive', [])
                     });
                 }
 
+                // *********************************** Взаимодействие с отрисованными эллементами ****************************** //
+
             }
 
             return {
@@ -333,5 +337,3 @@ angular.module('asPkpApp.drawingProcess.directive', [])
             };
         }
     );
-
-// border: 3px solid #0965AE;

@@ -14,6 +14,7 @@ angular.module('asPkpApp.selectedLeafCtrl', [])
             $scope.selectedLeafObj.pageNumber = 1;
             $scope.selectedLeafObj.countRowInPage = '5';
             $scope.selectedLeafObj.isDetailsScheme = false;
+            $scope.selectedLeafObj.counterSelectedTab = 0;
             $scope.model = $scope.selectedLeafObj;
 
             // $scope.selectedLeafObj.activeTabIndex = 0;
@@ -57,7 +58,7 @@ angular.module('asPkpApp.selectedLeafCtrl', [])
                 }
 
                 /**
-                 * newTab
+                 * Открытие нового таба
                  * @param tabName
                  * @param xmlName
                  */
@@ -75,6 +76,7 @@ angular.module('asPkpApp.selectedLeafCtrl', [])
 
                         if (indexExistTab >= 0) {
                             // $log.log('Открывается существующая вкладка');
+                            $scope.selectedLeafObj.isDetailsScheme = false;
                             $timeout(function () {
                                 $scope.selectedLeafObj.activeTabIndex = $scope.selectedLeafObj.tabs[indexExistTab].activeTabIndex;
                             });
@@ -86,30 +88,31 @@ angular.module('asPkpApp.selectedLeafCtrl', [])
                                 activeTabIndex: $scope.selectedLeafObj.tabs.length + 1
                             };
                             $scope.selectedLeafObj.tabs.push(newTab);
+                            $scope.selectedLeafObj.isDetailsScheme = false;
                             $timeout(function () {
                                 $scope.selectedLeafObj.activeTabIndex = $scope.selectedLeafObj.tabs.length;
                                 $scope.selectedLeafObj.getXML(xmlName);
                             });
                         }
                     } else {
+                        // $log.log('массив не существует');
                         newTab = {
                             title: tabName,
                             showScheme: tabName,
                             activeTabIndex: 1
                         };
                         $scope.selectedLeafObj.tabs.push(newTab);
-                        // $log.log('массив не существует');
+                        $scope.selectedLeafObj.isDetailsScheme = false;
                         $timeout(function () {
                             $scope.selectedLeafObj.activeTabIndex = $scope.selectedLeafObj.tabs.length;
                             $scope.selectedLeafObj.getXML(xmlName);
-                            // return $scope.selectedLeafObj.activeTabIndex;
                         });
                     }
                 }
             };
 
             /**
-             *  taskDetailInfo
+             * показ подробной информации при клике по эллементу
              * @param idElem
              */
             $scope.selectedLeafObj.taskDetailInfo = function (idElem) {
@@ -120,6 +123,42 @@ angular.module('asPkpApp.selectedLeafCtrl', [])
                 }
             };
 
+            /**
+             * действия при выборе таба
+             */
+            $scope.selectedLeafObj.tabSelected = function (index) {
+                $scope.selectedLeafObj.indexTabSelected = index;
+                if ($scope.selectedLeafObj.counterSelectedTab) {
+                    if (index == 0) {
+                        $scope.selectedLeafObj.isDetailsScheme = true;
+                    } else {
+                        $scope.selectedLeafObj.isDetailsScheme = false;
+                    }
+                }
+                $scope.selectedLeafObj.counterSelectedTab++;
+            };
+
+            /**
+             * закрыть выбранный таб
+             */
+            $scope.selectedLeafObj.closeTab = function (index) {
+                // $log.debug(index);
+                // $log.log($scope.selectedLeafObj.tabs);
+                $scope.selectedLeafObj.tabs.splice(index - 1, 1);
+
+                $timeout(function () {
+                    // $log.log($scope.selectedLeafObj.tabs);
+                    $scope.selectedLeafObj.activeTabIndex = 0;
+                }, 100);
+                // alert(index);
+            };
+
+            /**
+             * selectedLeafObj.refreshAllTabs()
+             */
+            $scope.selectedLeafObj.refreshAllTabs = function (index) {
+                alert(index);
+            };
 
             /**
              * Загрузка данных
