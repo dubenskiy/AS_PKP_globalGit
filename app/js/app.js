@@ -29,6 +29,7 @@ angular.module('asPkpApp', [
     'asPkpApp.tasksDetailCtrl',
     'asPkpApp.censusProcessCtrl',
     'asPkpApp.selectedLeafCtrl',
+    'asPkpApp.distributionCtrl',
     // 'asPkpApp.tableSelectedLeafCtrl',
 
     'asDrApp.datePickerCtrl',
@@ -258,7 +259,7 @@ angular.module('asPkpApp', [
                         url: '/censusProcess',
                         views: {
                             '': {
-                                templateUrl: 'pages/censusProcess/censusProcess.tpl.html',
+                                templateUrl: 'pages/censusProcess/censusProcess.html',
                                 controller: 'CensusProcessCtrl'
                                 // controllerAs: 'censusProcess'
                             }
@@ -306,6 +307,25 @@ angular.module('asPkpApp', [
                         },
                         data: {
                             displayName: false
+                        }
+                    })
+
+                    ///////////
+                    // censusProcess //
+                    ///////////
+
+                    .state('distribution', {
+                        url: '/distribution',
+                        views: {
+                            '': {
+                                templateUrl: 'pages/distribution/distribution.html',
+                                controller: 'DistributionCtrl',
+                                controllerAs: 'vm',
+                                // controllerAs: 'censusProcess'
+                            }
+                        },
+                        data: {
+                            displayName: 'Рассылка'
                         }
                     })
 

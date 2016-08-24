@@ -1,0 +1,87 @@
+<div class="panel">
+    <div class="panel-heading">
+        <h3 class="panel-title text-center">Список рассылки</h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-lg-offset-1 col-lg-10">
+                <div class="pad-btm form-inline" style="padding-bottom: 0;">
+                    <div ng-hide="vm.isAddOrEditDestination" class="row">
+                        <div class="col-lg-6 table-toolbar-left">
+                            <div class="form-group">
+                                <button class="btn btn-primary" ng-click="vm.distribution(vm.listDistribution)"><i class="fa fa-envelope-o fa-fw"></i>
+                                    Выполнить рассылку
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 table-toolbar-right">
+                            <div class="form-group">
+                                <button class="btn btn-default" type="button" name="refresh" title="Добавить"
+                                        ng-click="vm.isAddOrEditDestination=!vm.isAddOrEditDestination; vm.setClickedRow(null)"><i
+                                        class="fa fa-plus"></i></button>
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-default" type="button" name="refresh" title="Изменить" ng-disabled="!vm.disabledToolbarButtons"
+                                        ng-click="vm.edit(vm.listDistribution)">
+                                    <i class="fa fa-pencil fa-fw"></i>
+                                </button>
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-default" type="button" name="refresh" title="Удалить" ng-disabled="!vm.disabledToolbarButtons"
+                                        ng-click="vm.removeRow(vm.listDistribution)"><i class="fa fa-trash-o fa-fw"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-show="vm.isAddOrEditDestination" class="row">
+                        <div class=" col-lg-2 table-toolbar-right">
+                            <select name="roadCode" placeholder="Код дороги" ng-model="vm.roadCode" required class="form-control textSizeInput noselect" style="width: 100%">
+                                <option value="" disabled selected hidden>Код дороги</option>
+                                <option value="12">ЖД Крым</option>
+                                <option value="55">ЖД Якутии</option>
+                                <option value="66">ЖД России</option>
+                            </select>
+                        </div>
+                        <div class=" col-lg-4 table-toolbar-right">
+                            <input type="text" class="form-control" ng-model="vm.name" placeholder="ФИО" style="width: 100%">
+                        </div>
+                        <div class=" col-lg-6 table-toolbar-right">
+
+                                <input type="text" class="form-control" ng-model="vm.email" style="width: 80%" placeholder="Электронная почта">
+
+                            <button type="button" ng-if="!vm.disabledToolbarButtons" class="btn btn-primary editable-submit" ng-disabled="!(vm.listDistribution&&vm.roadCode&&vm.name&&vm.email)"
+                                    ng-click="vm.saveNewDestination(vm.listDistribution, vm.roadCode, vm.name, vm.email)"><i class="fa fa-fw fa-check"></i></button>
+                            <button type="button" ng-if="vm.disabledToolbarButtons" class="btn btn-primary editable-submit" ng-disabled="!(vm.listDistribution&&vm.roadCode&&vm.name&&vm.email)"
+                                    ng-click="vm.saveEditDestination(vm.listDistribution, vm.roadCode, vm.name, vm.email)"><i class="fa fa-fw fa-check"></i></button>
+                            <button type="button" class="btn btn-default editable-cancel" ng-click="vm.isAddOrEditDestination=!vm.isAddOrEditDestination"><i
+                                    class="fa fa-fw fa-times"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover noselect" style="cursor: default !important;">
+                        <thead>
+                        <tr>
+                            <th class="text-center">#</th>
+                            <th class="text-center">Код дороги</th>
+                            <th class="text-center">ФИО</th>
+                            <th class="text-center">Адрес электронной почты</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="row in vm.listDistribution track by $index"
+                            ng-click="vm.setClickedRow($index,row)"
+                            ng-class="{'selected': $index == vm.selectedIndex}"
+                            class="text-center">
+                            <td ng-bind="$index+1"></td>
+                            <td ng-bind="row.roadCode"></td>
+                            <td ng-bind="row.name"></td>
+                            <td ng-bind="row.email"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -82,8 +82,11 @@
                     <li>
                         <a ng-class="{activeNavbar: $state.includes('tasks')}" ui-sref="tasks">Задачи</a>
                     </li>
-                    <li ui-sref-active="activeNavbar">
+                    <li>
                         <a ng-class="{activeNavbar: $state.includes('censusProcess')}" ui-sref="censusProcess">Процесс переписи</a>
+                    </li>
+                    <li>
+                        <a ng-class="{activeNavbar: $state.includes('distribution')}" ui-sref="distribution">Рассылка</a>
                     </li>
                 </ul>
                 <ul class="nav navbar-top-links pull-right">
@@ -223,17 +226,17 @@
 
 <!--<script type="text/javascript" src="dist/lib/ng-tags-input.min.js"></script>-->
 
-<script type="text/javascript" src="js/app.js?rev=a0e7ca4cba2edaae430e36cc6245dfc8"></script>
+<script type="text/javascript" src="js/app.js?rev=5a5d6765db907566e2012515e8e14102"></script>
 <script type="text/javascript" src="js/tasks/tasksCtrl.js?rev=1bebc40457d57f6c9c7555c195d9fea8"></script>
-<script type="text/javascript" src="js/tasks/tasksDetailCtrl.js?rev=c94c9c5ded2dae87f9b66a0979da6df7"></script>
+<script type="text/javascript" src="js/tasks/tasksDetailCtrl.js?rev=fa5a4d98374ce6889a80c613744c6bb2"></script>
 <script type="text/javascript" src="js/censusProcess/censusProcessCtrl.js?rev=8044a3480b7e3864eaf1ff78fdbe50d1"></script>
 <script type="text/javascript" src="js/censusProcess/selectedLeafCtrl.js?rev=e10c50ac06311d12f0203b9959c7aa53"></script>
-<!--<script type="text/javascript" src="js/censusProcess/tableSelectedLeafCtrl.js?rev=086be61921024d18ff06ba5f38653404"></script>-->
+<script type="text/javascript" src="js/distribution/distributionCtrl.js?rev=c124bbfdfb1e9ef42c210403eb78f676"></script>
 <script type="text/javascript" src="js/detailInfoFromRowModalCtrl.js"></script>
 
 <script type="text/javascript" src="js/datePickerCtrl.js?rev=1e88f509238335361234c8d26c535a8a"></script>
 
-<script type="text/javascript" src="services/tasks-service.js?rev=adf5ff4f668540e2c9010265f3776db1"></script>
+<script type="text/javascript" src="services/tasks-service.js?rev=5d245c053a5287ed2bfa611370aba2f4"></script>
 <script type="text/javascript" src="services/censusProcess-service.js?rev=2da579ed8321791a2379a8f74c25d4c0"></script>
 
 <!--<script type="text/javascript" src="filters/startsWith-filter.js?rev=ed55b83441e9d065dd44f9755a0ece0a"></script>-->

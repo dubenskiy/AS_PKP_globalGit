@@ -58,8 +58,10 @@ angular.module('asPkpApp.tasks.service', [])
          */
         this.getListFile = function () {
             return $http.get('../json/listFile.json').then(function (response) {
+
                 var time = response.config.responseTimestamp - response.config.requestTimestamp;
                 console.log('The request took ' + (time / 1000) + ' seconds.');
+
                 return response.data;
             });
         };

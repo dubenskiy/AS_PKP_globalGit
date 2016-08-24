@@ -91,14 +91,14 @@ angular.module('asPkpApp.tasksDetailCtrl', [])
                 });
             };
 
-            $scope.tasksDetailObj.getListDistribution = function () {
-                tasksService.getListDistribution().then(function (response) {
-                    if (response) {
-                        $scope.tasksDetailObj.listDistribution = response.data;
-                        // $log.info($scope.tasksData);
-                    }
-                });
-            };
+            // $scope.tasksDetailObj.getListDistribution = function () {
+            //     tasksService.getListDistribution().then(function (response) {
+            //         if (response) {
+            //             $scope.tasksDetailObj.listDistribution = response.data;
+            //             // $log.info($scope.tasksData);
+            //         }
+            //     });
+            // };
 
             $scope.tasksDetailObj.getListUpload3345 = function () {
                 tasksService.getListUpload3345().then(function (response) {
@@ -111,13 +111,8 @@ angular.module('asPkpApp.tasksDetailCtrl', [])
 
             if ($stateParams.type === 'SendDifferencesFiles' || $stateParams.type === 'SendPartDbf') {
                 $scope.tasksDetailObj.getListFile();
-                $scope.tasksDetailObj.getListDistribution();
-            } else if ($stateParams.type === 'AktForm') {
-                $scope.tasksDetailObj.getListDistribution();
             } else if ($stateParams.type === 'ControlUpload3345') {
                 $scope.tasksDetailObj.getListUpload3345();
-            } else if ($stateParams.type === 'SendContainerLis') {
-                $scope.tasksDetailObj.getListDistribution();
             }
 
 
@@ -146,33 +141,33 @@ angular.module('asPkpApp.tasksDetailCtrl', [])
             /**
              * Добавить новую запись в рассылке
              */
-            $scope.tasksDetailObj.saveNewDestination = function (arr) {
-                arr.push($scope.tasksDetailObj.destination);
-                $scope.tasksDetailObj.destination = null;
-                $scope.tasksDetailObj.isAddOrEditDestination = false;
-            };
+            // $scope.tasksDetailObj.saveNewDestination = function (arr) {
+            //     arr.push($scope.tasksDetailObj.destination);
+            //     $scope.tasksDetailObj.destination = null;
+            //     $scope.tasksDetailObj.isAddOrEditDestination = false;
+            // };
 
             /**
              * Изменить строку в рассылке
              */
-            $scope.tasksDetailObj.saveEditDestination = function (arr) {
-                angular.forEach(arr, function (val, index) {
-                    if (val === $scope.tasksDetailObj.selectedRow) {
-                        arr[index] = $scope.tasksDetailObj.destination
-                    }
-                });
-                $scope.tasksDetailObj.destination = null;
-                $scope.tasksDetailObj.isAddOrEditDestination = false;
-                $scope.tasksDetailObj.setClickedRow(null);
-            };
+            // $scope.tasksDetailObj.saveEditDestination = function (arr) {
+            //     angular.forEach(arr, function (val, index) {
+            //         if (val === $scope.tasksDetailObj.selectedRow) {
+            //             arr[index] = $scope.tasksDetailObj.destination
+            //         }
+            //     });
+            //     $scope.tasksDetailObj.destination = null;
+            //     $scope.tasksDetailObj.isAddOrEditDestination = false;
+            //     $scope.tasksDetailObj.setClickedRow(null);
+            // };
 
             /**
              * Выполнить рассылку
              * @param val
              */
-            $scope.tasksDetailObj.distribution = function (val) {
-                alert(val + ' || ' + $stateParams.type);
-            };
+            // $scope.tasksDetailObj.distribution = function (val) {
+            //     alert(val + ' || ' + $stateParams.type);
+            // };
 
             // ************************************************************************* //
 
@@ -193,6 +188,13 @@ angular.module('asPkpApp.tasksDetailCtrl', [])
             $scope.tasksDetailObj.differencesEliminated = function () {
                 alert('ho-ho')
             };
+
+            /**
+             * Обновить расхождения
+             */
+            $scope.tasksDetailObj.refreshEliminated = function () {
+                $scope.tasksDetailObj.getListUpload3345();
+            }  ;
 
             /**
              * test

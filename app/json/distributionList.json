@@ -1,3 +1,18 @@
 [
-  "Иванов П.D.","Иванов П.E.","Иванов П.H.","Иванов П.Q.","Иванов П.С."
+  {
+    "roadCode": "12",
+    "name": "Иванов П.D.",
+    "email": "iva@mail.ru"
+  } ,
+  {
+    "roadCode": "55",
+    "name": "Иванов П.E.",
+    "email": "iva@mail.ru"
+  },
+  {
+    "roadCode": "66",
+    "name": "Иванов П.H.",
+    "email": "iva@mail.ru"
+  }
 ]
+
