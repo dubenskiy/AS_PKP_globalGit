@@ -6,7 +6,16 @@
 
 angular.module('asPkpApp.censusProcess.service', [])
 
-// A RESTful factory for retrieving contacts from 'contacts.json'
+    .factory('UserService', function ($resource) {
+        var data = $resource('http://jsonplaceholder.typicode.com/users/:user', {user: '@user'}, {
+            update: {
+                method: 'PUT'
+            }
+        });
+        return data;
+    })
+
+    // A RESTful factory for retrieving contacts from 'contacts.json'
     .factory('censusProcessService', ['$http', function ($http) {
         return {
 

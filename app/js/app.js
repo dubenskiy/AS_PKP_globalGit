@@ -10,6 +10,7 @@ angular.module('asPkpApp', [
     'ngAnimate',
     'ngSanitize',
     'ngCookies',
+    'ngResource',
     'ui.bootstrap',
     'ui-notification',
 

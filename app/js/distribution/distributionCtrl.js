@@ -3,8 +3,8 @@
  */
 
 angular.module('asPkpApp.distributionCtrl', [])
-    .controller('DistributionCtrl', ['$scope', '$log', '$rootScope', '$stateParams', '$state', '$cookies', '$uibModal', 'tasksService', 'Notification',
-        function ($scope, $log, $rootScope, $stateParams, $state, $cookies, $uibModal, tasksService, Notification) {
+    .controller('DistributionCtrl', ['$scope', '$log', '$rootScope', '$stateParams', '$state', '$cookies', '$uibModal', 'tasksService', 'Notification', 'UserService',
+        function ($scope, $log, $rootScope, $stateParams, $state, $cookies, $uibModal, tasksService, Notification, UserService) {
 
             var vm = this;
             vm.distribution = distribution;
@@ -15,6 +15,26 @@ angular.module('asPkpApp.distributionCtrl', [])
             vm.edit = edit;
             // vm.listDistribution = [];
             // vm.getListDistribution = getListDistribution
+
+
+            // var postUsers = $http.get('http://jsonplaceholder.typicode.com/users/');
+            // postUsers.then(function(result) {
+            //     vm.users = result.data;
+            //     $log.debug(vm.users)
+            // });
+
+            $scope.users = UserService.query();
+            $log.debug($scope.users);
+            $log.debug('------------------------');
+            $scope.oneUser = UserService.get({user: 1});
+            $log.debug($scope.oneUser);
+
+
+            UserService.update({user: 1}, {name: 'Saimon', email: 'saimon@devdactic.com'});
+
+            $log.debug('------------------------');
+            $scope.users = UserService.query();
+            $log.debug($scope.users);
 
             getListDistribution();
 
@@ -63,11 +83,6 @@ angular.module('asPkpApp.distributionCtrl', [])
              * Изменить строку в рассылке
              */
             function saveEditDestination(arr, roadCode, name, email) {
-                // angular.forEach(arr, function (val, index) {
-                //     if (val === vm.selectedRow) {
-                //         arr[index] = vm.destination
-                //     }
-                // });
                 arr[vm.selectedIndex].roadCode = roadCode;
                 arr[vm.selectedIndex].name = name;
                 arr[vm.selectedIndex].email = email;

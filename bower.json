@@ -17,7 +17,8 @@
     "angular-utils-ui-breadcrumbs": "^0.2.2",
     "angularUtils-pagination": "angular-utils-pagination#^0.11.1",
     "angular-resizable": "^1.2.0",
-    "angular-sanitize": "^1.5.7"
+    "angular-sanitize": "^1.5.7",
+    "angular-resource": "^1.5.8"
   },
   "overrides": {
     "jquery": {
