@@ -25,6 +25,7 @@ angular.module('asPkpApp', [
 
     'asPkpApp.tasks.service',
     'asPkpApp.censusProcess.service',
+    'asPkpApp.distribution.service',
 
     'asPkpApp.tasksCtrl',
     'asPkpApp.tasksDetailCtrl',

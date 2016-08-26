@@ -3,8 +3,8 @@
  */
 
 angular.module('asPkpApp.distributionCtrl', [])
-    .controller('DistributionCtrl', ['$scope', '$log', '$rootScope', '$stateParams', '$state', '$cookies', '$uibModal', 'tasksService', 'Notification', 'UserService',
-        function ($scope, $log, $rootScope, $stateParams, $state, $cookies, $uibModal, tasksService, Notification, UserService) {
+    .controller('DistributionCtrl', ['$scope', '$log', '$rootScope', '$stateParams', '$state', '$cookies', '$uibModal', 'DistributionService', 'Notification',
+        function ($scope, $log, $rootScope, $stateParams, $state, $cookies, $uibModal, DistributionService, Notification) {
 
             var vm = this;
             vm.distribution = distribution;
@@ -23,18 +23,18 @@ angular.module('asPkpApp.distributionCtrl', [])
             //     $log.debug(vm.users)
             // });
 
-            $scope.users = UserService.query();
-            $log.debug($scope.users);
-            $log.debug('------------------------');
-            $scope.oneUser = UserService.get({user: 1});
-            $log.debug($scope.oneUser);
+            // $scope.users = DistributionService.getUp();
+            // $log.debug($scope.users);
+            // $log.debug('------------------------');
+            // $scope.oneUser = DistributionService.get({id: 1});
+            // $log.debug($scope.oneUser);
 
 
-            UserService.update({user: 1}, {name: 'Saimon', email: 'saimon@devdactic.com'});
+            // UserService.update({user: 1}, {name: 'Saimon', email: 'saimon@devdactic.com'});
 
-            $log.debug('------------------------');
-            $scope.users = UserService.query();
-            $log.debug($scope.users);
+            // $log.debug('------------------------');
+            // $scope.users = DistributionService.query();
+            // $log.debug($scope.users);
 
             getListDistribution();
 
@@ -102,10 +102,11 @@ angular.module('asPkpApp.distributionCtrl', [])
             }
 
             function getListDistribution() {
-                tasksService.getListDistribution().then(function (response) {
+                DistributionService.getListDistribution().then(function (response) {
                     if (response) {
-                        vm.listDistribution = response.data;
-                        return vm.listDistribution;
+                        $log.info(response);
+                        // vm.listDistribution = response.data;
+                        // return vm.listDistribution;
                         // $log.info($scope.tasksData);
                     }
                 });
