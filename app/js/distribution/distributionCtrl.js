@@ -6,37 +6,16 @@ angular.module('asPkpApp.distributionCtrl', [])
     .controller('DistributionCtrl', ['$scope', '$log', '$rootScope', '$stateParams', '$state', '$cookies', '$uibModal', 'DistributionService', 'Notification',
         function ($scope, $log, $rootScope, $stateParams, $state, $cookies, $uibModal, DistributionService, Notification) {
 
-            var vm = this;
+            let vm = this;
             vm.distribution = distribution;
             vm.setClickedRow = setClickedRow;
             vm.removeRow = removeRow;
             vm.saveNewDestination = saveNewDestination;
             vm.saveEditDestination = saveEditDestination;
             vm.edit = edit;
-            // vm.listDistribution = [];
-            // vm.getListDistribution = getListDistribution
 
-
-            // var postUsers = $http.get('http://jsonplaceholder.typicode.com/users/');
-            // postUsers.then(function(result) {
-            //     vm.users = result.data;
-            //     $log.debug(vm.users)
-            // });
-
-            // $scope.users = DistributionService.getUp();
-            // $log.debug($scope.users);
-            // $log.debug('------------------------');
-            // $scope.oneUser = DistributionService.get({id: 1});
-            // $log.debug($scope.oneUser);
-
-
-            // UserService.update({user: 1}, {name: 'Saimon', email: 'saimon@devdactic.com'});
-
-            // $log.debug('------------------------');
-            // $scope.users = DistributionService.query();
-            // $log.debug($scope.users);
-
-            getListDistribution();
+            $scope.users = DistributionService.query();
+            $log.debug($scope.users);
 
             function edit(arr) {
                 vm.isAddOrEditDestination = !vm.isAddOrEditDestination;

@@ -6,33 +6,10 @@
 
 angular.module('asPkpApp.distribution.service', [])
 
-    .factory('DistributionService', function ($resource, $http) {
+    .factory('DistributionService', function ($resource) {
 
-
-        // $resource('http://10.200.3.92:8080/activiti-rest/service/repository/models', {}, {headers: { 'Authorization': 'Basic a2VybWl0Omtlcm1pdA==' }});
-
-
-        // $resource('http://10.200.3.92:8080/activiti-rest/service/repository/models', {}, {
-        //     getUp: {
-        //         method: 'GET',
-        //         headers: { 'Authorization': 'Basic a2VybWl0Omtlcm1pdA==' }
-        //     }
-        // });
-
-
-        return {
-            getListDistribution: function () {
-                return $http.get('http://10.200.3.92:8087/test'
-                    // {
-                    // headers: {
-                    //     'Authorization': 'Basic a2VybWl0Omtlcm1pdA=='
-                    //
-                    // }
-                // }
-                ).then(function (response) {
-                    return response.data;
-                });
-            }
-        };
+        return $resource('http://10.200.11.169:8085/distributions/:id', {id: '@id'}, {
+            update: {method: 'PUT',  isArray: true}
+        });
         // return data;
     });

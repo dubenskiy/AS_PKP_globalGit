@@ -53,6 +53,26 @@ angular.module('asPkpApp.tasks.service', [])
         };
 
         /**
+         * getFoo
+         * @param fooId
+         */
+        this.getFoo = function (fooId) {
+            // alert(fooId);
+            let promise = $http({
+                method: 'GET',
+                url: '../json/tasks.json'
+            })
+                .success(function (data, status, headers, config) {
+                    return data;
+                })
+                .error(function (data, status, headers, config) {
+                    return {"status": false};
+                });
+
+            return promise;
+        };
+
+        /**
          * listFile
          * @returns {*}
          */

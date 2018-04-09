@@ -34,6 +34,9 @@ angular.module('asPkpApp', [
     'asPkpApp.distributionCtrl',
     // 'asPkpApp.tableSelectedLeafCtrl',
 
+    'asPkpApp.counter.component',
+    'asPkpApp.foo.component',
+
     'asDrApp.datePickerCtrl',
 
     // 'asPkpApp.detailInfoFromRowModalCtrl'
@@ -43,29 +46,58 @@ angular.module('asPkpApp', [
 ])
 
     .run(
-        ['$rootScope', '$state', '$stateParams', '$log', '$cookies', '$uibModal',
-            function ($rootScope, $state, $stateParams, $log, $cookies, $uibModal) {
+        ['$rootScope', '$state', '$log', '$trace', '$transitions',
+            function ($rootScope, $state, $log, $trace, $transitions) {
                 $rootScope.$state = $state;
-                $rootScope.$stateParams = $stateParams;
-                $rootScope.$on("$stateChangeError", console.log.bind(console));
+                // $rootScope.$transition = $transition$.params();
 
-                $rootScope.$on('$stateChangeSuccess',
-                    function (event, toState, toParams, fromState, fromParams) {
-                        if (toState.name === 'censusProcess.detailSelectedLeaf' && fromState.name === '' && fromState.views === null) {
-                            $state.go('^');
-                        }
-                    });
+                // $log.debug( $rootScope.$transition);
+
+                // $rootScope.$on("$stateChangeError", console.log.bind(console));
+                //
+                // $rootScope.$on('$stateChangeSuccess',
+                //     function (event, toState, toParams, fromState, fromParams) {
+                //         if (toState.name === 'censusProcess.detailSelectedLeaf' && fromState.name === '' && fromState.views === null) {
+                //             $state.go('^');
+                //         }
+                //     });
 
                 $rootScope.checkedMainNavigationRoot = false;
                 $rootScope.loading = 0;
                 // $cookies.remove('categoryIdKey');
                 //$log.warn('app '+$rootScope.checkedMainNavigationTemp);
 
-                $rootScope.openInfo = function () {
-                    alert('Вас зовут: ' + $rootScope.user.fio + ' и вы из ' + $rootScope.user.org + '\n' + 'angular version: ' + angular.version.full);
-                };
+                // $rootScope.openInfo = function () {
+                //     alert('Вас зовут: ' + $rootScope.user.fio + ' и вы из ' + $rootScope.user.org + '\n' + 'angular version: ' + angular.version.full);
+                // };
 
                 // alert(angular.version.full );
+
+                /**
+                 * Ошибки
+                 * @type {Array}
+                 */
+                // window.myAppErrorLog = [];
+                // $stateProvider.defaultErrorHandler(function(error) {
+                //     // This is a naive example of how to silence the default error handler.
+                //     window.myAppErrorLog.push(error);
+                // });
+
+                /**
+                 * трасировка
+                 */
+                $trace.enable('TRANSITION');
+
+                /**
+                 * анимация загрузкт
+                 */
+                $transitions.onStart({entering: 'tasks'}, function (trans) {
+                    let SpinnerService = trans.injector().get('SpinnerService');
+                    SpinnerService.transitionStart();
+                    trans.promise.finally(SpinnerService.transitionEnd);
+                });
+
+                // $log.info($transitions.getHooks("onEnter"));
 
                 /**
                  * счетчик вотчеров
@@ -95,6 +127,44 @@ angular.module('asPkpApp', [
             }
         ]
     )
+
+    .service('SpinnerService', function () {
+
+        let count = 0;
+
+        return {
+            transitionStart: function () {
+                if (++count > 0) showSpinner();
+            },
+            transitionEnd: function () {
+                if (--count <= 0) hideSpinner();
+            },
+        };
+
+        function showSpinner() {
+            console.log('showSpinner');
+        }
+
+        function hideSpinner() {
+            console.log('hideSpinner');
+        }
+
+    })
+
+    .service('MyService', function ($log) {
+
+
+        return {
+            onEnter: function () {
+                return $log.warn('onEnter')
+            },
+            onExit: function () {
+                return $log.warn('onExit')
+            }
+        };
+
+
+    })
 
     .controller('ReferenceModalCtrl', function ($scope, $uibModalInstance) {
 
@@ -160,9 +230,60 @@ angular.module('asPkpApp', [
         }
     })
 
+    .component('modalComponent', {
+        template: [
+            '<div class="modal-body" id="modal-body">',
+            '<ul>',
+            '<li ng-repeat="item in $ctrl.items">',
+            '<a href="#" ng-click="$event.preventDefault(); $ctrl.selected.item = item">{{ item }}</a>',
+            '</li>',
+            '</ul>',
+            'Selected: <b>{{ $ctrl.selected.item }}</b>',
+            '</div>',
+            '<div class="modal-footer">',
+            '<button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">OK</button> ',
+            '<button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">Cancel</button>',
+            '</div>'
+        ].join(''),
+        bindings: {
+            resolve: '<',
+            close: '&',
+            dismiss: '&'
+        },
+        controller: function () {
+            let $ctrl = this;
+
+            $ctrl.$onInit = function () {
+                $ctrl.items = ['item1', 'item2', 'item3'];
+                $ctrl.selected = {
+                    item: $ctrl.items[0]
+                };
+            };
+
+            $ctrl.ok = function () {
+                $ctrl.close({$value: $ctrl.selected.item});
+            };
+
+            $ctrl.cancel = function () {
+                $ctrl.dismiss({$value: 'cancel'});
+            };
+        }
+    })
+
+    // .config(['$stateProvider'], function($stateProvider) {
+    //     window.myAppErrorLog = [];
+    //     $stateProvider.defaultErrorHandler(function(error) {
+    //         // This is a naive example of how to silence the default error handler.
+    //         window.myAppErrorLog.push(error);
+    //     });
+    // })
+
     .config(
         ['$stateProvider', '$urlRouterProvider', '$httpProvider',
             function ($stateProvider, $urlRouterProvider, $httpProvider) {
+
+
+
 
                 //////////////////
                 // interceptors //
@@ -187,9 +308,9 @@ angular.module('asPkpApp', [
 
                 $stateProvider
 
-                //////////
-                // Home //
-                //////////
+                    //////////
+                    // Home //
+                    //////////
 
                     .state("home", {
                         url: "/",
@@ -206,14 +327,51 @@ angular.module('asPkpApp', [
 
                     .state('tasks', {
                         url: '/tasks',
+                        // component: 'foo',
                         views: {
                             '': {
                                 templateUrl: 'pages/tasks/tasks.html',
                                 controller: 'TasksCtrl'
                             }
                         },
+                        onRetain: function ($transition$, $state$) {
+                            console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!! Leaving " + $state$.name);
+                        },
+                        // onEnter: function ($transition$, $state$) {
+                        //     let $uibModal = $transition$.injector().get('$uibModal');
+                        //     $uibModal.open({
+                        //         component: 'modalComponent'
+                        //
+                        //     });
+                        //
+                        //
+                        //     // let AuditService = $transition$.injector().get('AuditService');
+                        //     // AuditService.log("Entered " + state.name + " module while transitioning to " + transition.to().name);
+                        // },
                         data: {
                             displayName: 'Очередь моих задач'
+                        }
+                    })
+
+                    ///////////
+                    // component //
+                    ///////////
+
+                    .state('fooState', {
+                        url: '/foo/:fooId',
+                        params: {
+                            fooId: '999',
+                            squash: "~"
+                        },
+                        component: 'foo',
+                        // the `foo` input binding on the component
+                        // receives `fooData` resolve value (from the state)
+                        bindings: { foo: 'fooData' },
+                        resolve: {
+                            // A resolve named `fooData`
+                            fooData: function(tasksService, $stateParams) {
+                                return tasksService.getFoo($stateParams.fooId)
+                            }
                         }
                     })
 

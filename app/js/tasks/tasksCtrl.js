@@ -12,6 +12,24 @@ angular.module('asPkpApp.tasksCtrl', [])
             $scope.sortReverse = true;  // обратная сортировка
             $scope.searchTasks = '';     // значение поиска по умолчанию
 
+            $scope.data = 4;
+
+            $scope.uiOnParamsChanged = function(newParams) {
+                console.log("new params: ", newParams);
+            };
+
+            $scope.fooStateGo = function () {
+                $state.go('fooState', {'fooId': '999'});
+            };
+
+            // $scope.test = function () {
+            //     alert(423432);
+            // };
+            //
+            // $scope.$watch('count', function (newValue, oldValue) {
+            //     if (newValue > 6) alert('hi')
+            // });
+
             /**
              * года
              */
